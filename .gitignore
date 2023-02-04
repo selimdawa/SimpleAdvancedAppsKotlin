@@ -5,7 +5,7 @@
 .DS_Store
 /build
 /app/build
-/app/schemas
+/app/schemas/
 /app/release
 /captures
 .externalNativeBuild
