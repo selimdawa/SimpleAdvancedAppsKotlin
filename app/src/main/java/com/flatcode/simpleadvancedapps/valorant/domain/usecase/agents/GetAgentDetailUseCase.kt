@@ -1,0 +1,29 @@
+package com.flatcode.simpleadvancedapps.valorant.domain.usecase.agents
+
+import com.flatcode.simpleadvancedapps.valorant.common.Resource
+import com.flatcode.simpleadvancedapps.valorant.data.model.agents.toAgent
+import com.flatcode.simpleadvancedapps.valorant.domain.model.Agent
+import com.flatcode.simpleadvancedapps.valorant.domain.repository.ValorantRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
+import java.io.IOException
+import javax.inject.Inject
+
+class GetAgentDetailUseCase @Inject constructor(
+    private val valorantRepository: ValorantRepository
+) {
+    operator fun invoke(agentUuid: String): Flow<Resource<Agent>> = flow {
+
+        try {
+            emit(Resource.Loading)
+            valorantRepository.getAgentByUuid(agentUuid).data?.toAgent()?.let {
+                emit(Resource.Success(it))
+            }
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.localizedMessage.orEmpty()))
+        } catch (e: IOException) {
+            emit(Resource.Error(e.localizedMessage.orEmpty()))
+        }
+    }
+}

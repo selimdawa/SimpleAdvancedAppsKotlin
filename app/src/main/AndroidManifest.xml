@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".HiltApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="false"
+        android:theme="@style/OneTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:supportsRtl"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainApp.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainApp.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".dogs.ui.MainActivity" />
+        <activity android:name=".poke.ui.view.MainActivity" />
+        <activity android:name=".movies.MainActivity" />
+        <activity android:name=".countries.MainActivity" />
+        <activity
+            android:name=".todoNote.MainActivity"
+            android:theme="@style/Theme.DarkActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".pop.MainActivity" />
+        <activity android:name=".calculator.MainActivity" />
+        <activity
+            android:name=".valorant.presentation.MainActivity"
+            android:theme="@style/Theme.ValorantCompose" />
+        <activity android:name=".crypto.ui.MainActivity" />
+        <activity android:name=".rickAndMorty.ui.activity.MainActivity" />
+        <activity android:name=".news.ui.activity.MainActivity" />
+        <activity
+            android:name=".stockMarket.presentation.MainActivity"
+            android:theme="@style/Theme.StockMarketApp" />
+        <activity
+            android:name=".weather.MainActivity"
+            android:theme="@style/Theme.NoActionBar" />
+        <activity android:name=".dictionary.DefinitionWordActivity" />
+        <activity android:name=".dictionary.MainActivity" />
+        <activity android:name=".meals.activities.CategoryMealsActivity" />
+        <activity android:name=".meals.activities.MealActivity" />
+        <activity android:name=".meals.activities.MainActivity" />
+
+    </application>
+
+</manifest>

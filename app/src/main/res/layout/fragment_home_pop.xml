@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="homeFragment"
+            type="com.flatcode.simpleadvancedapps.pop.fragments.HomeFragment" />
+
+        <variable
+            name="funkoViewModel"
+            type="com.flatcode.simpleadvancedapps.pop.viewmodels.FunkoViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?colorOnBackground">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_content" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/search_et_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar"
+                android:hint="@string/search_et"
+                android:inputType="text"
+                android:textColorHint="?colorError"
+                app:boxCornerRadiusBottomEnd="6sp"
+                app:boxCornerRadiusBottomStart="6sp"
+                app:boxCornerRadiusTopEnd="6sp"
+                app:boxStrokeWidth="2sp"
+                app:hintTextColor="?colorError"
+                app:boxCornerRadiusTopStart="6sp"
+                app:boxStrokeColor="?colorError"
+                android:layout_marginHorizontal="10sp"
+                app:startIconDrawable="@drawable/ic_search"
+                app:startIconTint="?colorError"
+                app:suffixTextColor="?colorError"
+                tools:ignore="Autofill">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:afterTextChanged="@{() -> funkoViewModel.filter()}"
+                    android:text="@={funkoViewModel.filterText}"
+                    android:textColor="?colorError"
+                    android:textColorHint="?colorError" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                listData="@{funkoViewModel.pops}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/search_et_layout"
+                android:layout_marginHorizontal="5sp"
+                android:layout_marginTop="10sp"
+                android:clipToPadding="false"
+                android:paddingBottom="30dp"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_pop" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/net_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_internet_connection"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</layout>
