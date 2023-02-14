@@ -42,9 +42,7 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClick
                 setHasFixedSize(true)
             }
 
-            floatAddButton.setOnClickListener {
-                viewModel.onAddNewTaskClick()
-            }
+            floatAddButton.setOnClickListener { viewModel.onAddNewTaskClick() }
 
             ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
                 0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -125,9 +123,7 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClick
         val searchItem = menu.findItem(R.id.action_search)
         searhView = searchItem.actionView as SearchView
 
-        searhView.onQueryTextChanged {
-            viewModel.searchQuery.value = it
-        }
+        searhView.onQueryTextChanged { viewModel.searchQuery.value = it }
 
         val pendingQuery = viewModel.searchQuery.value
         if (pendingQuery != null && pendingQuery.isNotEmpty()) {

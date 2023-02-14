@@ -39,8 +39,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeMealsBinding.inflate(inflater, container, false)
         return binding.root
@@ -48,6 +47,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         preparePopularItemsRecyclerView()
 
         viewModel.getRandomMeal()
@@ -62,7 +62,6 @@ class HomeFragment : Fragment() {
         viewModel.getCategories()
         observerCategoriesLiveData()
         onCategoryClick()
-
     }
 
     private fun onCategoryClick() {

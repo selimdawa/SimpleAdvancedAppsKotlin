@@ -42,9 +42,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes), NotesAdapter.OnItemClic
                 setHasFixedSize(true)
             }
 
-            floatAddButton.setOnClickListener {
-                viewModel.onAddNewNoteClick()
-            }
+            floatAddButton.setOnClickListener { viewModel.onAddNewNoteClick() }
 
             setFragmentResultListener("note_add_edit_request") { _, bundle ->
                 val result = bundle.getInt("note_add_edit_request")
@@ -52,10 +50,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes), NotesAdapter.OnItemClic
             }
         }
 
-        viewModel.notes.observe(viewLifecycleOwner) {
-            notesAdapter.differ.submitList(it)
-        }
-
+        viewModel.notes.observe(viewLifecycleOwner) { notesAdapter.differ.submitList(it) }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.noteEvent.collect { event ->
@@ -111,9 +106,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes), NotesAdapter.OnItemClic
         val searchItem = menu.findItem(R.id.action_search_notes)
         searchView = searchItem.actionView as SearchView
 
-        searchView.onQueryTextChanged {
-            viewModel.searchQuery.value = it
-        }
+        searchView.onQueryTextChanged { viewModel.searchQuery.value = it }
 
         val pendingQuery = viewModel.searchQuery.value
         if (pendingQuery != null && pendingQuery.isNotEmpty()) {

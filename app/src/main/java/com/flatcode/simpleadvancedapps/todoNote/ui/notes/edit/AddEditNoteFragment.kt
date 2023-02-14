@@ -31,16 +31,9 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
             currentDateNote.isVisible = viewModel.note != null
             currentDateNote.text = "Created:  ${viewModel.note?.createdDateFormatted}"
 
-            noteTitleEditText.addTextChangedListener {
-                viewModel.noteTitle = it.toString()
-            }
-            noteContentEditText.addTextChangedListener {
-                viewModel.noteContent = it.toString()
-            }
-
-            noteAddEditFloatBttn.setOnClickListener {
-                viewModel.onSaveClick()
-            }
+            noteTitleEditText.addTextChangedListener { viewModel.noteTitle = it.toString() }
+            noteContentEditText.addTextChangedListener { viewModel.noteContent = it.toString() }
+            noteAddEditFloatBttn.setOnClickListener { viewModel.onSaveClick() }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {

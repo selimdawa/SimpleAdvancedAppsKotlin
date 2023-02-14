@@ -9,6 +9,7 @@ import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategory
 
 class CategoryMealsAdapter : RecyclerView.Adapter<CategoryMealsAdapter.CategoryMealsViewHolder>() {
 
+    lateinit var onItemClick: ((MealsByCategory) -> Unit)
     private var mealList = ArrayList<MealsByCategory>()
 
     fun setMealList(mealList: List<MealsByCategory>) {
@@ -27,6 +28,10 @@ class CategoryMealsAdapter : RecyclerView.Adapter<CategoryMealsAdapter.CategoryM
         Glide.with(holder.itemView).load(mealList[position].strMealThumb)
             .into(holder.binding.imgMeal)
         holder.binding.tvMealName.text = mealList[position].strMeal
+
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(mealList[position])
+        }
     }
 
     override fun getItemCount(): Int {

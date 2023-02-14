@@ -32,17 +32,11 @@ class AddEditTaskFragment : Fragment(R.layout.fragment_add_edit_task) {
             dateCreatedTextView.isVisible = viewModel.task != null
             dateCreatedTextView.text = "Created: ${viewModel.task?.createdDateFormatted}"
 
-            taskEditText.addTextChangedListener {
-                viewModel.taskName = it.toString()
-            }
-
+            taskEditText.addTextChangedListener { viewModel.taskName = it.toString() }
             editTaskCheck.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.taskImportance = isChecked
             }
-
-            floatingActionButtonEditTask.setOnClickListener {
-                viewModel.onSaveClick()
-            }
+            floatingActionButtonEditTask.setOnClickListener { viewModel.onSaveClick() }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {

@@ -25,7 +25,6 @@ object AppModule {
             .addCallback(callBack)
             .build()
 
-
     @Provides
     fun providesDao(db: TaskDatabase) = db.taskDao()
 
