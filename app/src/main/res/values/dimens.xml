@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dictionary -->
+    <dimen name="margin_eight">8dp</dimen>
+    <!-- Poke -->
+    <dimen name="space_small">8dp</dimen>
+    <dimen name="space_normal">16dp</dimen>
+    <dimen name="space_large">24dp</dimen>
+    <dimen name="space_x_large">32dp</dimen>
+    <dimen name="space_loading_2">100dp</dimen>
+    <dimen name="space_loading_3">200dp</dimen>
+</resources>
+

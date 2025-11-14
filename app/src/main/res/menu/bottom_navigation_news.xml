@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/everythingFragment"
+        android:icon="@drawable/ic_all"
+        android:title="@string/everything" />
+
+    <item
+        android:id="@+id/topArticlesFragment"
+        android:icon="@drawable/ic_top"
+        android:title="@string/top_articles" />
+
+</menu>

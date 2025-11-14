@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.flatcode.simpleadvancedapps.dogs.ui.DogViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?colorOnBackground"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_content" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10sp"
+            android:textColorHint="@color/white"
+            android:theme="@style/changeBackgroundColor"
+            app:boxBackgroundColor="?tickColor"
+            app:boxStrokeColor="?colorError"
+            app:boxStrokeWidth="2sp"
+            app:hintTextColor="?colorError">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_text_breeds"
+                android:inputType="none"
+                android:textColor="@color/white" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10sp"
+            android:clipToPadding="false"
+            app:listImg="@{viewModel.photosDog}"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_list" />
+
+        <ImageView
+            android:id="@+id/status_image_error"
+            android:layout_width="0dp"
+            android:layout_height="170dp"
+            android:visibility="gone"
+            app:dogApiStatus="@{viewModel.status}" />
+
+    </LinearLayout>
+
+</layout>

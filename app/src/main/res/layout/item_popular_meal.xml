@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="220sp"
+        android:layout_height="160sp"
+        android:layout_marginHorizontal="5sp"
+        android:layout_marginBottom="10sp"
+        android:elevation="6sp"
+        app:cardCornerRadius="6sp">
+
+        <ImageView
+            android:id="@+id/img_popular_meal_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@color/image_profile" />
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
