@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.flatcode.simpleadvancedapps"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.flatcode.simpleadvancedapps"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 4
         versionName = "1.04"
 
