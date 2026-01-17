@@ -9,7 +9,9 @@ plugins {
 
 android {
     namespace = "com.flatcode.simpleadvancedapps"
-    compileSdk = 36
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         applicationId = "com.flatcode.simpleadvancedapps"
@@ -19,6 +21,7 @@ android {
         versionName = "1.04"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //noinspection WrongGradleMethod
         kapt { arguments { arg("room.schemaLocation", "$projectDir/schemas") } }
     }
 
@@ -45,12 +48,14 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
     composeOptions {
         //kotlinCompilerExtensionVersion = "1.5.10"
         kotlinCompilerExtensionVersion = "1.4.0"
-    }
-    kotlinOptions {
-        jvmTarget = "17"
     }
     buildFeatures {
         dataBinding = true
@@ -79,14 +84,14 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")                //Appcompat for class
     implementation("androidx.preference:preference-ktx:1.2.1")          //Shared preference
     testImplementation("junit:junit:4.13.2")                            //Test
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
     //Layout
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")  //Constraint Layout
-    implementation("com.google.android.material:material:1.11.0")        //Material
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")  //Constraint Layout
+    implementation("com.google.android.material:material:1.13.0")        //Material
     implementation("androidx.legacy:legacy-support-v4:1.0.0")           //Legacy Support
     implementation("androidx.cardview:cardview:1.0.0")                  //Card View
-    implementation("androidx.recyclerview:recyclerview:1.3.2")          //Recycle View
+    implementation("androidx.recyclerview:recyclerview:1.4.0")          //Recycle View
     //implementation("androidx.recyclerview:recyclerview:1.0.0")          //Recycle View
     implementation("androidx.fragment:fragment-ktx:1.6.2")              //Kotlin Fragment
     //implementation("androidx.fragment:fragment-ktx:1.5.5")              //Kotlin Fragment
@@ -94,9 +99,9 @@ dependencies {
     //implementation("androidx.activity:activity-ktx:1.6.1")              //Kotlin Activity
     //Image
     implementation("de.hdodenhof:circleimageview:3.1.0")                //Circle image
-    implementation("com.github.bumptech.glide:glide:4.15.1")            //Glide image
+    implementation("com.github.bumptech.glide:glide:5.0.5")            //Glide image
     //noinspection KaptUsageInsteadOfKsp
-    kapt("com.github.bumptech.glide:compiler:4.15.1")                   //Glide compiler
+    kapt("com.github.bumptech.glide:compiler:5.0.5")                   //Glide compiler
     implementation("jp.wasabeef:glide-transformations:4.3.0")           //Glide Blur
     implementation("com.github.skydoves:landscapist-glide:1.6.1")       //Glide
     implementation("com.squareup.picasso:picasso:2.71828")              //Picasso
