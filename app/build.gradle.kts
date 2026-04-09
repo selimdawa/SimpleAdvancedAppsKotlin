@@ -10,7 +10,9 @@ plugins {
 android {
     namespace = "com.flatcode.simpleadvancedapps"
     compileSdk {
-        version = release(36)
+        version = release(36) {
+            minorApiLevel = 1
+        }
     }
 
     defaultConfig {
