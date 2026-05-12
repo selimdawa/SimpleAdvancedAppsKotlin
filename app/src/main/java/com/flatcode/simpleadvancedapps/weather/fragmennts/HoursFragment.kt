@@ -1,4 +1,4 @@
-package com.example.weatherapp.fragmennts
+package com.flatcode.simpleadvancedapps.weather.fragmennts
 
 import android.os.Bundle
 import android.view.LayoutInflater

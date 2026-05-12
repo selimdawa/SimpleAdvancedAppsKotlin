@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="23/07/2022"
+                    android:text="@string/date_weather"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
                     android:layout_marginStart="78dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="114dp"
-                    android:text="Chicago"
+                    android:text="@string/city_weather"
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     android:textStyle="bold"
@@ -74,7 +74,7 @@
                     android:id="@+id/tv_current_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="23°C"
+                    android:text="@string/c_weather"
                     android:textColor="@color/white"
                     android:textSize="70sp"
                     app:layout_constraintEnd_toEndOf="@+id/tv_city"
@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Sunny"
+                    android:text="@string/status_weather"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/tv_current_temp"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
-                    android:text="34°C/23°C"
+                    android:text="@string/c_c_weather"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/tv_current_temp"
@@ -144,12 +144,12 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hours" />
+                android:text="@string/hours" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Days" />
+                android:text="@string/days" />
 
         </com.google.android.material.tabs.TabLayout>
 

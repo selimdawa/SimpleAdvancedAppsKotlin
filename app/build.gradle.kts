@@ -168,7 +168,7 @@ dependencies {
     //noinspection GradleDependency
     implementation("com.airbnb.android:lottie:3.4.0")                  //Lottie Files
     implementation("com.facebook.shimmer:shimmer:0.5.0")               //Facebook Shimmer
-    implementation("androidx.datastore:datastore-preferences:1.0.0")   // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")   //DataStore
     implementation("com.jakewharton.timber:timber:5.0.1")              //Timber Log
     implementation("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6") //Binding
 }

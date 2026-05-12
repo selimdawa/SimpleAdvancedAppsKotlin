@@ -252,15 +252,26 @@
     <string name="country_capital">Country Capital :</string>
     <string name="country_region">Country Region :</string>
     <string name="country_currency">Country Currency :</string>
-    <string name="what_would_you_like_to_eat">What would you like to eat?</string>
-    <string name="instructions">Instructions :</string>
-    <string name="over_popular_items">Over popular items</string>
-    <string name="categories">Categories</string>
-    <string name="everything">Everything</string>
-    <string name="top_articles">Top Articles</string>
     <string name="character">Character</string>
     <string name="location">Location</string>
     <string name="episode">Episode</string>
     <string name="last_know_location">Last know location :</string>
     <string name="gender">Gender :</string>
+    //Meals
+    <string name="what_would_you_like_to_eat">What would you like to eat?</string>
+    <string name="over_popular_items">Over popular items</string>
+    <string name="categories">Categories</string>
+    <string name="instructions">Instructions :</string>
+    //News
+    <string name="everything">Everything</string>
+    <string name="top_articles">Top Articles</string>
+    //Weather
+    <string name="date_weather">23/07/2022</string>
+    <string name="city_weather">Chicago</string>
+    <string name="c_weather">23°C</string>
+    <string name="c_c_weather">34°C/23°C</string>
+    <string name="status_weather">Sunny</string>
+    <string name="hours">Hours</string>
+    <string name="days">Days</string>
+    <string name="day_weather">Monday 23/07/2022</string>
 </resources>

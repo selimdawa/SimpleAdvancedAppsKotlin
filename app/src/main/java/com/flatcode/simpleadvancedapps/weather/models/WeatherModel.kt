@@ -1,6 +1,5 @@
 package com.flatcode.simpleadvancedapps.weather.models
 
-
 data class WeatherModel(
     val city: String,
     val time: String,

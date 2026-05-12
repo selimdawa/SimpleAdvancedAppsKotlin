@@ -20,7 +20,6 @@ import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.weatherapp.fragmennts.HoursFragment
 import com.flatcode.simpleadvancedapps.Unit.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainWeatherBinding
 import com.flatcode.simpleadvancedapps.weather.DialogManager
@@ -30,6 +29,7 @@ import com.flatcode.simpleadvancedapps.weather.models.MainViewModel
 import com.flatcode.simpleadvancedapps.weather.models.WeatherModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
@@ -185,10 +185,7 @@ class MainFragment : Fragment() {
         ) {
             return
         }
-        fLocationClient.getCurrentLocation(
-            com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY,
-            ct.token
-        )
+        fLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, ct.token)
             .addOnCompleteListener {
                 getWeatherRequest("${it.result.latitude},${it.result.longitude}")
             }

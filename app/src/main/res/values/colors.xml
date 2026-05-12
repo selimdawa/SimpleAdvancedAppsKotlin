@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#fff</color>
-    //Colors
     //Needed
     <color name="image_profile">#e0e0e0</color>
     <color name="dark">#000000</color>
@@ -9,6 +8,7 @@
     <color name="white">#ffffff</color>
     <color name="night_corner">#ef7462</color>
     <color name="night_corner_2">#ed3559</color>
+    <color name="red">#F44336</color>
     //Day Theme
     <color name="basic_2">#3c415e</color>
     <color name="basic">#2196F3</color>
@@ -36,22 +36,13 @@
     //Wordpress
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    //Covid
-    //Crypto App
-    //Dictionary App
-    //Meals App
     //Valorant
     <color name="valo_blue">#161C23</color>
     //Movie Two
     <color name="gray">#5E5E5E</color>
-    <color name="red">#F44336</color>
     <color name="green">#4CAF50</color>
-    //Movie One
     //Poke
     <color name="background_type">#C8C8C9</color>
-    //Rick And Morty
     //Weather
     <color name="card_blue_bg">#6606A9F4</color>
-    //Stock
-
 </resources>

@@ -1,6 +1,5 @@
 package com.flatcode.simpleadvancedapps.weather
 
-
 data class DayItem(
     val city: String,
     val time: String,
