@@ -23,6 +23,9 @@ android {
         versionName = "1.04"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //vectorDrawables {
+        //    useSupportLibrary = true
+        //}
         //noinspection WrongGradleMethod
         kapt { arguments { arg("room.schemaLocation", "$projectDir/schemas") } }
     }
@@ -55,14 +58,9 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
     }
-    composeOptions {
-        //kotlinCompilerExtensionVersion = "1.5.10"
-        kotlinCompilerExtensionVersion = "1.4.0"
-    }
     buildFeatures {
         dataBinding = true
         viewBinding = true
-        compose = true
     }
 }
 
@@ -71,7 +69,6 @@ dependencies {
     //def retrofit_version = "2.9.0"
     //def room_version = "2.5.0"
     //def coroutines_version = "1.6.4"
-    //def compose_ui_version = "1.3.3"
 
     val hilt_version = rootProject.extra["hilt_version"]
     val nav_version = rootProject.extra["nav_version"]
@@ -141,20 +138,6 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")      //Dagger Hilt Compiler
     kapt("androidx.hilt:hilt-compiler:1.0.0")                          //Hilt Compiler
     kapt("com.google.dagger:hilt-compiler:$hilt_version")              //Hilt Compiler
-    //Compose
-    implementation("androidx.activity:activity-compose:1.6.1")         //Compose Activity
-    implementation("androidx.compose.ui:ui:$compose_ui_version")       //Compose Ui
-    implementation("androidx.compose.material:material:1.3.1")         //Compose Material
-    implementation("androidx.compose.ui:ui-tooling-preview:$compose_ui_version")  //Compose Preview
-    //Compose Ui Preview
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_ui_version")//Compose Test
-    debugImplementation("androidx.compose.ui:ui-tooling:$compose_ui_version")    //Compose Ui Tooling
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")//Compose MVVM
-    implementation("com.opencsv:opencsv:5.5.2")                        //Open CSV
-    implementation("com.google.accompanist:accompanist-swiperefresh:0.24.2-alpha")
-    implementation("com.google.accompanist:accompanist-pager:0.26.1-alpha")    //Pager
-    implementation("io.github.raamcosta.compose-destinations:core:1.1.2-beta")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")      //Compose Hilt
     //Others
     implementation("io.coil-kt:coil:2.2.2")                            //Coil
     implementation("com.google.code.gson:gson:2.10.1")                    //Gson

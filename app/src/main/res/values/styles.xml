@@ -324,10 +324,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.ValorantCompose" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/valo_blue</item>
-    </style>
-
     <!-- TextView -->
     <style name="StyleTextView">
         <item name="android:paddingBottom">5dp</item>

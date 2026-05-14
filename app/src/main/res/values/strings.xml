@@ -215,11 +215,6 @@
     //Dictionary App
     <string name="hint_search">Enter your word</string>
     <string name="button_find">find</string>
-    //Valorant
-    <string name="desc_agent_image">Agent Image</string>
-    <string name="title_description">Description</string>
-    <string name="title_abilities">Abilities</string>
-    <string name="search_agent">Search Agent</string>
     //Poke
     <string name="pokemon_image">Pokemon Image</string>
     <string name="type">Type :</string>
@@ -243,7 +238,6 @@
     <string name="room">Room :</string>
     <string name="coroutines">Coroutines :</string>
     <string name="rxjava">RxJava :</string>
-    <string name="compose">Compose :</string>
     <string name="app_features_mvvm">App Features - MVVM</string>
     <string name="error">Error!</string>
     //Country Details

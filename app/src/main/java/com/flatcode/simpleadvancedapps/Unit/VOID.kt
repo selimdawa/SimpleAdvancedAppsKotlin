@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.flatcode.simpleadvancedapps.R
 import jp.wasabeef.glide.transformations.BlurTransformation
-import java.io.Serializable
 
 object VOID {
     fun IntentClear(context: Context, c: Class<*>?) {
@@ -25,26 +24,6 @@ object VOID {
     fun IntentExtra(context: Context, c: Class<*>?, key: String?, value: String?) {
         val intent = Intent(context, c)
         intent.putExtra(key, value)
-        context.startActivity(intent)
-    }
-
-    fun IntentSerializable(context: Context, c: Class<*>?, key: String?, value: Serializable?) {
-        val intent = Intent(context, c)
-        intent.putExtra(key, value)
-        context.startActivity(intent)
-    }
-
-    fun IntentExtra2(
-        context: Context,
-        c: Class<*>?,
-        key: String?,
-        value: String?,
-        key2: String?,
-        value2: String?,
-    ) {
-        val intent = Intent(context, c)
-        intent.putExtra(key, value)
-        intent.putExtra(key2, value2)
         context.startActivity(intent)
     }
 

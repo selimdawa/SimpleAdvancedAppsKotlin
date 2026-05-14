@@ -29,7 +29,6 @@ class MainInfoAdapter(private val context: Context) :
         val s3: Boolean = model.s3!!
         val s4: Boolean = model.s4!!
         val s5: Boolean = model.s5!!
-        val s6: Boolean = model.s6!!
 
         holder.name.text = name
         check(s, holder.daggerHilt)
@@ -37,7 +36,6 @@ class MainInfoAdapter(private val context: Context) :
         check(s3, holder.room)
         check(s4, holder.coroutines)
         check(s5, holder.rxJava)
-        check(s6, holder.compose)
     }
 
     override fun getItemCount(): Int {
@@ -61,7 +59,6 @@ class MainInfoAdapter(private val context: Context) :
         var room: ImageView
         var coroutines: ImageView
         var rxJava: ImageView
-        var compose: ImageView
 
         init {
             name = binding!!.name
@@ -70,7 +67,6 @@ class MainInfoAdapter(private val context: Context) :
             room = binding!!.room
             coroutines = binding!!.coroutines
             rxJava = binding!!.rxJava
-            compose = binding!!.compose
         }
     }
 

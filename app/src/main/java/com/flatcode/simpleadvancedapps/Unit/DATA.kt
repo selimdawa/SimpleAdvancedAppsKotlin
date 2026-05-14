@@ -116,9 +116,4 @@ object DATA {
     //Weather
     const val API_KEY_WEATHER = "aadc41a523b744b483c154258230510"
     const val BASE_URL_WEATHER = "https://api.weatherapi.com/v1/forecast.json?key="
-
-    //Valorant
-    const val BASE_URL_VALORANT = "https://valorant-api.com/"
-    const val CATEGORY_AGENTS = "Agents"
-    const val PARAM_AGENT_ID = "agentUuid"
 }

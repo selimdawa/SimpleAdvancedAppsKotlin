@@ -7,11 +7,9 @@ class MainInfo {
     var s3: Boolean? = null
     var s4: Boolean? = null
     var s5: Boolean? = null
-    var s6: Boolean? = null
 
     constructor(
-        title: String?, s: Boolean?, s2: Boolean?, s3: Boolean?,
-        s4: Boolean?, s5: Boolean?, s6: Boolean?,
+        title: String?, s: Boolean?, s2: Boolean?, s3: Boolean?, s4: Boolean?, s5: Boolean?
     ) {
         this.title = title
         this.s = s
@@ -19,7 +17,6 @@ class MainInfo {
         this.s3 = s3
         this.s4 = s4
         this.s5 = s5
-        this.s6 = s6
     }
 
     constructor(title: String?) {
