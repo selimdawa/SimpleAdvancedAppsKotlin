@@ -90,21 +90,14 @@ One | Two | Three
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEg6nSESS7nrDaoTeL6SlhVBwAhC3g_BvhOAZMN9rPm_HHlYZuF_a7CotAd3_ldOfUulQCkG-A3qxi4dDIzUdewj-XOmRjpHFo2pP4ZWCXPQsVLJsg8Pl0Dt4k5HUDGQKsVYU_97ogVzg5SmcGttOBUx3qQbTZp7o01AtkYg7qVAVnYhCb0vMb4GJ2AsHA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgY8yYTHRiJZYVWkEhzALUI1j-ja9h_f6FN_XIteEdCgHtSWEnvuj1LMG_rsCE5D35NaoSf_zOqAEPmMhceiCyFCYIC1klhG5C2Tthz3VRNpfNCSU2OqZqY-besQjhOZ36sMyFSvYkChcQP0Nh0zcfg2WJ5H3i6qa3BgpwH_82cOgY1uhg4TlHBZrYS9A) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEj6EguOA8fCYGNNoBT5_nAQKlNg0jnVyn6NB6Sy3ru3AuCXBlCW3sHbXeA0i2tyox9L7AQ_DcgGV_tMFQcr8glrkkJYIpu-_Hs34RzTsa_oMQh-3RChd70S3OXPSdJL_1hTkmXVRTrYS-cqOR1KRVzg5Fovxdlhxg_GOAFJXaxdI0ozXY5GUiVfCkgZ1g) | 
 
-# `.7 Valorant` :
- 
-## Images
-One | Two | Three 
---- | --- | --- | 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEho9id7TS0C6GpfP8fdjGOgJTxnnQ5cNzQ3qstFoh40JvMa_LZ-k4tAKdH8lAiIOAfasc3VpP5g2n_o8ZvRp5LAdTZA80__kKBVosKlSKJZYGPQ0pFHQgXTSaYfze0bcs10ox2HjXnsATn0Et9P9JHnxJDkO_eIbmCN3l_X3vCuJhr2vgog4jAP6WCvaQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgCt9a5JxVzGnRnvKYIuT6GyV0SKwBX_BhdSP9kuqT_Y40p-4wFzVf4aRfGWf_vn5k36P6A2v5Dkb1R1yfkRqKvtpHst_SZ3eBhpxWNuE4gUlYtSnPPFJYv1UbDbf0Tq4oURjg-zjt0zVUpi79mamMKTSOfoDnXtRjzZZS9Bx3CY4BSIdeyvq_qmEg7mg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEggm-Dm6aC92zsvLsWgNh1MdEEYTMuKYRF_wGC9TbzTEJK16emLixJRAjzn-qqdWWayBXDQlc9sKZU5sqXoCaCnwyz8xfxQST53FYKwTnqPTk0JMQb5TkbNftLI7J3UlgMdt49Sa2fabqHnnSk70C-iYRGuJrQRm_xuWhU0aEkpcO1Rv50R1xEy9odGqg) |
-
-# `.8 Pop` :
+# `.7 Pop` :
  
 ## Images
 One | Two | Three 
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEizp1RmvNlRBPqdlrSRuSiw63vK91vAPS3iHNe9u2joVqGGdD79EPHoVbdow6PYDK1ufTndjTZRyrQ6dqmTBR_ObupFQee2SEGXdoK5WYcKgPO7ceIQOez8tGoe_sththDwAUv150X8rEQRJAi2M7bDTOEWBwMxFxutQuVFa4RMp2IINa-spSHBLVialw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjKBjVmnYR-F7v-GpWuoXmo6TDyLboRvPifkkE2puZR8MecDs3OabZ0o96zK7uq1CVBZ8bpRiZZ7ZgBauILMytRJcRYc5cG1eAGaKAk8eNyQsFNMNrVk4EWG3Ieod-B1-OxMtxrsJAwDjtQyF-yj0G6Oz-sv8hNPq-oNsmoOGQ1xyIxRvUBqRWA_cPx_w) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhkedJ2bBj_LUeVo9xLOs1idyzh2rlgg8XSzDK4fj3r1OC7rjCMM5U-qS4WJIcfdr1qZj_qPbr4Ie_mHW2XLM-5wZrZXAwReo_xUa7FZTfG0wcdUR3s-5iI9PraWnqWikeDRd36mfgbLozjr_9eZ2JFkGC9OezauRit0RwyHiR6zU_7oco6I62LaHwvLA) | 
 
-# `.9 Movies` :
+# `.8 Movies` :
  
 ## Day Mode
 One | Two | Three 
@@ -116,14 +109,14 @@ One | Two | Three
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEgbIByb2EFCZeOLuT6HYAM9ooa93xxRCnJIQ-VDSFTJRO0R3im68O1kzSw3GZjyfQx6O_3Yu2pnsxHZQUob9vvSw6t6H9CWKbVF0AwngHTZJadh63zVpM1azESZ0k0ue4UuMBXfEkm8k0CMrru8lpKdSqEOL1sBbRLIRPbnLhSQ2_7a8tX20d2Ilbh0fg) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEj1co_TQzweJgPtYP6QIvBGNZp1YB046BzkpujNMTA_wjXC9U96SaAG6_Xbe_l2d7IgQbsk2-CpjKaqjm9XRGsrEBNHq7OzpoLT05J22jMTSTqMicf-XKLbEqUo937HVDxEaFOCu7N_wDFreEpahBpXB25KS7CtWMCqg8uVSLcHZRQjzNfMM3PhAizkqw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhE-FyKGqaESSpFsCCrDx0ZtgFW_GfGy2_pWnYoGywrLBUZeX8r8dMF9kBRrLS4xrC-Es1t_Sn4qWp15MGdnMgXrz2VNrbyTJcDInin3gT-gAmzRnj43ztmKDD0Eye3YrRV8C1ewg3ECg343PTE7GWeZei3ili8RPXxjh_qzlESbXOOpzdgueWeBnDXSQ) |
 
-# `.10 Stock Market` :
+# `.9 Stock Market` :
  
 ## Images
 One | Two | Three 
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEhYecMPMTzTIiZv-sHoI8DLehXnOLyy8R49gddhbB-CxVnMYTJAPW2TC-TEa5IID2hrzEAdAQVpbQFzx0preITn1T7dwIK2hLz-9ARl96osKrhYORxZe4kSz7luE_CBXfN4s4Va-zabGSjIqgICQigYCb3m5HM8J_rKRyCWoe1g8MtExPlpgm_pZfo6GQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhGrcuqg5YHkqykcFYUGAoqQO1cVucUSXMCtjGHJh7LycAqd03aNz4miwsTCE3aZk5LELxG38DZOh5S-cw9vbBzZDbYpKNKGPqCBRDg7ATq2wOfegPKgcUCl3NraSkJ6e5nyS-eF6XqvbavGKEXaCIrG7Gr2BHV5NW0RRNqkyc9OlcUqGjV3ricbHqLaA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhXc6gfFEQbVePaFgJzzErZHZUy0D6jAf20sq53IJG9X3fklgG33AJCwQfjvVQG3ckd3LPID0TTkn-LhxWrhzi4T7f1wFsI-8_izxeVLwhMOIkGtBoeC8i0Xuo-pgW_aLnGp7eS5vtV5BrLsvV-rfaeXS_EM3IO9vuORlgtLwpw68iHnKD3Xt4lD1b6jw) | 
 
-# `.11 News` :
+# `.10 News` :
  
 ## Day Mode
 One | Two | Three 
@@ -135,7 +128,7 @@ One | Two | Three
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEg_jHtB6KF7MZ88tIsblpZ7h3mUJJXl0ubtzj0wrbYkU8S_DtpiWOmDcPROyk15L_XXcfZmzgnmCt_vUlzC1Eru-JVodflJRAChukKoMMRIZ8x1rgps9erD0qHcOPwOy8CfePSjlpUtgWplwfbuKhSJXPtNQ7sZxfbQ3hJvTrmyKnaS84oss3-jsOCHEQ) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiNrCZEoG1XR1o1dmMSygVrcGG6WG--oShudL6IWAsmeyqS6G1dl5TvaQmer87wtNcg554W8mX54aiFh5FDiWitpB1Ek1p5QqzuYqbEFqh3FfbbbgiqjFDF3sk9iEXnszTB4Gfkcn1LrunwCrLdRbhfe62_wXB5Jm9uhSlHZ9JP43BfSW5YAEeGMPuZxw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEhK8vgXrJdtfgRVosDuCDmZb5iaCyTfm2FQTke9QmP-l_TwKg-voWNlwJ1LobmngN9Iou6lnQu9rSCOFrhFUjvCsj4XsecTQuuDAL-ezQj7PGyAkjzKDMnsJ7YE0fl6lfTVSiUj3LEWjiMc0V5K3Xps7ESkWAJCVwKP_oDBRrcBBWdVl00iDQCPorypSg) | 
 
-# `.12 Rick & Morty` :
+# `.11 Rick & Morty` :
  
 ## Day Mode
 One | Two | Three 
@@ -147,14 +140,14 @@ One | Two | Three
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEi9Vt3d4n0Hvv4La0orgVujkytDBmDmJKlqaF_WqMFkzx-il_Bp1n49gUuw7VZ3lujx3VWJHzWGgJUKjDT4Y_8WxqrcB-ooB-CmCa3beH4KHttcQykH8cdxaMkgCrKXd6RbMiCkzYDdhMPLvD6CTdTFPV8LS4551ADeSU3benxnegbllO03BePMlzyMLA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiCzFJzcieLga2hC-1kCv8zxwJHfAKQZlF7P5HAe8g3IcZfnYnOoRhPOO5acGYKUDhamX_Bz0VJMTzcq3hAIGIHpcTYM5xNP1KXuxLa8TbvP2kX_C5kd0L_--pIlLQpSQcnfBV62sy4WXDimZaqqMX_TZJVNBOqhHLAnWbWSMcPS5kOTVteYe8DcydpLA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEh1aW_ZbAyg6080NXA_NlwAJpD3chQrJMRCLaXyj86V7KKn4rFg_brxlqBa7ajsFFtMHjwPH9fMocFK-SH0_nKsB4d1I7QOaHNY9xkiV3X88dkzPZTHw4-v7S7KjlHTkO50z7WC-RI9-Wv8Q1hE4l1UZbQa2srh1eCkkfy9i6G3b48V0UzYiFSl35NbMQ) | 
 
-# `.13 Weather` :
+# `.12 Weather` :
  
 ## Images
 One | Two | Three 
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEhnqF_NXHMhE6cgqMvxU0LDrpUQ1n4jZq3VC0MlZFCwzzXF5x8ruVGrJKlLoRJ9VlSObkgrVsI3_HF_CcdrXsthENEQNawbrkRmoGgs2Ypf5bT65N-6W8uwcA-23rN-BxMXDNJt-Vz-kOk01BdBjDjs0D59xv4ZNH745UynqSypO65z3g71rdlgw-5KOA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiuXsfjAioX9UPjjam79mzh5LuTtaAxePyrT3N2zidTMNfLY1BzwFiS6DPVZDGZnm6bbuysOfOQX4s2K4gNWLsM7cS1H62gEmC5gBXZqbV6VPtHQWWmmTTilFnImwHvjbYJstrrnKLQyCm5wKSXN6CAcDjgtXEo6p4jCFwZ8YtxFgaBzHEmrihfdIOMJw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEit09OnhMIpEzIyqLtCj6xUlPGPZpp7pNyLkCKv9iNrM2T3N7E7Gm0ElXQsyiB-q6Of4d-0zsqsIl5gMhW1C9p_U2IX6LK4Wjg_jUNrEikcmRWPD4yjANhJ-7v6UW601s6kGRrMoJginIM9rMDc_YLn2yiK1_zuPhHVrJPbPO6bvxQnAiyZB00aSQPodg) | 
 
-# `.14 Poke` :
+# `.13 Poke` :
  
 ## Day Mode
 One | Two | Three 
@@ -166,7 +159,7 @@ One | Two | Three
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEj6fdqhqzPy1q6Bt4BHpI2vQgQc0h50SC6lf5K14aW8i9vLSxFkJY7ejhhYAsT1zEYmvEW-X6LSGX2YA4Q1UNBLvNo2Fz_AT2HToSwuuiSauovU3FTyeipAmRi9xa_SX7EImmYqV1WOc9BmQatJ4Zl12QoPXHrz58_77UfS_J8Lvz9s4q_ySv5uAzmLxA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEjDcSDY_SrtTHKsfbc2TiR9BtJECsLOCMXzjdm5HCMNxsp7U3mYZ6dBFw_ibuDs6aNpFzTS-WqeRNrmdF4mTeeYJmjIkbJkqs5be-JZ7bYQglas4MFFawv4LSeeRyCYCnmmeKM6_bmnzJ__VXeOFstZuplF0SAfl1Fpt9PU7seVV7JPOJLKnMLx_Y65hA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEgoPln3hn64tTjR_Lm6NJKOk12ghWXI-pKwl_bN1jxenZAjuaOJJluEgtviEV-Bg0AoybZouBMkOGvd9kgc6krhb56wQlFcy-trZhE3e2Bwbm5kBVnZlR6tikZt1v5qIbWYUxRXykhM4r__Pf5T32fbW9WMleqFisF_UO-Pgr2ZnYlDHtckeRVhBseR0g) | 
 
-# `.15 TODO-Note` :
+# `.14 TODO-Note` :
  
 ## Images
 One | Two | Three 
