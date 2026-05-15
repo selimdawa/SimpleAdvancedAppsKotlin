@@ -12,10 +12,8 @@ object DATA {
     const val CRYPTO = "Crypto"
     const val DICTIONARY = "Dictionary"
     const val MEALS = "Meals"
-    const val VALORANT = "Valorant"
     const val POP = "Pop"
     const val MOVIE = "Movies"
-    const val STOCK_MARKET = "Stock Market"
     const val NEWS = "News"
     const val RICK_AND_MORTY = "Rick & Morty"
     const val WEATHER = "Weather"
@@ -67,6 +65,7 @@ object DATA {
 
     //Rick & Morty
     const val Alive = "Alive"
+    const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
 
     //Country
     const val COUNTRY_GSON: String =
@@ -105,13 +104,6 @@ object DATA {
     //Pop
     const val BASE_URL_POP = "https://funko.fandom.com/wiki/Pop!_Animation"
     const val IMAGE_POP = "https://www.vectorkhazana.com/assets/images/products/Funko_Pup.png"
-
-    //Rick & Morty
-    const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
-
-    //Stock Market
-    const val API_KEY_STOCK_MARKET = "CY75KFHR7APO4MSF"
-    const val BASE_URL_STOCK_MARKET = "https://alphavantage.co"
 
     //Weather
     const val API_KEY_WEATHER = "aadc41a523b744b483c154258230510"

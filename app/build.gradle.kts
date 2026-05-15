@@ -23,9 +23,7 @@ android {
         versionName = "1.04"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        //vectorDrawables {
-        //    useSupportLibrary = true
-        //}
+
         //noinspection WrongGradleMethod
         kapt { arguments { arg("room.schemaLocation", "$projectDir/schemas") } }
     }
@@ -76,7 +74,7 @@ dependencies {
     val retrofit_version = "2.9.0"
     val room_version = "2.5.0"
     val coroutines_version = "1.6.4"
-    val compose_ui_version = "1.3.3"
+
     //App Req
     implementation("androidx.core:core-ktx:1.12.0")                      //Kotlin Core
     //implementation("androidx.core:core-ktx:1.9.0")                      //Kotlin Core

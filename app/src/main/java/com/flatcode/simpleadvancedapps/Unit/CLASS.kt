@@ -15,13 +15,11 @@ object CLASS {
     val I6: Class<*> = com.flatcode.simpleadvancedapps.meals.activities.MainActivity::class.java
     val I7: Class<*> = com.flatcode.simpleadvancedapps.pop.MainActivity::class.java
     val I8: Class<*> = com.flatcode.simpleadvancedapps.movies.MainActivity::class.java
-    val I9: Class<*> =
-        com.flatcode.simpleadvancedapps.stockMarket.presentation.MainActivity::class.java
-    val I10: Class<*> = com.flatcode.simpleadvancedapps.news.ui.activity.MainActivity::class.java
-    val I11: Class<*> =
+    val I9: Class<*> = com.flatcode.simpleadvancedapps.news.ui.activity.MainActivity::class.java
+    val I10: Class<*> =
         com.flatcode.simpleadvancedapps.rickAndMorty.ui.activity.MainActivity::class.java
-    val I12: Class<*> = com.flatcode.simpleadvancedapps.weather.MainActivity::class.java
-    val I13: Class<*> = com.flatcode.simpleadvancedapps.poke.ui.view.MainActivity::class.java
-    val I14: Class<*> = com.flatcode.simpleadvancedapps.todoNote.MainActivity::class.java
+    val I11: Class<*> = com.flatcode.simpleadvancedapps.weather.MainActivity::class.java
+    val I12: Class<*> = com.flatcode.simpleadvancedapps.poke.ui.view.MainActivity::class.java
+    val I13: Class<*> = com.flatcode.simpleadvancedapps.todoNote.MainActivity::class.java
     val Definition_Word = DefinitionWordActivity::class.java
 }
