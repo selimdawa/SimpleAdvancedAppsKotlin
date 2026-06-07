@@ -12,7 +12,7 @@ import com.flatcode.simpleadvancedapps.Unit.DATA
 class MainViewModel : ViewModel() {
     var dataMain = MutableLiveData<ArrayList<Main>>()
 
-    private val I: IntArray = intArrayOf(1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+    private val I: IntArray = intArrayOf(1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 1, 1, 1)
 
     fun getItems(recyclerView: RecyclerView, bar: ProgressBar) {
         dataMain.value = data
@@ -29,10 +29,8 @@ class MainViewModel : ViewModel() {
             arrayList.add(Main(R.drawable.ic_monetization, DATA.CRYPTO, I[3], CLASS.I4))
             arrayList.add(Main(R.drawable.ic_words, DATA.DICTIONARY, I[4], CLASS.I5))
             arrayList.add(Main(R.drawable.ic_meal, DATA.MEALS, I[5], CLASS.I6))
-            arrayList.add(Main(R.drawable.logo_valorant, DATA.VALORANT, I[6], CLASS.I7))
             arrayList.add(Main(R.drawable.ic_game, DATA.POP, I[7], CLASS.I7))
             arrayList.add(Main(R.drawable.ic_movie, DATA.MOVIE, I[8], CLASS.I8))
-            arrayList.add(Main(R.drawable.ic_company, DATA.STOCK_MARKET, I[9], CLASS.I9))
             arrayList.add(Main(R.drawable.ic_feed, DATA.NEWS, I[10], CLASS.I9))
             arrayList.add(Main(R.drawable.ic_child, DATA.RICK_AND_MORTY, I[11], CLASS.I10))
             arrayList.add(Main(R.drawable.ic_nights, DATA.WEATHER, I[12], CLASS.I11))

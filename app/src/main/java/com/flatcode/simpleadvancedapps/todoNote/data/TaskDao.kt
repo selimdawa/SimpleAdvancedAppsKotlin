@@ -3,7 +3,6 @@ package com.flatcode.simpleadvancedapps.todoNote.data
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
 interface TaskDao {
 

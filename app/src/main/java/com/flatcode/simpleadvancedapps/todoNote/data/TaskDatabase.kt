@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
-
 @Database(entities = [Task::class], version = 1)
 abstract class TaskDatabase : RoomDatabase() {
 

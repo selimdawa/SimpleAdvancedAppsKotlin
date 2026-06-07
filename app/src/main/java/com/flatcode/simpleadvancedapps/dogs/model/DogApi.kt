@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.dogs.api
+package com.flatcode.simpleadvancedapps.dogs.model
 
 import com.google.gson.annotations.SerializedName
 

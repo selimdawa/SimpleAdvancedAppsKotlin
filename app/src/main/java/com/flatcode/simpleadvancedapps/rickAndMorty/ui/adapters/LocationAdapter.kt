@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.simpleadvancedapps.models.location.LocationModel
+import com.flatcode.simpleadvancedapps.models.location.LocationModel
 import com.flatcode.simpleadvancedapps.databinding.ItemLocationBinding
 
 class LocationAdapter(private val list: ArrayList<LocationModel>) :

@@ -5,7 +5,6 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.flatcode.simpleadvancedapps.todoNote.util.Converters
 
-
 @Database(entities = [Notes::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class NoteDatabase :RoomDatabase() {

@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.dogs.ui
+package com.flatcode.simpleadvancedapps.dogs.view
 
 import android.content.Context
 import android.os.Bundle

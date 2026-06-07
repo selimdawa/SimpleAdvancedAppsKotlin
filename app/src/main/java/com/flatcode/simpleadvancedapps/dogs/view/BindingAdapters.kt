@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.dogs.ui
+package com.flatcode.simpleadvancedapps.dogs.view
 
 import android.view.View
 import android.widget.ImageView
@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
+import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogApiStatus
 import com.squareup.picasso.Picasso
 
 @BindingAdapter("imgUrlPhoto")

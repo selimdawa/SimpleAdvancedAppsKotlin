@@ -1,4 +1,4 @@
-package com.example.simpleadvancedapps.models.location
+package com.flatcode.simpleadvancedapps.models.location
 
 import com.flatcode.simpleadvancedapps.rickAndMorty.base.IBaseDiffModel
 import com.google.gson.annotations.SerializedName
