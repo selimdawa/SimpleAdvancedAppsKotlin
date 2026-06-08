@@ -1,42 +1,47 @@
 package com.flatcode.simpleadvancedapps.pop.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.pop.models.PopItem
 import com.flatcode.simpleadvancedapps.pop.repository.FunkoRepository
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FunkoViewModel(private val funkoRepository: FunkoRepository) : ViewModel() {
 
-    var pops: MutableLiveData<MutableList<PopItem>> = MutableLiveData()
-    val _pop = MutableLiveData<PopItem>()
-    var filterText: MutableLiveData<String> = MutableLiveData()
-    val isListFiltered: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _pops = MutableLiveData<MutableList<PopItem>>()
+    val pops: LiveData<MutableList<PopItem>> get() = _pops
 
-    fun fetchData(): MutableLiveData<MutableList<PopItem>> {
-        viewModelScope.launch(IO) {
-            pops.postValue(funkoRepository.getFunkoPops())
+    private val _pop = MutableLiveData<PopItem>()
+    val pop: LiveData<PopItem> get() = _pop
+
+    val filterText = MutableLiveData<String>("")
+
+    private val _isListFiltered = MutableLiveData(false)
+    val isListFiltered: LiveData<Boolean> get() = _isListFiltered
+
+    fun fetchData(): LiveData<MutableList<PopItem>> {
+        viewModelScope.launch(Dispatchers.IO) {
+            _pops.postValue(funkoRepository.getFunkoPops())
         }
         return pops
     }
 
     fun filter() {
-        isListFiltered.value = filterText.value?.length!! > 1
+        val currentTextLength = filterText.value?.length ?: 0
+        _isListFiltered.value = currentTextLength > 1
     }
 
     fun getFilteredList(text: String): List<PopItem> {
-        val filteredList = arrayListOf<PopItem>()
-        for (pop: PopItem in pops.value!!) {
-            if (pop.name.lowercase().contains(text.lowercase()) || pop.series.lowercase()
-                    .contains(text.lowercase())
-            ) {
-                filteredList.add(pop)
-            }
+        val currentPops = _pops.value ?: return emptyList()
+        val query = text.lowercase()
+
+        return currentPops.filter { pop ->
+            pop.name.lowercase().contains(query) || pop.series.lowercase().contains(query)
         }
-        return filteredList
     }
 
     fun onPopClicked(pop: PopItem) {
@@ -46,7 +51,7 @@ class FunkoViewModel(private val funkoRepository: FunkoRepository) : ViewModel()
     class FunkoViewModelFactory(private val funkoRepository: FunkoRepository) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(FunkoViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(com.littleapp.pop.viewmodels.FunkoViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return FunkoViewModel(funkoRepository) as T
             }

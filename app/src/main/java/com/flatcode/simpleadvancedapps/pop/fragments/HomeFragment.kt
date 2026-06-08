@@ -7,21 +7,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.flatcode.simpleadvancedapps.R
+import com.flatcode.simpleadvancedapps.HiltApplication
 import com.flatcode.simpleadvancedapps.Unit.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomePopBinding
 import com.flatcode.simpleadvancedapps.pop.adapters.FunkoListAdapter
 import com.flatcode.simpleadvancedapps.pop.adapters.PopListener
 import com.flatcode.simpleadvancedapps.pop.viewmodels.FunkoViewModel
-import com.flatcode.simpleadvancedapps.HiltApplication
 import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomePopBinding
+    private var _binding: FragmentHomePopBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: FunkoViewModel by activityViewModels {
         FunkoViewModel.FunkoViewModelFactory(
@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_pop, container, false)
+        _binding = FragmentHomePopBinding.inflate(inflater, container, false)
 
         val adapter = FunkoListAdapter(PopListener { pop ->
             viewModel.onPopClicked(pop)
@@ -41,11 +41,14 @@ class HomeFragment : Fragment() {
 
         binding.apply {
             toolbar.nameSpace.text = DATA.POP
-            funkoViewModel = viewModel
-            lifecycleOwner = this.lifecycleOwner
             recyclerView.adapter = adapter
             progressBar.visibility = View.VISIBLE
             searchEtLayout.visibility = View.INVISIBLE
+
+            searchEt.doAfterTextChanged { text ->
+                viewModel.filterText.value = text.toString()
+                viewModel.filter()
+            }
         }
 
         loadData(adapter)
@@ -57,16 +60,19 @@ class HomeFragment : Fragment() {
         if (isOnline(requireContext())) {
             binding.swipeLayout.setOnRefreshListener { binding.swipeLayout.isRefreshing = false }
             showComponents()
+
             viewModel.fetchData().observe(viewLifecycleOwner) { _ ->
                 binding.apply {
                     progressBar.visibility = View.GONE
                     searchEtLayout.visibility = View.VISIBLE
                 }
-                viewModel.isListFiltered.observe(viewLifecycleOwner) {
-                    if (it)
+
+                viewModel.isListFiltered.observe(viewLifecycleOwner) { isFiltered ->
+                    if (isFiltered) {
                         adapter.submitList(viewModel.getFilteredList(viewModel.filterText.value.toString()))
-                    else
+                    } else {
                         adapter.submitList(viewModel.pops.value)
+                    }
                 }
             }
         } else {
@@ -116,5 +122,10 @@ class HomeFragment : Fragment() {
             }
         }
         return false
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
