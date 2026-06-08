@@ -1,10 +1,14 @@
 package com.flatcode.simpleadvancedapps.crypto.ui.home
 
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.Unit.DATA
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
 import com.flatcode.simpleadvancedapps.crypto.model.home.Data
@@ -16,6 +20,8 @@ class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(FragmentHomeBinding::inflate) {
 
     override val viewModel by viewModels<HomeViewModel>()
+    private lateinit var mAdapter: HomeRecyclerAdapter
+    private var isCurrentlyLoadingMore = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +30,7 @@ class HomeFragment :
 
     override fun onCreateFinished() {
         binding.toolbar.nameSpace.text = DATA.CRYPTO
+        setupRecyclerView()
     }
 
     override fun initializeListeners() {
@@ -31,9 +38,10 @@ class HomeFragment :
 
     override fun observeEvents() {
         with(viewModel) {
-            cryptoResponse.observe(viewLifecycleOwner) {
-                it?.let {
-                    it.data?.let { it1 -> setRecycler(it1) }
+            cryptoList.observe(viewLifecycleOwner) { dataList ->
+                dataList?.let {
+                    mAdapter.setList(it)
+                    isCurrentlyLoadingMore = false
                 }
             }
             isLoading.observe(viewLifecycleOwner) {
@@ -41,13 +49,16 @@ class HomeFragment :
             }
             onError.observe(viewLifecycleOwner) {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+                isCurrentlyLoadingMore = false
             }
         }
     }
 
-    private fun setRecycler(data: List<Data>) {
-        val mAdapter = HomeRecyclerAdapter(object : ItemClickListener {
-            override fun onItemClick(coin: Data) {
+    private fun setupRecyclerView() {
+        mAdapter = HomeRecyclerAdapter(object : ItemClickListener {
+            override fun onItemClick(
+                coin: Data, ivRowImage: ImageView, tvRowTitle: TextView, tvRowSymbol: TextView
+            ) {
                 if (coin.symbol != null) {
                     val navigation =
                         HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin.symbol)
@@ -55,12 +66,34 @@ class HomeFragment :
                 }
             }
         })
+
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.rvHome.layoutManager = layoutManager
         binding.rvHome.adapter = mAdapter
-        mAdapter.setList(data)
+
+        binding.rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                    if (!isCurrentlyLoadingMore && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
+                        isCurrentlyLoadingMore = true
+                        viewModel.loadNextPage(DATA.API_KEY_CRYPTO)
+                    }
+                }
+            }
+        })
     }
 
     private fun handleViews(isLoading: Boolean = false) {
-        binding.rvHome.isVisible = !isLoading
-        binding.pbHome.isVisible = isLoading
+        if (viewModel.isFirstPage()) {
+            binding.rvHome.isVisible = !isLoading
+            binding.pbHome.isVisible = isLoading
+        } else {
+            binding.pbHome.isVisible = false
+        }
     }
 }

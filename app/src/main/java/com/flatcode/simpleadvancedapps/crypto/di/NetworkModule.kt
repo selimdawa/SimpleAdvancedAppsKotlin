@@ -2,7 +2,7 @@ package com.flatcode.simpleadvancedapps.crypto.di
 
 import com.flatcode.simpleadvancedapps.BuildConfig
 import com.flatcode.simpleadvancedapps.Unit.DATA
-import com.flatcode.simpleadvancedapps.crypto.network.ApiFactory
+import com.flatcode.simpleadvancedapps.crypto.network.CryptoApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,7 +54,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiFactory(retrofit: Retrofit): ApiFactory {
-        return retrofit.create(ApiFactory::class.java)
+    fun provideApiFactory(retrofit: Retrofit): CryptoApi {
+        return retrofit.create(CryptoApi::class.java)
     }
 }

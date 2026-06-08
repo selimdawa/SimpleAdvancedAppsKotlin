@@ -3,21 +3,31 @@ package com.flatcode.simpleadvancedapps.crypto.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.flatcode.simpleadvancedapps.Unit.DATA.IMAGE_CRYPTO
 import com.flatcode.simpleadvancedapps.crypto.model.home.Data
 import com.flatcode.simpleadvancedapps.databinding.ItemCryptoBinding
 
 class HomeRecyclerAdapter(private val listener: ItemClickListener) :
     RecyclerView.Adapter<HomeRecyclerAdapter.MViewHolder>() {
 
-    private var coins = emptyList<Data>()
+    private val coins = mutableListOf<Data>()
 
     class MViewHolder(private val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(listener: ItemClickListener, coin: Data) {
-            binding.onItemClickListener = listener
-            binding.coin = coin
-            binding.executePendingBindings()
+            binding.tvRowTitle.text = coin.name
+            binding.tvRowSymbol.text = coin.symbol
+            binding.tvRowValue.text = "$${coin.quote!!.uSD!!.price}"
+
+            binding.ivRowImage.load("${IMAGE_CRYPTO}${coin.id}.png") {
+                crossfade(true)
+            }
+
+            binding.root.setOnClickListener {
+                listener.onItemClick(coin, binding.ivRowImage, binding.tvRowTitle, binding.tvRowSymbol)
+            }
         }
 
         companion object {
@@ -37,7 +47,14 @@ class HomeRecyclerAdapter(private val listener: ItemClickListener) :
     override fun getItemCount() = coins.size
 
     fun setList(newList: List<Data>) {
-        coins = newList
+        coins.clear()
+        coins.addAll(newList)
         notifyDataSetChanged()
+    }
+
+    fun addMoreItems(moreList: List<Data>) {
+        val startPosition = coins.size
+        coins.addAll(moreList)
+        notifyItemRangeInserted(startPosition, moreList.size)
     }
 }

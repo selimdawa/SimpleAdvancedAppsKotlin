@@ -1,11 +1,6 @@
 package com.flatcode.simpleadvancedapps.crypto.utils
 
-sealed class NetworkResult<T>(
-    val data: T? = null,
-    val message: String? = null,
-    val networkError: Boolean = false,
-) {
-    class Success<T>(data: T) : NetworkResult<T>(data)
-    class Error<T>(networkError: Boolean, message: String?) :
-        NetworkResult<T>(data = null, message = message, networkError = networkError)
+sealed class NetworkResult<out T> {
+    data class Success<out T>(val data: T) : NetworkResult<T>()
+    data class Error(val message1: Boolean, val message: String?) : NetworkResult<Nothing>()
 }
