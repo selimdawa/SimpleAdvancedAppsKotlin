@@ -86,7 +86,7 @@ dependencies {
     //Image
     implementation(libs.circleimageview)                //Circle image
     implementation(libs.glide)            //Glide image
-    ksp(libs.compiler)                   //Glide compiler
+    ksp(libs.glide.ksp)                   //Glide compiler
     implementation(libs.glide.transformations)           //Glide Blur
     implementation(libs.landscapist.glide)       //Glide
     implementation(libs.picasso)              //Picasso
