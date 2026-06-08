@@ -2,7 +2,7 @@
 agp = "9.2.1"
 cardview = "1.0.0"
 circleimageview = "3.1.0"
-coreKtx = "1.18.0"
+coreKtx = "1.19.0"
 glide = "5.0.7"
 glideKsp = "5.0.7"
 glideTransformations = "4.3.0"
