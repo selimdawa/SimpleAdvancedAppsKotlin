@@ -19,13 +19,10 @@ android {
         applicationId = "com.flatcode.simpleadvancedapps"
         minSdk = 24
         targetSdk = 36
-        versionCode = 4
-        versionName = "1.04"
+        versionCode = 5
+        versionName = "1.05"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        //noinspection WrongGradleMethod
-       // kapt { arguments { arg("room.schemaLocation", "$projectDir/schemas") } }
     }
 
     //signingConfigs {
@@ -93,6 +90,9 @@ dependencies {
     implementation(libs.glide.transformations)           //Glide Blur
     implementation(libs.landscapist.glide)       //Glide
     implementation(libs.picasso)              //Picasso
+    implementation(libs.coil)                            //Coil
+    implementation(libs.lottie)                  //Lottie Files
+    implementation(libs.shimmer)               //Facebook Shimmer
     //Life Cycle
     implementation(libs.lifecycle.extensions)     //Life Cycle Extensions
     implementation(libs.lifecycle.viewmodel.ktx)
@@ -128,7 +128,6 @@ dependencies {
     ksp(libs.hilt.androidx.compiler)                          //Hilt Compiler
     ksp(libs.hilt.compiler)              //Hilt Compiler
     //Others
-    implementation(libs.coil)                            //Coil
     implementation(libs.gson)                    //Gson
     implementation(libs.jsoup)                            //Jsoup
     implementation(libs.volley)                 //Volley
@@ -137,8 +136,6 @@ dependencies {
     implementation(libs.exp4j)                     //Calculator
     implementation(libs.swiperefreshlayout)     //Swipe Refresh
     implementation(libs.play.services.location)     //Weather Location
-    implementation(libs.lottie)                  //Lottie Files
-    implementation(libs.shimmer)               //Facebook Shimmer
     implementation(libs.datastore.preferences)   //DataStore
     implementation(libs.timber)              //Timber Log
     implementation(libs.viewbinding.property.delegate) //Binding to libs

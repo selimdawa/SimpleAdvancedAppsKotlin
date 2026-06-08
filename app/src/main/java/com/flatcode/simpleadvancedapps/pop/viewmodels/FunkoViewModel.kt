@@ -51,7 +51,7 @@ class FunkoViewModel(private val funkoRepository: FunkoRepository) : ViewModel()
     class FunkoViewModelFactory(private val funkoRepository: FunkoRepository) :
         ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(com.littleapp.pop.viewmodels.FunkoViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(FunkoViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return FunkoViewModel(funkoRepository) as T
             }

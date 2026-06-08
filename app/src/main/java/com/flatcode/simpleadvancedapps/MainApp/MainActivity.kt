@@ -18,7 +18,6 @@ import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.Unit.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
 
     private var binding: ActivityMainBinding? = null
