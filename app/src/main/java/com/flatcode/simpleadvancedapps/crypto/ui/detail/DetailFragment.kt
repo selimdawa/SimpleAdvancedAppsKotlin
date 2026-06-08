@@ -48,12 +48,11 @@ class DetailFragment :
         val json = gson.toJson(it?.data)
         val jsonObject = JSONObject(json)
         val jsonArray = jsonObject[args.symbol] as JSONArray
-
         val coin = gson.fromJson(jsonArray.getJSONObject(0).toString(), CoinDetail::class.java)
 
         coin?.let {
             with(binding) {
-                ivDetail.loadImage(it.logo)
+                ivDetail.loadImage("${DATA.IMAGE_CRYPTO}${args.coinId}.png")
                 tvDetailTitle.text = it.name
                 tvDetailSymbol.text = it.symbol
                 tvDetailDescription.text = it.description

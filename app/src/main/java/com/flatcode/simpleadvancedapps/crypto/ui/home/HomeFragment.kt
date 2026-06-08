@@ -59,9 +59,11 @@ class HomeFragment :
             override fun onItemClick(
                 coin: Data, ivRowImage: ImageView, tvRowTitle: TextView, tvRowSymbol: TextView
             ) {
-                if (coin.symbol != null) {
-                    val navigation =
-                        HomeFragmentDirections.actionHomeFragmentToDetailFragment(coin.symbol)
+                if (coin.symbol != null && coin.id != null) {
+                    val navigation = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                        symbol = coin.symbol,
+                        coinId = coin.id
+                    )
                     Navigation.findNavController(requireView()).navigate(navigation)
                 }
             }

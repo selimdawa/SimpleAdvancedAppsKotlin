@@ -20,10 +20,7 @@ class HomeRecyclerAdapter(private val listener: ItemClickListener) :
             binding.tvRowTitle.text = coin.name
             binding.tvRowSymbol.text = coin.symbol
             binding.tvRowValue.text = "$${coin.quote!!.uSD!!.price}"
-
-            binding.ivRowImage.load("${IMAGE_CRYPTO}${coin.id}.png") {
-                crossfade(true)
-            }
+            binding.ivRowImage.load("${IMAGE_CRYPTO}${coin.id}.png")
 
             binding.root.setOnClickListener {
                 listener.onItemClick(coin, binding.ivRowImage, binding.tvRowTitle, binding.tvRowSymbol)
