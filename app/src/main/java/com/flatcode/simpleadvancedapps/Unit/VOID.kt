@@ -34,8 +34,7 @@ object VOID {
     }
 
     fun GlideRickAndMorty(
-        context: Context?, Url: String?, Image: ImageView,
-        ImageBlur: ImageView, level: Int,
+        context: Context?, Url: String?, Image: ImageView, ImageBlur: ImageView, level: Int,
     ) {
         try {
             Glide.with(context!!).load(Url).into(Image)
