@@ -125,7 +125,7 @@ dependencies {
     ksp(libs.hilt.android.compiler)      //Dagger Hilt Compiler
     ksp(libs.hilt.androidx.compiler)                          //Hilt Compiler
     ksp(libs.hilt.compiler)              //Hilt Compiler
-    //Others
+    //Other's
     implementation(libs.gson)                    //Gson
     implementation(libs.jsoup)                            //Jsoup
     implementation(libs.volley)                 //Volley
@@ -137,4 +137,5 @@ dependencies {
     implementation(libs.datastore.preferences)   //DataStore
     implementation(libs.timber)              //Timber Log
     implementation(libs.viewbinding.property.delegate) //Binding to libs
+    ksp(libs.kotlin.metadata.jvm)
 }
