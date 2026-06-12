@@ -14,6 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import kotlin.collections.get
 
 class MealViewModel(val mealDatabase: MealDatabase) : ViewModel() {
 
@@ -40,5 +41,13 @@ class MealViewModel(val mealDatabase: MealDatabase) : ViewModel() {
 
     fun insertMeal(meal: Meal) {
         viewModelScope.launch(Dispatchers.IO) { mealDatabase.mealDao().upsert(meal) }
+    }
+
+    fun observeFavoritesMealsLiveData(): LiveData<List<Meal>> {
+        return mealDatabase.mealDao().getAllMeals()
+    }
+
+    fun deleteMeal(meal: Meal) {
+        viewModelScope.launch(Dispatchers.IO) { mealDatabase.mealDao().delete(meal) }
     }
 }

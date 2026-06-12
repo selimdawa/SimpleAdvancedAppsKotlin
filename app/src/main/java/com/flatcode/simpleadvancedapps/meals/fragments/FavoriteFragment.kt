@@ -1,5 +1,6 @@
 package com.flatcode.simpleadvancedapps.meals.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.databinding.FragmentFavoriteMealsBinding
 import com.flatcode.simpleadvancedapps.meals.activities.MainActivity
+import com.flatcode.simpleadvancedapps.meals.activities.MealActivity
 import com.flatcode.simpleadvancedapps.meals.adapters.FavoritesMealsAdapter
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -37,6 +39,7 @@ class FavoriteFragment : Fragment() {
 
         prepareRecyclerView()
         observeFavorites()
+        onFavoriteItemClick()
 
         val itemTouchHelper = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -50,9 +53,14 @@ class FavoriteFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                viewModel.deleteMeal(favoritesAdapter.differ.currentList[position])
+                val deletedMeal = favoritesAdapter.differ.currentList[position]
 
-                Snackbar.make(requireView(), "Meal deleted", Snackbar.LENGTH_LONG).show()
+                viewModel.deleteMeal(deletedMeal)
+
+                Snackbar.make(requireView(), "Meal deleted", Snackbar.LENGTH_LONG)
+                    .setAction("Undo") {
+                        viewModel.insertMeal(deletedMeal)
+                    }.show()
             }
         }
 
@@ -67,6 +75,16 @@ class FavoriteFragment : Fragment() {
     private fun observeFavorites() {
         viewModel.observeFavoritesMealsLiveData().observe(viewLifecycleOwner) { meals ->
             favoritesAdapter.differ.submitList(meals)
+        }
+    }
+
+    private fun onFavoriteItemClick() {
+        favoritesAdapter.onItemClick = { meal ->
+            val intent = Intent(activity, MealActivity::class.java)
+            intent.putExtra(HomeFragment.MEAL_ID, meal.idMeal)
+            intent.putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
+            intent.putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+            startActivity(intent)
         }
     }
 }

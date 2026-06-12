@@ -26,10 +26,10 @@ class HomeFragment : Fragment() {
     private lateinit var categoriesAdapter: CategoriesAdapter
 
     companion object {
-        const val MEAL_ID = "com.flatcode.simpleadvancedapps.i20.fragments.idMeal"
-        const val MEAL_NAME = "com.flatcode.simpleadvancedapps.i20.fragments.nameMeal"
-        const val MEAL_THUMB = "com.flatcode.simpleadvancedapps.i20.fragments.thumbMeal"
-        const val CATEGORY_NAME = "com.flatcode.simpleadvancedapps.i20.fragments.categoryName"
+        const val MEAL_ID = "idMeal"
+        const val MEAL_NAME = "nameMeal"
+        const val MEAL_THUMB = "thumbMeal"
+        const val CATEGORY_NAME = "categoryName"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

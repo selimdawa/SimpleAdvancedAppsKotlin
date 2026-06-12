@@ -27,6 +27,9 @@ class MealActivity : AppCompatActivity() {
     private lateinit var youtubeLink: String
     var context = this@MealActivity
 
+    private var mealToSave: Meal? = null
+    private var isMealFavorite = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
@@ -43,15 +46,32 @@ class MealActivity : AppCompatActivity() {
 
         mealMvvm.getMealDetail(mealId)
         observerMealDetailsLiveData()
+        observeFavoriteStatus()
         onYoutubeImageClick()
         onFavoriteClick()
     }
 
+    private fun observeFavoriteStatus() {
+        mealMvvm.observeFavoritesMealsLiveData().observe(this) { favoritesList ->
+            isMealFavorite = favoritesList.any { it.idMeal == mealId }
+            if (isMealFavorite) {
+                binding.btnAddToFav.setImageResource(R.drawable.ic_heart_selected)
+            } else {
+                binding.btnAddToFav.setImageResource(R.drawable.ic_heart_unselected)
+            }
+        }
+    }
+
     private fun onFavoriteClick() {
         binding.btnAddToFav.setOnClickListener {
-            mealToSave?.let {
-                mealMvvm.insertMeal(it)
-                Toast.makeText(this, "Meal is saved", Toast.LENGTH_LONG).show()
+            mealToSave?.let { meal ->
+                if (isMealFavorite) {
+                    mealMvvm.deleteMeal(meal)
+                    Toast.makeText(this, "Meal removed from favorites", Toast.LENGTH_SHORT).show()
+                } else {
+                    mealMvvm.insertMeal(meal)
+                    Toast.makeText(this, "Meal is saved", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
@@ -63,7 +83,6 @@ class MealActivity : AppCompatActivity() {
         }
     }
 
-    private var mealToSave: Meal? = null
     private fun observerMealDetailsLiveData() {
         mealMvvm.observeMealDetailsLiveData().observe(this) { value ->
             onResponseCase()

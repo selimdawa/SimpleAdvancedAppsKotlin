@@ -19,12 +19,11 @@ class HomeViewModel(private val mealDatabase: MealDatabase) : ViewModel() {
     val randomMealLiveData = MutableLiveData<Meal>()
     val popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
     val categoriesLiveData = MutableLiveData<List<Category>>()
-    var favoritesMealsLiveData = mealDatabase.mealDao().getAllMeal()
+    var favoritesMealsLiveData = mealDatabase.mealDao().getAllMeals()
 
     fun getRandomMeal() {
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-
                 if (response.body() != null) {
                     val randomMeal: Meal = response.body()!!.meals[0]
                     randomMealLiveData.value = randomMeal
@@ -68,6 +67,12 @@ class HomeViewModel(private val mealDatabase: MealDatabase) : ViewModel() {
                 Timber.e(t.message.toString())
             }
         })
+    }
+
+    fun insertMeal(meal: Meal) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mealDatabase.mealDao().upsert(meal)
+        }
     }
 
     fun deleteMeal(meal: Meal) {

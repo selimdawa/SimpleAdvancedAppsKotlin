@@ -12,6 +12,8 @@ import com.flatcode.simpleadvancedapps.meals.pojo.Meal
 class FavoritesMealsAdapter :
     RecyclerView.Adapter<FavoritesMealsAdapter.FavoritesMealsAdapterViewHolder>() {
 
+    lateinit var onItemClick: ((Meal) -> Unit)
+
     class FavoritesMealsAdapterViewHolder(val binding: ItemMealBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -40,6 +42,8 @@ class FavoritesMealsAdapter :
         val meal = differ.currentList[position]
         Glide.with(holder.itemView).load(meal.strMealThumb).into(holder.binding.imgMeal)
         holder.binding.tvMealName.text = meal.strMeal
+
+        holder.itemView.setOnClickListener { onItemClick.invoke(meal) }
     }
 
     override fun getItemCount(): Int {
