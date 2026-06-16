@@ -38,7 +38,7 @@
         <activity android:name=".countries.MainActivity" />
         <activity
             android:name=".todoNote.MainActivity"
-            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+            android:theme="@style/ToDoTheme.MainApp"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".pop.MainActivity" />
         <activity android:name=".calculator.MainActivity" />

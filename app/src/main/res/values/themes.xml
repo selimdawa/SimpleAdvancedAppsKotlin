@@ -317,4 +317,22 @@
         <item name="endIconTint">@color/white</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="Base.ToDoTheme.MainApp" parent="Theme.Material3.DayNight">
+        <!--  <item name="android:windowFullscreen">true</item>  -->
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/basic_2</item>
+        <item name="colorAccent">@color/basic_2</item>
+        <item name="color">@color/white</item>
+        <item name="background">@color/basic_2</item>
+        <item name="tickColor">@color/basic_2</item>
+        <item name="trackColor">@color/basic_2</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorError">@color/dark</item>
+        <item name="colorOnError">@color/basic_2</item>
+    </style>
+
+    <style name="ToDoTheme.MainApp" parent="Base.ToDoTheme.MainApp" />
+
 </resources>

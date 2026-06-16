@@ -10,5 +10,4 @@
         android:id="@+id/topArticlesFragment"
         android:icon="@drawable/ic_top"
         android:title="@string/top_articles" />
-
 </menu>

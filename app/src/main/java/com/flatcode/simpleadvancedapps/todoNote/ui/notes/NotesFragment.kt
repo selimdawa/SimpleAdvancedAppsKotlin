@@ -36,7 +36,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes), NotesAdapter.OnItemClic
         val notesAdapter = NotesAdapter(this)
 
         binding.apply {
-            notesRecyc.apply {
+            notesRec.apply {
                 adapter = notesAdapter
                 layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 setHasFixedSize(true)
@@ -58,28 +58,30 @@ class NotesFragment : Fragment(R.layout.fragment_notes), NotesAdapter.OnItemClic
                     is NotesViewModel.NotesEvent.NavigateToAddScreen -> {
                         val action =
                             NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
-                                "New Note",
-                                null
+                                "New Note", null
                             )
                         findNavController().navigate(action)
                     }
+
                     is NotesViewModel.NotesEvent.NavigateToEditNoteScreen -> {
                         val action =
                             NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
-                                "Edit Note",
-                                event.note
+                                "Edit Note", event.note
                             )
                         findNavController().navigate(action)
                     }
+
                     is NotesViewModel.NotesEvent.ShowUndoDeleteNoteMessage -> {
                         Snackbar.make(requireView(), "Note Deleted", Snackbar.LENGTH_LONG)
                             .setAction("UNDO") {
                                 viewModel.onUndoDeleteClick(event.note)
                             }.show()
                     }
+
                     is NotesViewModel.NotesEvent.ShowNoteSavedConfirmationMessage -> {
                         Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_SHORT).show()
                     }
+
                     is NotesViewModel.NotesEvent.NavigateToDeleteAllScreen -> {
                         val action = NotesFragmentDirections.actionGlobalDeleteAllNotes()
                         findNavController().navigate(action)
@@ -136,6 +138,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes), NotesAdapter.OnItemClic
                 viewModel.onSortOrderSelected(SortOrder.BY_DATE)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
