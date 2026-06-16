@@ -1,6 +1,12 @@
-package com.flatcode.simpleadvancedapps.todoNote.ui.todo.tasks
+package com.flatcode.simpleadvancedapps.todoNote.ui.tasks
 
-import androidx.lifecycle.*
+import android.content.Context
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.Unit.DATA
 import com.flatcode.simpleadvancedapps.todoNote.ADD_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.EDIT_RESULT_OK
@@ -9,6 +15,7 @@ import com.flatcode.simpleadvancedapps.todoNote.data.SortOrder
 import com.flatcode.simpleadvancedapps.todoNote.data.Task
 import com.flatcode.simpleadvancedapps.todoNote.data.TaskDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -21,6 +28,7 @@ class TasksViewModel @Inject constructor(
     private val taskDao: TaskDao,
     private val preferecesManager: PreferencesManager,
     private val state: SavedStateHandle,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     val searchQuery = state.getLiveData("searchQuery", DATA.EMPTY)
@@ -32,7 +40,6 @@ class TasksViewModel @Inject constructor(
     private val tasksFlow = combine(
         searchQuery.asFlow(),
         preferencesFlow
-
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
     }.flatMapLatest { (query, filterPreferences) ->
@@ -48,7 +55,6 @@ class TasksViewModel @Inject constructor(
     }
 
     val tasks = tasksFlow.asLiveData()
-
 
     fun onTaskSelected(task: Task) = viewModelScope.launch {
         taskEventChannel.send(TasksEvent.NavigateToEditTaskScreen(task))
@@ -73,8 +79,15 @@ class TasksViewModel @Inject constructor(
 
     fun onAddEditResult(result: Int) {
         when (result) {
-            ADD_RESULT_OK -> showTaskSavedConfirmationMessage("Task Added")
-            EDIT_RESULT_OK -> showTaskSavedConfirmationMessage("Task updated")
+            ADD_RESULT_OK -> {
+                val message = context.getString(R.string.msg_task_added)
+                showTaskSavedConfirmationMessage(message)
+            }
+
+            EDIT_RESULT_OK -> {
+                val message = context.getString(R.string.msg_task_updated)
+                showTaskSavedConfirmationMessage(message)
+            }
         }
     }
 
@@ -82,8 +95,10 @@ class TasksViewModel @Inject constructor(
         taskEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(text))
     }
 
-    fun deleteAllCompletedTasksClick() = viewModelScope.launch {
-        taskEventChannel.send(TasksEvent.NavigateToDeleteAllCompletedTasksScreen)
+    fun onDeleteAllCompletedConfirmed() = viewModelScope.launch {
+        taskDao.deleteCompletedTasks()
+        val message = context.getString(R.string.msg_all_completed_tasks_deleted)
+        taskEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(message))
     }
 
     sealed class TasksEvent {

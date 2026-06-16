@@ -1,6 +1,12 @@
 package com.flatcode.simpleadvancedapps.todoNote.ui.notes
 
-import androidx.lifecycle.*
+import android.content.Context
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.Unit.DATA
 import com.flatcode.simpleadvancedapps.todoNote.ADD_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.EDIT_RESULT_OK
@@ -9,6 +15,7 @@ import com.flatcode.simpleadvancedapps.todoNote.data.Notes
 import com.flatcode.simpleadvancedapps.todoNote.data.PreferencesManager
 import com.flatcode.simpleadvancedapps.todoNote.data.SortOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -16,11 +23,12 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class NotesViewModel @Inject constructor(
     private val noteDao: NoteDao,
-    private val preferencesManager: PreferencesManager, private val state: SavedStateHandle,
+    private val preferencesManager: PreferencesManager,
+    private val state: SavedStateHandle,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     val searchQuery = state.getLiveData("noteSearchQuery", DATA.EMPTY)
@@ -47,8 +55,15 @@ class NotesViewModel @Inject constructor(
 
     fun onAddEditNoteResult(result: Int) {
         when (result) {
-            ADD_RESULT_OK -> showNoteSavedConfirmationMessage("Note added.")
-            EDIT_RESULT_OK -> showNoteSavedConfirmationMessage("Note updated.")
+            ADD_RESULT_OK -> {
+                val message = context.getString(R.string.msg_note_added)
+                showNoteSavedConfirmationMessage(message)
+            }
+
+            EDIT_RESULT_OK -> {
+                val message = context.getString(R.string.msg_note_updated)
+                showNoteSavedConfirmationMessage(message)
+            }
         }
     }
 
@@ -65,6 +80,12 @@ class NotesViewModel @Inject constructor(
         noteEventChannel.send(NotesEvent.NavigateToDeleteAllScreen)
     }
 
+    fun onDeleteAllNotesConfirmed() = viewModelScope.launch {
+        noteDao.deleteAllNotes()
+        val message = context.getString(R.string.msg_all_notes_deleted)
+        showNoteSavedConfirmationMessage(message)
+    }
+
     private fun showNoteSavedConfirmationMessage(msg: String) = viewModelScope.launch {
         noteEventChannel.send(NotesEvent.ShowNoteSavedConfirmationMessage(msg))
     }
@@ -78,10 +99,10 @@ class NotesViewModel @Inject constructor(
     }
 
     sealed class NotesEvent {
-        object NavigateToAddScreen : NotesEvent()
+        data object NavigateToAddScreen : NotesEvent()
         data class NavigateToEditNoteScreen(val note: Notes) : NotesEvent()
         data class ShowUndoDeleteNoteMessage(val note: Notes) : NotesEvent()
         data class ShowNoteSavedConfirmationMessage(val msg: String) : NotesEvent()
-        object NavigateToDeleteAllScreen : NotesEvent()
+        data object NavigateToDeleteAllScreen : NotesEvent()
     }
 }

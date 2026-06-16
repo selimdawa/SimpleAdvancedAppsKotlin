@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.todoNote.ui.todo.tasks
+package com.flatcode.simpleadvancedapps.todoNote.ui.tasks
 
 
 import android.view.LayoutInflater

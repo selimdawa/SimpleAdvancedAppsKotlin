@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.todoNote.ui.todo.tasks.edit
+package com.flatcode.simpleadvancedapps.todoNote.ui.tasks.edit
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
