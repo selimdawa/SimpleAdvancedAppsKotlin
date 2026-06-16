@@ -264,6 +264,37 @@
         <item name="colorOnBackground">@color/dark</item>
         <item name="colorError">@color/white</item>
         <item name="colorOnError">@color/dark</item>
+
+        <item name="toolbarStyle">@style/Widget.MyApp.Toolbar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MyApp.Toolbar</item>
+        <item name="drawerArrowStyle">@style/Widget.MyApp.DrawerArrowStyle</item>
+        <!--
+           <item name="android:navigationBarColor">@color/basic_night</item>
+           <item name="android:windowLightNavigationBar">true</item> -->
+    </style>
+
+    <!-- Define the checkbox specific theme override -->
+    <style name="Widget.App.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <!-- Color when checked -->
+        <item name="colorPrimary">@color/white</item>
+    </style>
+
+    <style name="Widget.MyApp.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/basic_night</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.Toolbar" parent="ThemeOverlay.Material3.ActionBar">
+        <item name="titleTextColor">@color/dark</item>
+        <item name="colorOnSurface">@color/dark</item>
+        <item name="colorOnSurfaceVariant">@color/dark</item>
+        <item name="android:textColorPrimary">@color/dark</item>
+        <item name="colorControlNormal">@color/dark</item>
+        <item name="editTextColor">@color/dark</item>
+        <item name="android:textColorHint">@color/dark</item>
+    </style>
+
+    <style name="Widget.MyApp.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/dark</item>
     </style>
 
 </resources>
