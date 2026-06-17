@@ -164,6 +164,8 @@ One | Two | Three
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQVH5FnSpB8T0915WzZg6RfhGFCvhUr3AeGhsHRDmWY0rfC9m5pCaJ4E6BR3m6mVbcQNdhOvCg04h4wUAobr7ZtETfPf2i1p5n7lYUHqsE3t9q_GqSTro907KsC7F2YCp7C8wXpB4y0ToKzQsdQYu1iSRyyNOXIUz79ZUfXdMY6GgE_MaMMCYaURHYwOE/s1280/photo_2026-06-17_05-31-14.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhR8JcfZSjHeCvCny-ptgyDLnXtsDbNgdNHFjjD6vSUpjDLl8XT3B2cWHRrWKq2ZzFZeHlO5tEi3Ejm_MFGZI07gOH3DwMJAVRW_atGYzK_ljrVkfWPVlp_LG75uojasbOcDdbURNcuEDp13exrgQEBe_0pVY0Pd4mPHfvQy6lPVOjS3f2I2sH3QsYpuoA/s1280/photo_2026-06-17_05-31-14%20(2).jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQ9zgfyWd4B0ZpBuEreQURtiIN7aA1Lj0kZgsDBct43HHyGhjMS2g9jcVG04EPhbVAYy5ACkkCdEvc8g1FlGHTygI4ZsQnB_b8w4BSt_kHvueQL5Gk2pS6y9DNlP6Oz-0N8GmhH2VB7hj3lW4yYe9gxEjCli_sZ9DjtfddK0yJ-csvysmD2Hg26sWmgU4/s1280/photo_2026-06-17_05-31-14%20(3).jpg) | 
 
+- Note ⛔ : In the Pop app - the malfunction is due to an API issue on the official website.
+
 <a href='https://play.google.com/store/apps/details?id=com.flatcode.simpleadvancedapps'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="170px"/></a>
 <br />
 
