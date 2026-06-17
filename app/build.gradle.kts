@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt.android)
@@ -9,9 +8,7 @@ plugins {
 
 android {
     namespace = "com.flatcode.simpleadvancedapps"
-    compileSdk {
-         version = release(37)
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.flatcode.simpleadvancedapps"
@@ -65,6 +62,9 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -79,7 +79,6 @@ dependencies {
     //Layout
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
-    implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.cardview)
     //Image
     implementation(libs.circleimageview)                //Circle image
@@ -92,7 +91,6 @@ dependencies {
     implementation(libs.lottie)                  //Lottie Files
     implementation(libs.shimmer)               //Facebook Shimmer
     //Life Cycle
-    implementation(libs.lifecycle.extensions)     //Life Cycle Extensions
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -101,7 +99,6 @@ dependencies {
     implementation(libs.retrofit.core) //Retrofit
     implementation(libs.retrofit.converter.gson)   //Gson
     implementation(libs.retrofit.converter.moshi)  //Moshi
-    implementation(libs.retrofit.kotlin.coroutines.adapter)
     //RxJava
     implementation(libs.retrofit.adapter.rxjava2)      //Rxjava
     implementation(libs.rxjava.rxandroid)              //Rxjava
@@ -114,7 +111,7 @@ dependencies {
     implementation(libs.navigation.dynamic.features)
     //Room
     implementation(libs.room.runtime)          //Room
-    ksp(libs.room.compiler)                   //Room Compiler
+    ksp(libs.room.compiler)                    //Room Compiler
     implementation(libs.room.ktx)              //Room Kotlin
     //OkHttp
     implementation(platform(libs.okhttp.bom)) //OkHttp
@@ -123,8 +120,6 @@ dependencies {
     //Dagger - Hilt
     implementation(libs.hilt.android)     //Dagger Hilt
     ksp(libs.hilt.android.compiler)      //Dagger Hilt Compiler
-    ksp(libs.hilt.androidx.compiler)                          //Hilt Compiler
-    ksp(libs.hilt.compiler)              //Hilt Compiler
     //Other's
     implementation(libs.gson)                    //Gson
     implementation(libs.jsoup)                            //Jsoup
