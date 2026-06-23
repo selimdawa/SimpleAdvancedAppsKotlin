@@ -1,11 +1,12 @@
 package com.flatcode.simpleadvancedapps.meals.activities
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.R
@@ -25,7 +26,7 @@ class MealActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMealBinding
     private lateinit var mealMvvm: MealViewModel
     private lateinit var youtubeLink: String
-    var context = this@MealActivity
+    private val context = this@MealActivity
 
     private var mealToSave: Meal? = null
     private var isMealFavorite = false
@@ -67,10 +68,11 @@ class MealActivity : AppCompatActivity() {
             mealToSave?.let { meal ->
                 if (isMealFavorite) {
                     mealMvvm.deleteMeal(meal)
-                    Toast.makeText(this, "Meal removed from favorites", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.meal_removed), Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     mealMvvm.insertMeal(meal)
-                    Toast.makeText(this, "Meal is saved", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.meal_saved), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -78,8 +80,10 @@ class MealActivity : AppCompatActivity() {
 
     private fun onYoutubeImageClick() {
         binding.imgYoutube.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
-            startActivity(intent)
+            if (::youtubeLink.isInitialized && youtubeLink.isNotEmpty()) {
+                val intent = Intent(Intent.ACTION_VIEW, youtubeLink.toUri())
+                startActivity(intent)
+            }
         }
     }
 
@@ -87,11 +91,13 @@ class MealActivity : AppCompatActivity() {
         mealMvvm.observeMealDetailsLiveData().observe(this) { value ->
             onResponseCase()
             mealToSave = value
-            binding.tvCategory.text = "Category: ${value!!.strCategory}"
-            binding.tvArea.text = "Area: ${value.strArea}"
-            binding.tvInstructionsSteps.text = value.strInstructions
 
-            youtubeLink = value.strYoutube.toString()
+            binding.tvCategory.text =
+                getString(R.string.category_placeholder, value?.strCategory.orEmpty())
+            binding.tvArea.text = getString(R.string.area_placeholder, value?.strArea.orEmpty())
+            binding.tvInstructionsSteps.text = value?.strInstructions.orEmpty()
+
+            youtubeLink = value?.strYoutube.toString()
         }
     }
 
@@ -101,12 +107,16 @@ class MealActivity : AppCompatActivity() {
             .into(binding.imgMealDetail)
 
         binding.collapsingToolbar.title = mealName
-        binding.collapsingToolbar.setCollapsedTitleTextColor(resources.getColor(R.color.white))
-        binding.collapsingToolbar.setExpandedTitleColor(resources.getColor(R.color.white))
+        binding.collapsingToolbar.setCollapsedTitleTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white
+            )
+        )
+        binding.collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.white))
     }
 
     private fun getMealInformationFromIntent() {
-        val intent = intent
         mealId = intent.getStringExtra(HomeFragment.MEAL_ID)!!
         mealName = intent.getStringExtra(HomeFragment.MEAL_NAME)!!
         mealThumb = intent.getStringExtra(HomeFragment.MEAL_THUMB)!!

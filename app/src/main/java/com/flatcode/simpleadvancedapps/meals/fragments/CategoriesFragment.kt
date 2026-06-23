@@ -14,20 +14,22 @@ import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
 
 class CategoriesFragment : Fragment() {
 
-    lateinit var binding: FragmentCategoriesMealsBinding
-    lateinit var categoriesAdapter: CategoriesAdapter
-    lateinit var viewModel: HomeViewModel
+    private var _binding: FragmentCategoriesMealsBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var categoriesAdapter: CategoriesAdapter
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (requireActivity() as MainActivity).viewModel
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentCategoriesMealsBinding.inflate(inflater)
+        _binding = FragmentCategoriesMealsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -39,20 +41,27 @@ class CategoriesFragment : Fragment() {
         onCategoryClick()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun observeCategories() {
         viewModel.observeCategoriesLiveData().observe(viewLifecycleOwner) { categories ->
-            categoriesAdapter.setCategoryList(categories)
+            categoriesAdapter.submitList(categories)
         }
     }
 
     private fun prepareRecyclerView() {
         categoriesAdapter = CategoriesAdapter()
-        binding.rvCategories.apply { adapter = categoriesAdapter }
+        binding.rvCategories.apply {
+            adapter = categoriesAdapter
+        }
     }
 
     private fun onCategoryClick() {
         categoriesAdapter.onItemClick = { category ->
-            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            val intent = Intent(requireContext(), CategoryMealsActivity::class.java)
             intent.putExtra(HomeFragment.CATEGORY_NAME, category.strCategory)
             startActivity(intent)
         }

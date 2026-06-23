@@ -2,20 +2,16 @@ package com.flatcode.simpleadvancedapps.meals.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.databinding.ItemCategoryMealBinding
 import com.flatcode.simpleadvancedapps.meals.pojo.Category
 
-class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
+class CategoriesAdapter : ListAdapter<Category, CategoriesAdapter.CategoryViewHolder>(CategoryDiffCallback) {
 
-    var categoryList = ArrayList<Category>()
-    lateinit var onItemClick: ((Category) -> Unit)
-
-    fun setCategoryList(categoryList: List<Category>) {
-        this.categoryList = categoryList as ArrayList
-        notifyDataSetChanged()
-    }
+    var onItemClick: ((Category) -> Unit)? = null
 
     class CategoryViewHolder(val binding: ItemCategoryMealBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -27,16 +23,26 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoryViewHol
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        Glide.with(holder.itemView).load(categoryList[position].strCategoryThumb)
+        val category = getItem(position)
+
+        Glide.with(holder.itemView.context)
+            .load(category.strCategoryThumb)
             .into(holder.binding.imgCategory)
-        holder.binding.tvCategoryName.text = categoryList[position].strCategory
+
+        holder.binding.tvCategoryName.text = category.strCategory
 
         holder.itemView.setOnClickListener {
-            onItemClick.invoke(categoryList[position])
+            onItemClick?.invoke(category)
         }
     }
 
-    override fun getItemCount(): Int {
-        return categoryList.size
+    private object CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
+        override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem.idCategory == newItem.idCategory
+        }
+
+        override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+            return oldItem == newItem
+        }
     }
 }

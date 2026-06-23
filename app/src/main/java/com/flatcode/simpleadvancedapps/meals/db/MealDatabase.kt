@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
 
-@Database(entities = [Meal::class], version = 1)
+@Database(entities = [Meal::class], version = 1, exportSchema = false)
 @TypeConverters(MealTypeConverter::class)
 abstract class MealDatabase : RoomDatabase() {
 
@@ -15,15 +15,20 @@ abstract class MealDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        var INSTANCE: MealDatabase? = null
+        private var INSTANCE: MealDatabase? = null
 
-        @Synchronized
         fun getInstance(context: Context): MealDatabase {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context, MealDatabase::class.java, "meal.db")
-                    .fallbackToDestructiveMigration().build()
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    MealDatabase::class.java,
+                    "meal.db"
+                )
+                    .fallbackToDestructiveMigration(dropAllTables = true)
+                    .build()
+                INSTANCE = instance
+                instance
             }
-            return INSTANCE as MealDatabase
         }
     }
 }

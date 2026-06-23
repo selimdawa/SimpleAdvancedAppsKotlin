@@ -15,11 +15,12 @@ import com.flatcode.simpleadvancedapps.meals.adapters.CategoriesAdapter
 import com.flatcode.simpleadvancedapps.meals.adapters.MostPopularAdapter
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
-import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategory
 
 class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentHomeMealsBinding
+    private var _binding: FragmentHomeMealsBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var viewModel: HomeViewModel
     private lateinit var randomMeal: Meal
     private lateinit var popularItemsAdapter: MostPopularAdapter
@@ -34,14 +35,14 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (requireActivity() as MainActivity).viewModel
         popularItemsAdapter = MostPopularAdapter()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentHomeMealsBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeMealsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -64,9 +65,14 @@ class HomeFragment : Fragment() {
         onCategoryClick()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun onCategoryClick() {
         categoriesAdapter.onItemClick = { category ->
-            val intent = Intent(activity, CategoryMealsActivity::class.java)
+            val intent = Intent(requireContext(), CategoryMealsActivity::class.java)
             intent.putExtra(CATEGORY_NAME, category.strCategory)
             startActivity(intent)
         }
@@ -74,18 +80,20 @@ class HomeFragment : Fragment() {
 
     private fun prepareCategoriesRecyclerView() {
         categoriesAdapter = CategoriesAdapter()
-        binding.recViewCategories.apply { adapter = categoriesAdapter }
+        binding.recViewCategories.apply {
+            adapter = categoriesAdapter
+        }
     }
 
     private fun observerCategoriesLiveData() {
         viewModel.observeCategoriesLiveData().observe(viewLifecycleOwner) { categories ->
-            categoriesAdapter.setCategoryList(categories)
+            categoriesAdapter.submitList(categories)
         }
     }
 
     private fun onPopularItemClick() {
         popularItemsAdapter.onItemClick = { meal ->
-            val intent = Intent(activity, MealActivity::class.java)
+            val intent = Intent(requireContext(), MealActivity::class.java)
             intent.putExtra(MEAL_ID, meal.idMeal)
             intent.putExtra(MEAL_NAME, meal.strMeal)
             intent.putExtra(MEAL_THUMB, meal.strMealThumb)
@@ -101,27 +109,31 @@ class HomeFragment : Fragment() {
 
     private fun observePopularItemsLiveData() {
         viewModel.observerPopularItemsLiveData().observe(viewLifecycleOwner) { mealList ->
-            popularItemsAdapter.setMeals(mealList = mealList as ArrayList<MealsByCategory>)
+            popularItemsAdapter.submitList(mealList)
         }
     }
 
     private fun onRandomMealClick() {
         binding.randomCardView.setOnClickListener {
-            val intent = Intent(activity, MealActivity::class.java)
-            intent.putExtra(MEAL_ID, randomMeal.idMeal)
-            intent.putExtra(MEAL_NAME, randomMeal.strMeal)
-            intent.putExtra(MEAL_THUMB, randomMeal.strMealThumb)
-            startActivity(intent)
+            if (::randomMeal.isInitialized) {
+                val intent = Intent(requireContext(), MealActivity::class.java)
+                intent.putExtra(MEAL_ID, randomMeal.idMeal)
+                intent.putExtra(MEAL_NAME, randomMeal.strMeal)
+                intent.putExtra(MEAL_THUMB, randomMeal.strMealThumb)
+                startActivity(intent)
+            }
         }
     }
 
     private fun observerRandomMeal() {
         viewModel.observeRandomMealLiveData().observe(viewLifecycleOwner) { meal ->
-            Glide.with(this@HomeFragment)
-                .load(meal!!.strMealThumb)
-                .into(binding.imgRandomMeal)
+            meal?.let {
+                Glide.with(this)
+                    .load(it.strMealThumb)
+                    .into(binding.imgRandomMeal)
 
-            this.randomMeal = meal
+                this.randomMeal = it
+            }
         }
     }
 }

@@ -17,12 +17,11 @@
     <string name="gradual_five_theme">Gradual 5</string>
     <string name="gradual_six_theme">Gradual 6</string>
     <string name="gradual_seven_theme">Gradual 7</string>
-    //Needed
+    //Dogs
     <string name="none_display">There are no items to display</string>
     <string name="copy">Copy</string>
     <string name="hint_text_breeds">Breeds list</string>
     <string name="dogs">photo dogs</string>
-    //Dog
     <string-array name="breeds_list">
         <!-- A -->
         <item>Affenpinscher</item>
@@ -208,9 +207,9 @@
     <string name="multiply">X</string>
     <string name="divide">/</string>
     <string name="equals">=</string>
-    //Crypto App
+    //Crypto
     <string name="error_message">An unknown error occurred.</string>
-    //Dictionary App
+    //Dictionary
     <string name="hint_search">Enter your word</string>
     <string name="button_find">find</string>
     //Poke
@@ -254,6 +253,13 @@
     <string name="over_popular_items">Over popular items</string>
     <string name="categories">Categories</string>
     <string name="instructions">Instructions :</string>
+    <string name="category_placeholder">Category: %1$s</string>
+    <string name="area_placeholder">Area: %1$s</string>
+    <string name="meal_removed">Meal removed from favorites</string>
+    <string name="meal_saved">Meal is saved</string>
+    <string name="meal_deleted">Meal deleted</string>
+    <string name="undo">Undo</string>
+    <string name="category_meals_count">%1$s ( %2$d )</string>
     //News
     <string name="everything">Everything</string>
     <string name="top_articles">Top Articles</string>
