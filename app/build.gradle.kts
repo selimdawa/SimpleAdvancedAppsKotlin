@@ -79,7 +79,6 @@ dependencies {
     //Layout
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
-    implementation(libs.androidx.cardview)
     //Image
     implementation(libs.circleimageview)                //Circle image
     implementation(libs.glide)            //Glide image
@@ -132,5 +131,5 @@ dependencies {
     implementation(libs.datastore.preferences)   //DataStore
     implementation(libs.timber)              //Timber Log
     implementation(libs.viewbinding.property.delegate) //Binding to libs
-    ksp(libs.kotlin.metadata.jvm)
+    ksp(libs.kotlin.metadata.jvm)                       //Kotlin
 }

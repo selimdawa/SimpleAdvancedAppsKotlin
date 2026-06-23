@@ -165,8 +165,6 @@
         <item name="colorOnError">@color/white</item>
     </style>
 
-    <style name="Theme.GradientTwoTheme" parent="Base.Theme.GradientTwoTheme" />
-
     <style name="Base.Theme.GradientThreeTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!--  <item name="android:windowFullscreen">true</item>  -->
         <!-- Customize your theme here. -->
@@ -181,8 +179,6 @@
         <item name="colorError">@color/white</item>
         <item name="colorOnError">@color/white</item>
     </style>
-
-    <style name="Theme.GradientThreeTheme" parent="Base.Theme.GradientThreeTheme" />
 
     <style name="Base.Theme.GradientFourTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!--  <item name="android:windowFullscreen">true</item>  -->
@@ -199,8 +195,6 @@
         <item name="colorOnError">@color/white</item>
     </style>
 
-    <style name="Theme.GradientFourTheme" parent="Base.Theme.GradientFourTheme" />
-
     <style name="Base.Theme.GradientFiveTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!--  <item name="android:windowFullscreen">true</item>  -->
         <!-- Customize your theme here. -->
@@ -216,8 +210,6 @@
         <item name="colorOnError">@color/white</item>
     </style>
 
-    <style name="Theme.GradientFiveTheme" parent="Base.Theme.GradientFiveTheme" />
-
     <style name="Base.Theme.GradientSixTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!--  <item name="android:windowFullscreen">true</item>  -->
         <!-- Customize your theme here. -->
@@ -232,8 +224,6 @@
         <item name="colorError">@color/white</item>
         <item name="colorOnError">@color/white</item>
     </style>
-
-    <style name="Theme.GradientSixTheme" parent="Base.Theme.GradientSixTheme" />
 
     <style name="Base.Theme.GradientSevenTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!--  <item name="android:windowFullscreen">true</item>  -->

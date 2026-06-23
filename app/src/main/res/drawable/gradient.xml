@@ -7,5 +7,4 @@
         android:endColor="@color/night_corner"
         android:startColor="@color/night_corner_2"
         android:type="linear" />
-
 </shape>
