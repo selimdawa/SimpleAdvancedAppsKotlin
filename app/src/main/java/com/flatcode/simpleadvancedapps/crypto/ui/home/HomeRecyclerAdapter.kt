@@ -2,6 +2,7 @@ package com.flatcode.simpleadvancedapps.crypto.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.flatcode.simpleadvancedapps.Unit.DATA.IMAGE_CRYPTO
@@ -19,8 +20,16 @@ class HomeRecyclerAdapter(private val listener: ItemClickListener) :
         fun bind(listener: ItemClickListener, coin: Data) {
             binding.tvRowTitle.text = coin.name
             binding.tvRowSymbol.text = coin.symbol
-            binding.tvRowValue.text = "$${coin.quote!!.uSD!!.price}"
-            binding.ivRowImage.load("${IMAGE_CRYPTO}${coin.id}.png")
+
+            val price = coin.quote?.uSD?.price
+            binding.tvRowValue.text = if (price != null) "$$price" else ""
+
+            val coinId = coin.id
+            if (coinId != null) {
+                binding.ivRowImage.load("$IMAGE_CRYPTO$coinId.png")
+            } else {
+                binding.ivRowImage.setImageDrawable(null)
+            }
 
             binding.root.setOnClickListener {
                 listener.onItemClick(coin, binding.ivRowImage, binding.tvRowTitle, binding.tvRowSymbol)
@@ -44,14 +53,28 @@ class HomeRecyclerAdapter(private val listener: ItemClickListener) :
     override fun getItemCount() = coins.size
 
     fun setList(newList: List<Data>) {
+        val diffCallback = CryptoDiffCallback(coins, newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         coins.clear()
         coins.addAll(newList)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
-    fun addMoreItems(moreList: List<Data>) {
-        val startPosition = coins.size
-        coins.addAll(moreList)
-        notifyItemRangeInserted(startPosition, moreList.size)
+    private class CryptoDiffCallback(
+        private val oldList: List<Data>,
+        private val newList: List<Data>
+    ) : DiffUtil.Callback() {
+
+        override fun getOldListSize() = oldList.size
+
+        override fun getNewListSize() = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
     }
 }

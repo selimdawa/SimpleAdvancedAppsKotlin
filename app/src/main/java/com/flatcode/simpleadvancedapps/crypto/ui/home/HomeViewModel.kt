@@ -16,7 +16,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     private val _cryptoList = MutableLiveData<List<Data>?>()
     val cryptoList: LiveData<List<Data>?> get() = _cryptoList
 
-    val isLoading = MutableLiveData<Boolean>(true)
+    val isLoading = MutableLiveData(true)
     val onError = MutableLiveData<String?>()
 
     private val accumulatedCryptoList = mutableListOf<Data>()
@@ -36,13 +36,12 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
             isLoading.value = true
             when (val request = repository.getData(apiKey, limit, currentStartOffset.toString())) {
                 is NetworkResult.Success -> {
-                    request.data?.data?.let { newItems ->
+                    request.data.data?.let { newItems ->
                         accumulatedCryptoList.addAll(newItems)
                         _cryptoList.value = accumulatedCryptoList
                     }
                     isLoading.value = false
                 }
-
                 is NetworkResult.Error -> {
                     onError.value = request.message
                     isLoading.value = false

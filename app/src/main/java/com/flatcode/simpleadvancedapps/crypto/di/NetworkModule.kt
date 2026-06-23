@@ -1,5 +1,6 @@
 package com.flatcode.simpleadvancedapps.crypto.di
 
+import com.google.gson.Gson
 import com.flatcode.simpleadvancedapps.BuildConfig
 import com.flatcode.simpleadvancedapps.Unit.DATA
 import com.flatcode.simpleadvancedapps.crypto.network.CryptoApi
@@ -18,28 +19,38 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return Gson()
+    }
+
     @Singleton
     @Provides
     fun provideHttpLoggerInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         if (BuildConfig.DEBUG) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        } else httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
+        } else {
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE
+        }
         return httpLoggingInterceptor
     }
 
     @Singleton
     @Provides
     fun provideHttpClint(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(httpLoggingInterceptor)
+        return OkHttpClient.Builder()
+            .readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .addInterceptor(httpLoggingInterceptor)
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideConverterFactory(): GsonConverterFactory {
-        return GsonConverterFactory.create()
+    fun provideConverterFactory(gson: Gson): GsonConverterFactory {
+        return GsonConverterFactory.create(gson)
     }
 
     @Singleton
@@ -48,8 +59,11 @@ object NetworkModule {
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
-        return Retrofit.Builder().baseUrl(DATA.BASE_URL_CRYPTO).client(okHttpClient)
-            .addConverterFactory(gsonConverterFactory).build()
+        return Retrofit.Builder()
+            .baseUrl(DATA.BASE_URL_CRYPTO)
+            .client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
     }
 
     @Singleton

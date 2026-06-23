@@ -14,10 +14,14 @@ import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONArray
 import org.json.JSONObject
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment :
     BaseFragment<FragmentDetailCryptoBinding, DetailViewModel>(FragmentDetailCryptoBinding::inflate) {
+
+    @Inject
+    lateinit var gson: Gson
 
     override val viewModel by viewModels<DetailViewModel>()
     private val args by navArgs<DetailFragmentArgs>()
@@ -31,36 +35,41 @@ class DetailFragment :
 
     override fun observeEvents() {
         with(viewModel) {
-            detailResponse.observe(viewLifecycleOwner) {
-                parseData(it)
+            detailResponse.observe(viewLifecycleOwner) { response ->
+                parseData(response)
             }
-            isLoading.observe(viewLifecycleOwner) {
-                handleView(it)
+            isLoading.observe(viewLifecycleOwner) { loading ->
+                handleView(loading)
             }
-            onError.observe(viewLifecycleOwner) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun parseData(it: DetailResponse?) {
-        val gson = Gson()
-        val json = gson.toJson(it?.data)
-        val jsonObject = JSONObject(json)
-        val jsonArray = jsonObject[args.symbol] as JSONArray
-        val coin = gson.fromJson(jsonArray.getJSONObject(0).toString(), CoinDetail::class.java)
-
-        coin?.let {
-            with(binding) {
-                ivDetail.loadImage("${DATA.IMAGE_CRYPTO}${args.coinId}.png")
-                tvDetailTitle.text = it.name
-                tvDetailSymbol.text = it.symbol
-                tvDetailDescription.text = it.description
+            onError.observe(viewLifecycleOwner) { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
             }
         }
     }
 
-    private fun handleView(isLoading: Boolean = false) {
+    private fun parseData(response: DetailResponse?) {
+        try {
+            val json = gson.toJson(response?.data)
+            val jsonObject = JSONObject(json)
+            val jsonArray = jsonObject.optJSONArray(args.symbol) ?: JSONArray()
+            val firstObject = jsonArray.optJSONObject(0)?.toString()
+
+            if (!firstObject.isNullOrEmpty()) {
+                val coin = gson.fromJson(firstObject, CoinDetail::class.java)
+                coin?.let {
+                    with(binding) {
+                        ivDetail.loadImage("${DATA.IMAGE_CRYPTO}${args.coinId}.png")
+                        tvDetailTitle.text = it.name
+                        tvDetailSymbol.text = it.symbol
+                        tvDetailDescription.text = it.description
+                    }
+                }
+            }
+        } catch (_: Exception) {
+        }
+    }
+
+    private fun handleView(isLoading: Boolean) {
         binding.detailGroup.isVisible = !isLoading
         binding.pbDetail.isVisible = isLoading
     }

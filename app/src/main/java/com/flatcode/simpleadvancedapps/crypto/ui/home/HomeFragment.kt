@@ -6,7 +6,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.Unit.DATA
@@ -33,8 +33,7 @@ class HomeFragment :
         setupRecyclerView()
     }
 
-    override fun initializeListeners() {
-    }
+    override fun initializeListeners() {}
 
     override fun observeEvents() {
         with(viewModel) {
@@ -44,11 +43,11 @@ class HomeFragment :
                     isCurrentlyLoadingMore = false
                 }
             }
-            isLoading.observe(viewLifecycleOwner) {
-                handleViews(it)
+            isLoading.observe(viewLifecycleOwner) { loading ->
+                handleViews(loading)
             }
-            onError.observe(viewLifecycleOwner) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            onError.observe(viewLifecycleOwner) { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
                 isCurrentlyLoadingMore = false
             }
         }
@@ -59,38 +58,41 @@ class HomeFragment :
             override fun onItemClick(
                 coin: Data, ivRowImage: ImageView, tvRowTitle: TextView, tvRowSymbol: TextView
             ) {
-                if (coin.symbol != null && coin.id != null) {
+                val symbol = coin.symbol
+                val id = coin.id
+                if (!symbol.isNullOrEmpty() && id != null) {
                     val navigation = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                        symbol = coin.symbol,
-                        coinId = coin.id
+                        symbol = symbol,
+                        coinId = id
                     )
-                    Navigation.findNavController(requireView()).navigate(navigation)
+                    findNavController().navigate(navigation)
                 }
             }
         })
 
         val layoutManager = LinearLayoutManager(requireContext())
-        binding.rvHome.layoutManager = layoutManager
-        binding.rvHome.adapter = mAdapter
+        with(binding.rvHome) {
+            this.layoutManager = layoutManager
+            this.adapter = mAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 0) {
+                        val visibleItemCount = layoutManager.childCount
+                        val totalItemCount = layoutManager.itemCount
+                        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-        binding.rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (dy > 0) {
-                    val visibleItemCount = layoutManager.childCount
-                    val totalItemCount = layoutManager.itemCount
-                    val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-
-                    if (!isCurrentlyLoadingMore && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
-                        isCurrentlyLoadingMore = true
-                        viewModel.loadNextPage(DATA.API_KEY_CRYPTO)
+                        if (!isCurrentlyLoadingMore && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
+                            isCurrentlyLoadingMore = true
+                            viewModel.loadNextPage(DATA.API_KEY_CRYPTO)
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
     }
 
-    private fun handleViews(isLoading: Boolean = false) {
+    private fun handleViews(isLoading: Boolean) {
         if (viewModel.isFirstPage()) {
             binding.rvHome.isVisible = !isLoading
             binding.pbHome.isVisible = isLoading
