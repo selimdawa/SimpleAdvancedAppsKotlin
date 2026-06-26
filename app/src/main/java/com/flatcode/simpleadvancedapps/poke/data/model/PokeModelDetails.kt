@@ -9,34 +9,34 @@ data class PokeModelDetails(
     @SerializedName("sprites") val sprites: Sprites,
     @SerializedName("stats") val pokemonDetails: List<Stats>,
     @SerializedName("types") val types: List<Types>,
-    @SerializedName("weight") val weight: Int,
+    @SerializedName("weight") val weight: Int
 )
 
 data class Sprites(
-    @SerializedName("other") val other: Other,
+    @SerializedName("other") val other: Other
 )
 
 data class Other(
-    @SerializedName("official-artwork") val officialArtwork: OfficialArtwork,
+    @SerializedName("official-artwork") val officialArtwork: OfficialArtwork
 )
 
 data class OfficialArtwork(
-    @SerializedName("front_default") val img: String,
+    @SerializedName("front_default") val img: String
 )
 
 data class Stats(
     @SerializedName("base_stat") val statValue: Int,
-    @SerializedName("stat") val stat: Stat,
+    @SerializedName("stat") val stat: Stat
 )
 
 data class Stat(
-    @SerializedName("name") val statName: String,
+    @SerializedName("name") val statName: String
 )
 
 data class Types(
-    @SerializedName("type") val type: Type,
+    @SerializedName("type") val type: Type
 )
 
 data class Type(
-    @SerializedName("name") val name: String,
+    @SerializedName("name") val name: String
 )

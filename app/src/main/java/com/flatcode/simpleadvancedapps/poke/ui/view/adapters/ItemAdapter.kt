@@ -1,7 +1,6 @@
 package com.flatcode.simpleadvancedapps.poke.ui.view.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -15,38 +14,33 @@ class ItemAdapter : ListAdapter<PokeItem, ItemAdapter.ViewHolder>(DiffCallBack) 
 
     lateinit var onItemClickListener: (PokeItem) -> Unit
 
-    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(private val binding: ItemPokeBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private val binding = ItemPokeBinding.bind(view)
-
-        fun bind(pokeItem: PokeItem) {
+        fun bind(pokeItem: PokeItem, onItemClickListener: (PokeItem) -> Unit) {
             binding.tvId.text = pokeItem.formatId
             binding.tvName.text = pokeItem.name
+
             Picasso.get().load(pokeItem.img)
                 .placeholder(R.drawable.loading_animation)
                 .error(R.drawable.ic_broken_image)
                 .into(binding.ivPokemon)
 
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 onItemClickListener(pokeItem)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_poke, parent, false)
-        return ViewHolder(view)
+        val binding = ItemPokeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = getItem(position)
-        return holder.bind(item)
+        holder.bind(getItem(position), onItemClickListener)
     }
 
     companion object DiffCallBack : DiffUtil.ItemCallback<PokeItem>() {
-
         override fun areItemsTheSame(oldItem: PokeItem, newItem: PokeItem): Boolean {
             return oldItem.id == newItem.id
         }

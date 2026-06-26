@@ -7,7 +7,5 @@ class GetDetails {
 
     private val repository = PokeRepository()
 
-    suspend fun fromPokemon(id: Int): PokeItemDetails? {
-        return repository.getPokeDetails(id)
-    }
+    suspend fun fromPokemon(id: Int): PokeItemDetails? = repository.getPokeDetails(id)
 }

@@ -15,7 +15,6 @@ import com.flatcode.simpleadvancedapps.poke.ui.view.adapters.ItemAdapter
 import com.flatcode.simpleadvancedapps.poke.ui.viewmodel.ApiStatus
 import com.flatcode.simpleadvancedapps.poke.ui.viewmodel.PokeViewModel
 
-
 class ListFragment : Fragment() {
 
     private var _binding: FragmentListPokeBinding? = null
@@ -29,7 +28,7 @@ class ListFragment : Fragment() {
         super.onAttach(context)
         listener = try {
             context as SelectedListener
-        } catch (e: ClassCastException) {
+        } catch (_: ClassCastException) {
             throw ClassCastException("$context you must implement the listener")
         }
     }
@@ -39,7 +38,6 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentListPokeBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 

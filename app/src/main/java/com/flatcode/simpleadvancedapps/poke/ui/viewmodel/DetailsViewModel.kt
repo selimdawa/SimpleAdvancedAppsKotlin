@@ -12,14 +12,13 @@ import timber.log.Timber
 
 enum class ApiStatusDetail { LOADING, ERROR, DONE }
 
-class DetailsViewModel() : ViewModel() {
+class DetailsViewModel : ViewModel() {
 
     private var _pokeDetails = MutableLiveData<PokeItemDetails>()
     val pokeDetails: LiveData<PokeItemDetails> get() = _pokeDetails
 
     private var _status = MutableLiveData<ApiStatusDetail>()
-    val status: LiveData<ApiStatusDetail>
-        get() = _status
+    val status: LiveData<ApiStatusDetail> get() = _status
 
     init {
         getPokemonDetails(DetailFragment.idP)

@@ -1,6 +1,5 @@
 package com.flatcode.simpleadvancedapps.poke.ui.view
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,9 +30,8 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentDetailPokeBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -48,10 +46,8 @@ class DetailFragment : Fragment() {
 
     private fun observe() {
         viewModel.pokeDetails.observe(viewLifecycleOwner) { pokemon ->
-
             if (pokemon.types.size > 1) {
                 binding.tvType1.text = pokemon.types[0]
-                binding.tvType1
                 binding.tvType2.text = pokemon.types[1]
                 binding.tvType2.visibility = View.VISIBLE
             } else {

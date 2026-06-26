@@ -17,7 +17,7 @@ class ApiService {
         }
     }
 
-    suspend fun getDetailsPokemon(id: Int): PokeModelDetails?{
+    suspend fun getDetailsPokemon(id: Int): PokeModelDetails? {
         return withContext(Dispatchers.IO) {
             val response = retrofit.create(ApiClient::class.java).getDetailsPokemon(id)
             response.body()

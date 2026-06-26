@@ -8,10 +8,9 @@ import retrofit2.http.Path
 
 interface ApiClient {
 
-    @GET(value = "pokemon?limit=1154")
+    @GET("pokemon?limit=1154")
     suspend fun getListPokemon(): Response<ResultApi>
 
-    @GET(value = "pokemon/{id}")
+    @GET("pokemon/{id}")
     suspend fun getDetailsPokemon(@Path("id") id: Int): Response<PokeModelDetails>
 }
-

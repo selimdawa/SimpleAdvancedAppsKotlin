@@ -2,7 +2,7 @@ package com.flatcode.simpleadvancedapps.poke.domain.model
 
 import com.flatcode.simpleadvancedapps.poke.data.model.PokeModelDetails
 import com.flatcode.simpleadvancedapps.poke.data.model.Types
-import java.util.*
+import java.util.Locale
 
 data class PokeItemDetails(
     val id: String,
@@ -12,7 +12,7 @@ data class PokeItemDetails(
     val attack: Int,
     val defense: Int,
     val specialAttack: Int,
-    val specialDefense:Int,
+    val specialDefense: Int,
     val speed: Int,
     val types: List<String>,
     val weight: Double,
@@ -20,28 +20,37 @@ data class PokeItemDetails(
 )
 
 fun PokeModelDetails.toDomain(): PokeItemDetails {
-    val id = "N° ${id.toString().padStart(3,'0')}"
-    val name = replaceFirstChar(name)
-    val img = sprites.other.officialArtwork.img
-    val hp = pokemonDetails[0].statValue
-    val attack = pokemonDetails[1].statValue
-    val defense = pokemonDetails[2].statValue
-    val specialAttack = pokemonDetails[3].statValue
-    val specialDefense = pokemonDetails[4].statValue
-    val speed = pokemonDetails[5].statValue
-    val types = getTypes(types)
-    val weight = weight / 10.0
-    val height = height / 10.0
-    return PokeItemDetails(id, name, img, hp, attack, defense,
-        specialAttack, specialDefense, speed, types, weight, height)
+    val formattedId = "N° ${id.toString().padStart(3, '0')}"
+    val capitalizedName = replaceFirstChar(name)
+    val imgUrl = sprites.other.officialArtwork.img
+    val hpValue = pokemonDetails.getOrNull(0)?.statValue ?: 0
+    val attackValue = pokemonDetails.getOrNull(1)?.statValue ?: 0
+    val defenseValue = pokemonDetails.getOrNull(2)?.statValue ?: 0
+    val specialAttackValue = pokemonDetails.getOrNull(3)?.statValue ?: 0
+    val specialDefenseValue = pokemonDetails.getOrNull(4)?.statValue ?: 0
+    val speedValue = pokemonDetails.getOrNull(5)?.statValue ?: 0
+    val typeList = getTypes(types)
+    val weightInKg = weight / 10.0
+    val heightInMeters = height / 10.0
+
+    return PokeItemDetails(
+        id = formattedId,
+        name = capitalizedName,
+        img = imgUrl,
+        hp = hpValue,
+        attack = attackValue,
+        defense = defenseValue,
+        specialAttack = specialAttackValue,
+        specialDefense = specialDefenseValue,
+        speed = speedValue,
+        types = typeList,
+        weight = weightInKg,
+        height = heightInMeters
+    )
 }
 
 private fun getTypes(types: List<Types>): List<String> {
-    return if (types.size > 1) {
-        listOf(replaceFirstChar(types[0].type.name), replaceFirstChar(types[1].type.name))
-    } else {
-        listOf(replaceFirstChar(types[0].type.name))
-    }
+    return types.map { replaceFirstChar(it.type.name) }
 }
 
 private fun replaceFirstChar(t: String): String {

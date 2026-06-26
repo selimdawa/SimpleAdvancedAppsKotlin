@@ -4,29 +4,40 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.databinding.ActivityMainPokeBinding
 import com.flatcode.simpleadvancedapps.poke.domain.SelectedListener
 
-
 class MainActivity : AppCompatActivity(), SelectedListener {
+
+    private var _binding: ActivityMainPokeBinding? = null
+    private val binding get() = _binding!!
 
     var context = this@MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_poke)
+        _binding = ActivityMainPokeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onSelected(id: Int) {
-        val bundle = Bundle()
-        bundle.putInt("id", id)
+        val bundle = Bundle().apply {
+            putInt("id", id)
+        }
 
-        val detailFragment = DetailFragment()
-        detailFragment.arguments = bundle
+        val detailFragment = DetailFragment().apply {
+            arguments = bundle
+        }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerView, detailFragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -14,12 +14,10 @@ enum class ApiStatus { LOADING, ERROR, DONE }
 class PokeViewModel : ViewModel() {
 
     private var _pokemonList = MutableLiveData<List<PokeItem>>()
-    val pokemonList: LiveData<List<PokeItem>>
-        get() = _pokemonList
+    val pokemonList: LiveData<List<PokeItem>> get() = _pokemonList
 
     private var _status = MutableLiveData<ApiStatus>()
-    val status: LiveData<ApiStatus>
-        get() = _status
+    val status: LiveData<ApiStatus> get() = _status
 
     init {
         getAllPokemon()
@@ -33,7 +31,7 @@ class PokeViewModel : ViewModel() {
                 _status.value = ApiStatus.DONE
             } catch (e: Exception) {
                 _status.value = ApiStatus.ERROR
-                Timber.d(e.message)
+                Timber.d(e)
                 _pokemonList.value = listOf()
             }
         }

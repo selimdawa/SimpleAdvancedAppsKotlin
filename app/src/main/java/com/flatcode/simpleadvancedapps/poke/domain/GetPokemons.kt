@@ -7,7 +7,5 @@ class GetPokemons {
 
     private val repository = PokeRepository()
 
-    suspend fun listAll(): List<PokeItem> {
-        return repository.getAllPokemons()
-    }
+    suspend fun listAll(): List<PokeItem> = repository.getAllPokemons()
 }
