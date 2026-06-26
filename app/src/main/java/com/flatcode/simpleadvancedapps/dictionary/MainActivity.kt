@@ -16,18 +16,20 @@ import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
 
-    private var binding: ActivityMainDictionaryBinding? = null
-    var context: Context = this@MainActivity
+    private var _binding: ActivityMainDictionaryBinding? = null
+    private val binding get() = _binding!!
+    private val context: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityMainDictionaryBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        _binding = ActivityMainDictionaryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        binding!!.toolbar.nameSpace.text = DATA.DICTIONARY
-        binding!!.findButton.setOnClickListener { stringRequest() }
+        with(binding) {
+            toolbar.nameSpace.text = DATA.DICTIONARY
+            findButton.setOnClickListener { stringRequest() }
+        }
     }
 
     private fun extractDefinitionFromJason(response: String) {
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getUrl(): String {
-        val word = binding!!.searchEditText.text
+        val word = binding.searchEditText.text
         val apiKey = DATA.DICTIONARY_API_KEY
         val basicUrl = DATA.DICTIONARY_BASIC_URL
         return "$basicUrl$word?key=$apiKey"
@@ -61,5 +63,10 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
         })
         queue.add(stringRequest)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
