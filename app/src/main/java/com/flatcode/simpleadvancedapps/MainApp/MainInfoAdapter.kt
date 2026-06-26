@@ -2,75 +2,53 @@ package com.flatcode.simpleadvancedapps.MainApp
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import android.widget.ImageView
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ItemMainInfoBinding
 
 class MainInfoAdapter(private val context: Context) :
-    RecyclerView.Adapter<MainInfoAdapter.ViewHolder>() {
+    ListAdapter<MainInfo, MainInfoViewHolder>(MainInfoDiffCallback) {
 
-    private var binding: ItemMainInfoBinding? = null
-    var list: ArrayList<MainInfo>? = null
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemMainInfoBinding.inflate(LayoutInflater.from(context), parent, false)
-        return ViewHolder(binding!!.root)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainInfoViewHolder {
+        val binding = ItemMainInfoBinding.inflate(LayoutInflater.from(context), parent, false)
+        return MainInfoViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val model: MainInfo = list!![position]
-        val name: String = model.title!!
-        val s: Boolean = model.s!!
-        val s2: Boolean = model.s2!!
-        val s3: Boolean = model.s3!!
-        val s4: Boolean = model.s4!!
-        val s5: Boolean = model.s5!!
+    override fun onBindViewHolder(holder: MainInfoViewHolder, position: Int) {
+        val model = getItem(position)
 
-        holder.name.text = name
-        check(s, holder.daggerHilt)
-        check(s2, holder.navigation)
-        check(s3, holder.room)
-        check(s4, holder.coroutines)
-        check(s5, holder.rxJava)
-    }
+        with(holder.binding) {
+            name.text = model.title
 
-    override fun getItemCount(): Int {
-        return list!!.size
-    }
-
-    fun addList(mainInfoList: ArrayList<MainInfo>?) {
-        list = mainInfoList
-        notifyDataSetChanged()
-    }
-
-    fun check(boolean: Boolean, image: ImageView) {
-        if (boolean) image.setImageResource(R.drawable.circle_green)
-        else image.setImageResource(R.drawable.circle_red)
-    }
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var name: TextView
-        var daggerHilt: ImageView
-        var navigation: ImageView
-        var room: ImageView
-        var coroutines: ImageView
-        var rxJava: ImageView
-
-        init {
-            name = binding!!.name
-            daggerHilt = binding!!.daggerHilt
-            navigation = binding!!.navigation
-            room = binding!!.room
-            coroutines = binding!!.coroutines
-            rxJava = binding!!.rxJava
+            check(model.s == true, daggerHilt)
+            check(model.s2 == true, navigation)
+            check(model.s3 == true, room)
+            check(model.s4 == true, coroutines)
+            check(model.s5 == true, rxJava)
         }
     }
 
-    init {
-        this.list = list
+    private fun check(boolean: Boolean, image: ImageView) {
+        image.setImageResource(if (boolean) R.drawable.circle_green else R.drawable.circle_red)
+    }
+
+    companion object MainInfoDiffCallback : DiffUtil.ItemCallback<MainInfo>() {
+        override fun areItemsTheSame(oldItem: MainInfo, newItem: MainInfo): Boolean {
+            return oldItem.title == newItem.title
+        }
+
+        override fun areContentsTheSame(oldItem: MainInfo, newItem: MainInfo): Boolean {
+            return oldItem.s == newItem.s &&
+                    oldItem.s2 == newItem.s2 &&
+                    oldItem.s3 == newItem.s3 &&
+                    oldItem.s4 == newItem.s4 &&
+                    oldItem.s5 == newItem.s5
+        }
     }
 }
+
+class MainInfoViewHolder(val binding: ItemMainInfoBinding) : RecyclerView.ViewHolder(binding.root)

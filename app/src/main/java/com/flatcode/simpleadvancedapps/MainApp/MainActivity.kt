@@ -20,72 +20,78 @@ import com.flatcode.simpleadvancedapps.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
 
-    private var binding: ActivityMainBinding? = null
-    var mainViewModel: MainViewModel? = null
-    var mainInfoViewModel: MainInfoViewModel? = null
-    var adapter: MainAdapter? = null
-    var adapterInfo: MainInfoAdapter? = null
-    var context: Context = this@MainActivity
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
+    private var mainViewModel: MainViewModel? = null
+    private var mainInfoViewModel: MainInfoViewModel? = null
+    private var adapter: MainAdapter? = null
+    private var adapterInfo: MainInfoAdapter? = null
+    private val context: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         PreferenceManager.getDefaultSharedPreferences(baseContext)
             .registerOnSharedPreferenceChangeListener(this)
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding!!.root
-        setContentView(view)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Color Mode ----------------------------- Start
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings, SettingsFragment())
             .commit()
-        // Color Mode -------------------------------- End
 
-        binding!!.toolbar.info.setOnClickListener { showDialogAboutApps() }
+        binding.toolbar.info.setOnClickListener { showDialogAboutApps() }
 
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        //binding!!.recyclerView.setHasFixedSize(true)
         adapter = MainAdapter(context)
-        binding!!.recyclerView.adapter = adapter
-        mainViewModel!!.dataMain.observe(this) { mainArrayList: ArrayList<Main>? ->
-            adapter!!.addList(mainArrayList)
+        binding.recyclerView.adapter = adapter
+
+        mainViewModel?.dataMain?.observe(this) { mainArrayList ->
+            adapter?.addList(mainArrayList)
         }
-        mainViewModel!!.getItems(binding!!.recyclerView, binding!!.bar)
+        mainViewModel?.getItems(binding.recyclerView, binding.bar)
     }
 
     private fun showDialogAboutApps() {
-        val dialog = Dialog(context)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_main_info)
-        dialog.setCancelable(true)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dialog = Dialog(context).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.dialog_main_info)
+            setCancelable(true)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        }
 
-        val lp: WindowManager.LayoutParams = WindowManager.LayoutParams()
-        lp.copyFrom(dialog.window!!.attributes)
-        lp.width = WindowManager.LayoutParams.WRAP_CONTENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        val lp = WindowManager.LayoutParams().apply {
+            copyFrom(dialog.window?.attributes)
+            width = WindowManager.LayoutParams.WRAP_CONTENT
+            height = WindowManager.LayoutParams.WRAP_CONTENT
+        }
 
         val recyclerView = dialog.findViewById<RecyclerView>(R.id.recyclerView)
         mainInfoViewModel = ViewModelProvider(this)[MainInfoViewModel::class.java]
-        //recyclerView.setHasFixedSize(true)
         adapterInfo = MainInfoAdapter(context)
         recyclerView.adapter = adapterInfo
-        mainInfoViewModel!!.dataMainInfo.observe(this) { mainInfoArrayList: ArrayList<MainInfo>? ->
-            adapterInfo!!.addList(mainInfoArrayList)
+
+        mainInfoViewModel?.dataMainInfo?.observe(this) { mainInfoArrayList ->
+            adapterInfo?.addList(mainInfoArrayList)
         }
-        mainInfoViewModel!!.getInfoItems()
+        mainInfoViewModel?.getInfoItems()
 
         dialog.show()
-        dialog.window!!.attributes = lp
+        dialog.window?.attributes = lp
     }
 
-    // Color Mode ----------------------------- Start
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == "color_option") {
             recreate()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        PreferenceManager.getDefaultSharedPreferences(baseContext)
+            .unregisterOnSharedPreferenceChangeListener(this)
+        _binding = null
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
@@ -93,5 +99,4 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
         }
     }
-    // Color Mode ----------------------------- End
 }

@@ -1,58 +1,58 @@
 package com.flatcode.simpleadvancedapps.MainApp
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.flatcode.simpleadvancedapps.Unit.DATA
 
 class MainInfoViewModel : ViewModel() {
 
-    var dataMainInfo = MutableLiveData<ArrayList<MainInfo>>()
+    private val _dataMainInfo = MutableLiveData<List<MainInfo>>()
+    val dataMainInfo: LiveData<List<MainInfo>> get() = _dataMainInfo
 
-    private val S: BooleanArray = booleanArrayOf(
+    private val s = booleanArrayOf(
         false, false, false, true, false, false, false,
         false, true, true, false, false, true
     )
 
-    private val S2: BooleanArray = booleanArrayOf(
+    private val s2 = booleanArrayOf(
         false, true, false, true, false, true, true,
         true, true, true, false, false, true
     )
 
-    private val S3: BooleanArray = booleanArrayOf(
+    private val s3 = booleanArrayOf(
         false, false, false, false, false, true, false,
         true, false, false, false, false, true
     )
 
-    private val S4: BooleanArray = booleanArrayOf(
+    private val s4 = booleanArrayOf(
         true, true, false, true, false, true, true,
         true, false, false, false, true, true
     )
 
-    private val S5: BooleanArray = booleanArrayOf(
+    private val s5 = booleanArrayOf(
         false, true, false, false, false, false, false,
         false, false, false, false, false, false
     )
 
     fun getInfoItems() {
-        dataMainInfo.value = dataInfo
+        _dataMainInfo.value = dataInfo
     }
 
-    private val dataInfo: ArrayList<MainInfo>
-        get() {
-            val arrayList = ArrayList<MainInfo>()
-            arrayList.add(MainInfo(DATA.DOGS, S[0], S2[0], S3[0], S4[0], S5[0]))
-            arrayList.add(MainInfo(DATA.COUNTRIES, S[1], S2[1], S3[1], S4[1], S5[1]))
-            arrayList.add(MainInfo(DATA.Calculator, S[2], S2[2], S3[2], S4[2], S5[2]))
-            arrayList.add(MainInfo(DATA.CRYPTO, S[3], S2[3], S3[3], S4[3], S5[3]))
-            arrayList.add(MainInfo(DATA.DICTIONARY, S[4], S2[4], S3[4], S4[4], S5[4]))
-            arrayList.add(MainInfo(DATA.MEALS, S[5], S2[5], S3[5], S4[5], S5[5]))
-            arrayList.add(MainInfo(DATA.POP, S[6], S2[6], S3[6], S4[6], S5[6]))
-            arrayList.add(MainInfo(DATA.MOVIE, S[7], S2[7], S3[7], S4[7], S5[7]))
-            arrayList.add(MainInfo(DATA.NEWS, S[8], S2[8], S3[8], S4[8], S5[8]))
-            arrayList.add(MainInfo(DATA.RICK_AND_MORTY, S[9], S2[9], S3[9], S4[9], S5[9]))
-            arrayList.add(MainInfo(DATA.WEATHER, S[10], S2[10], S3[10], S4[10], S5[10]))
-            arrayList.add(MainInfo(DATA.POKE, S[11], S2[11], S3[11], S4[11], S5[11]))
-            arrayList.add(MainInfo(DATA.TODO_NOTE, S[12], S2[12], S3[12], S4[12], S5[12]))
-            return arrayList
-        }
+    private val dataInfo: List<MainInfo>
+        get() = listOf(
+            MainInfo(DATA.DOGS, s[0], s2[0], s3[0], s4[0], s5[0]),
+            MainInfo(DATA.COUNTRIES, s[1], s2[1], s3[1], s4[1], s5[1]),
+            MainInfo(DATA.Calculator, s[2], s2[2], s3[2], s4[2], s5[2]),
+            MainInfo(DATA.CRYPTO, s[3], s2[3], s3[3], s4[3], s5[3]),
+            MainInfo(DATA.DICTIONARY, s[4], s2[4], s3[4], s4[4], s5[4]),
+            MainInfo(DATA.MEALS, s[5], s2[5], s3[5], s4[5], s5[5]),
+            MainInfo(DATA.POP, s[6], s2[6], s3[6], s4[6], s5[6]),
+            MainInfo(DATA.MOVIE, s[7], s2[7], s3[7], s4[7], s5[7]),
+            MainInfo(DATA.NEWS, s[8], s2[8], s3[8], s4[8], s5[8]),
+            MainInfo(DATA.RICK_AND_MORTY, s[9], s2[9], s3[9], s4[9], s5[9]),
+            MainInfo(DATA.WEATHER, s[10], s2[10], s3[10], s4[10], s5[10]),
+            MainInfo(DATA.POKE, s[11], s2[11], s3[11], s4[11], s5[11]),
+            MainInfo(DATA.TODO_NOTE, s[12], s2[12], s3[12], s4[12], s5[12])
+        )
 }

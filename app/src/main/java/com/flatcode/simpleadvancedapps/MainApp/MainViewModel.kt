@@ -2,6 +2,7 @@ package com.flatcode.simpleadvancedapps.MainApp
 
 import android.view.View
 import android.widget.ProgressBar
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
@@ -10,32 +11,32 @@ import com.flatcode.simpleadvancedapps.Unit.CLASS
 import com.flatcode.simpleadvancedapps.Unit.DATA
 
 class MainViewModel : ViewModel() {
-    var dataMain = MutableLiveData<ArrayList<Main>>()
 
-    private val I: IntArray = intArrayOf(1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 1, 1, 1)
+    private val _dataMain = MutableLiveData<List<Main>>()
+    val dataMain: LiveData<List<Main>> get() = _dataMain
+
+    private val i = intArrayOf(1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 1, 1, 1)
 
     fun getItems(recyclerView: RecyclerView, bar: ProgressBar) {
-        dataMain.value = data
+        _dataMain.value = data
         bar.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
     }
 
-    private val data: ArrayList<Main>
-        get() {
-            val arrayList = ArrayList<Main>()
-            arrayList.add(Main(R.drawable.ic_home_work, DATA.DOGS, I[0], CLASS.I1))
-            arrayList.add(Main(R.drawable.ic_flag, DATA.COUNTRIES, I[1], CLASS.I2))
-            arrayList.add(Main(R.drawable.ic_calculate, DATA.Calculator, I[2], CLASS.I3))
-            arrayList.add(Main(R.drawable.ic_monetization, DATA.CRYPTO, I[3], CLASS.I4))
-            arrayList.add(Main(R.drawable.ic_words, DATA.DICTIONARY, I[4], CLASS.I5))
-            arrayList.add(Main(R.drawable.ic_meal, DATA.MEALS, I[5], CLASS.I6))
-            arrayList.add(Main(R.drawable.ic_game, DATA.POP, I[6], CLASS.I7))
-            arrayList.add(Main(R.drawable.ic_movie, DATA.MOVIE, I[7], CLASS.I8))
-            arrayList.add(Main(R.drawable.ic_feed, DATA.NEWS, I[8], CLASS.I9))
-            arrayList.add(Main(R.drawable.ic_child, DATA.RICK_AND_MORTY, I[9], CLASS.I10))
-            arrayList.add(Main(R.drawable.ic_nights, DATA.WEATHER, I[10], CLASS.I11))
-            arrayList.add(Main(R.drawable.ic_gamepad, DATA.POKE, I[11], CLASS.I12))
-            arrayList.add(Main(R.drawable.ic_note, DATA.TODO_NOTE, I[12], CLASS.I13))
-            return arrayList
-        }
+    private val data: List<Main>
+        get() = listOf(
+            Main(R.drawable.ic_home_work, DATA.DOGS, i[0], CLASS.I1),
+            Main(R.drawable.ic_flag, DATA.COUNTRIES, i[1], CLASS.I2),
+            Main(R.drawable.ic_calculate, DATA.Calculator, i[2], CLASS.I3),
+            Main(R.drawable.ic_monetization, DATA.CRYPTO, i[3], CLASS.I4),
+            Main(R.drawable.ic_words, DATA.DICTIONARY, i[4], CLASS.I5),
+            Main(R.drawable.ic_meal, DATA.MEALS, i[5], CLASS.I6),
+            Main(R.drawable.ic_game, DATA.POP, i[6], CLASS.I7),
+            Main(R.drawable.ic_movie, DATA.MOVIE, i[7], CLASS.I8),
+            Main(R.drawable.ic_feed, DATA.NEWS, i[8], CLASS.I9),
+            Main(R.drawable.ic_child, DATA.RICK_AND_MORTY, i[9], CLASS.I10),
+            Main(R.drawable.ic_nights, DATA.WEATHER, i[10], CLASS.I11),
+            Main(R.drawable.ic_gamepad, DATA.POKE, i[11], CLASS.I12),
+            Main(R.drawable.ic_note, DATA.TODO_NOTE, i[12], CLASS.I13)
+        )
 }
