@@ -6,39 +6,49 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.Unit.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentDogBinding
 import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogApiStatus
 import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogViewModel
 
-class DogFragment : Fragment(R.layout.fragment_dog), AdapterView.OnItemClickListener {
+class DogFragment : Fragment(), AdapterView.OnItemClickListener {
 
-    private val binding by viewBinding(FragmentDogBinding::bind)
+    private var _binding: FragmentDogBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: DogViewModel by viewModels()
     private val dogAdapter = DogAdapter()
     private var lastSelectedBreed: String? = null
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentDogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         loadingBreedsList()
 
-        with(binding.recyclerViewDog) {
-            adapter = dogAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+        with(binding) {
+            recyclerViewDog.adapter = dogAdapter
+            recyclerViewDog.layoutManager = LinearLayoutManager(requireContext())
+            toolbar.nameSpace.text = DATA.DOGS
         }
 
-        binding.toolbar.nameSpace.text = DATA.DOGS
         observer()
         registerNetworkCallback()
     }
@@ -57,22 +67,24 @@ class DogFragment : Fragment(R.layout.fragment_dog), AdapterView.OnItemClickList
         }
 
         viewModel.status.observe(viewLifecycleOwner) { status ->
-            when (status) {
-                DogApiStatus.START -> {
-                    binding.statusImageError.visibility = View.GONE
-                    binding.recyclerViewDog.visibility = View.VISIBLE
-                }
-                DogApiStatus.LOADING -> {
-                    binding.statusImageError.visibility = View.GONE
-                    binding.recyclerViewDog.visibility = View.GONE
-                }
-                DogApiStatus.ERROR -> {
-                    binding.statusImageError.visibility = View.VISIBLE
-                    binding.recyclerViewDog.visibility = View.GONE
-                }
-                DogApiStatus.DONE -> {
-                    binding.statusImageError.visibility = View.GONE
-                    binding.recyclerViewDog.visibility = View.VISIBLE
+            with(binding) {
+                when (status) {
+                    DogApiStatus.START -> {
+                        statusImageError.visibility = View.GONE
+                        recyclerViewDog.visibility = View.VISIBLE
+                    }
+                    DogApiStatus.LOADING -> {
+                        statusImageError.visibility = View.GONE
+                        recyclerViewDog.visibility = View.GONE
+                    }
+                    DogApiStatus.ERROR -> {
+                        statusImageError.visibility = View.VISIBLE
+                        recyclerViewDog.visibility = View.GONE
+                    }
+                    DogApiStatus.DONE -> {
+                        statusImageError.visibility = View.GONE
+                        recyclerViewDog.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -116,6 +128,7 @@ class DogFragment : Fragment(R.layout.fragment_dog), AdapterView.OnItemClickList
         networkCallback?.let { callback ->
             connectivityManager?.unregisterNetworkCallback(callback)
         }
+        _binding = null
     }
 
     private fun loadingBreedsList() {

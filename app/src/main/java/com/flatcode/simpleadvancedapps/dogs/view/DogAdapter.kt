@@ -10,47 +10,46 @@ import coil.load
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ItemListBinding
 
-class DogAdapter : ListAdapter<String, DogAdapter.ViewHolder>(DiffCallBack) {
+class DogAdapter : ListAdapter<String, DogViewHolder>(DiffCallBack) {
 
-    class ViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(photo: String) {
-            binding.imageView.load(photo) {
-                crossfade(true)
-                crossfade(300)
-                placeholder(R.drawable.loading_animation)
-                error(R.color.image_profile)
-                listener(
-                    onStart = { _ ->
-                        (binding.imageView.drawable as? Animatable)?.start()
-                    },
-                    onSuccess = { _, _ ->
-                        (binding.imageView.drawable as? Animatable)?.stop()
-                    },
-                    onError = { _, _ ->
-                        (binding.imageView.drawable as? Animatable)?.stop()
-                    }
-                )
-            }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
         val binding = ItemListBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return ViewHolder(binding)
+        return DogViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val photo = getItem(position)
-        holder.bind(photo)
+    override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 
     companion object DiffCallBack : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
         override fun areContentsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
+    }
+}
+
+class DogViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(photo: String) {
+        binding.imageView.load(photo) {
+            crossfade(true)
+            crossfade(300)
+            placeholder(R.drawable.loading_animation)
+            error(R.color.image_profile)
+            listener(
+                onStart = { _ ->
+                    (binding.imageView.drawable as? Animatable)?.start()
+                },
+                onSuccess = { _, _ ->
+                    (binding.imageView.drawable as? Animatable)?.stop()
+                },
+                onError = { _, _ ->
+                    (binding.imageView.drawable as? Animatable)?.stop()
+                }
+            )
+        }
     }
 }
