@@ -93,11 +93,13 @@ class HomeFragment :
     }
 
     private fun handleViews(isLoading: Boolean) {
-        if (viewModel.isFirstPage()) {
-            binding.rvHome.isVisible = !isLoading
-            binding.pbHome.isVisible = isLoading
-        } else {
-            binding.pbHome.isVisible = false
+        with(binding) {
+            if (viewModel.isFirstPage()) {
+                rvHome.isVisible = !isLoading
+                pbHome.isVisible = isLoading
+            } else {
+                pbHome.isVisible = false
+            }
         }
     }
 }

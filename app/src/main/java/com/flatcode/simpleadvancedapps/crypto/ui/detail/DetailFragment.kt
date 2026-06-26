@@ -70,7 +70,9 @@ class DetailFragment :
     }
 
     private fun handleView(isLoading: Boolean) {
-        binding.detailGroup.isVisible = !isLoading
-        binding.pbDetail.isVisible = isLoading
+        with(binding) {
+            detailGroup.isVisible = !isLoading
+            pbDetail.isVisible = isLoading
+        }
     }
 }
