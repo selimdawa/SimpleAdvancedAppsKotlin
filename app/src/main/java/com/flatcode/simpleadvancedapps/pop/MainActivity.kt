@@ -10,16 +10,20 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.databinding.ActivityMainPopBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private var _binding: ActivityMainPopBinding? = null
+    private val binding get() = _binding!!
     private lateinit var navController: NavController
     var context = this@MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_pop)
+        _binding = ActivityMainPopBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -40,5 +44,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

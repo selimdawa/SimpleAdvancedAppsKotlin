@@ -16,7 +16,6 @@ import com.flatcode.simpleadvancedapps.databinding.FragmentHomePopBinding
 import com.flatcode.simpleadvancedapps.pop.adapters.FunkoListAdapter
 import com.flatcode.simpleadvancedapps.pop.adapters.PopListener
 import com.flatcode.simpleadvancedapps.pop.viewmodels.FunkoViewModel
-import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
@@ -111,13 +110,10 @@ class HomeFragment : Fragment() {
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         if (capabilities != null) {
             if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                Timber.i("NetworkCapabilities.TRANSPORT_CELLULAR")
                 return true
             } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                Timber.i("NetworkCapabilities.TRANSPORT_WIFI")
                 return true
             } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                Timber.i("NetworkCapabilities.TRANSPORT_ETHERNET")
                 return true
             }
         }

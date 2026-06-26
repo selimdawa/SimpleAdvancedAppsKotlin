@@ -12,19 +12,23 @@ import com.squareup.picasso.Picasso
 class FunkoListAdapter(private val clickListener: PopListener) :
     ListAdapter<PopItem, FunkoListAdapter.FunkoListViewHolder>(DiffCallback) {
 
-class FunkoListViewHolder(private var binding: ItemPopBinding) :
-    RecyclerView.ViewHolder(binding.root)
+    class FunkoListViewHolder(private val binding: ItemPopBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    //    fun bind(clickListener: PopListener, pop: PopItem) {
-    //        binding.pop = pop
-    //        binding.clickListener = clickListener
-    //        binding.executePendingBindings()
-    //        Picasso.get()
-    //            .load(pop.img)
-    //            .resize(320, 320)
-    //            .into(binding.imageView)
-    //    }
-    //}
+        fun bind(clickListener: PopListener, pop: PopItem) {
+            binding.popName.text = pop.name
+
+            binding.root.setOnClickListener {
+                clickListener.onClick(pop)
+            }
+
+            Picasso.get()
+                .load(pop.img)
+                .resize(320, 320)
+                .centerCrop()
+                .into(binding.imageView)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FunkoListViewHolder {
         return FunkoListViewHolder(
@@ -33,8 +37,7 @@ class FunkoListViewHolder(private var binding: ItemPopBinding) :
     }
 
     override fun onBindViewHolder(holder: FunkoListViewHolder, position: Int) {
-        val pop = getItem(position)
-        //holder.bind(clickListener, pop)
+        holder.bind(clickListener, getItem(position))
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<PopItem>() {
@@ -43,7 +46,7 @@ class FunkoListViewHolder(private var binding: ItemPopBinding) :
         }
 
         override fun areContentsTheSame(oldItem: PopItem, newItem: PopItem): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem == newItem
         }
     }
 }

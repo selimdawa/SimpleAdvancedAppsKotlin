@@ -18,7 +18,7 @@ class FunkoViewModel(private val funkoRepository: FunkoRepository) : ViewModel()
     private val _pop = MutableLiveData<PopItem>()
     val pop: LiveData<PopItem> get() = _pop
 
-    val filterText = MutableLiveData<String>("")
+    val filterText = MutableLiveData("")
 
     private val _isListFiltered = MutableLiveData(false)
     val isListFiltered: LiveData<Boolean> get() = _isListFiltered

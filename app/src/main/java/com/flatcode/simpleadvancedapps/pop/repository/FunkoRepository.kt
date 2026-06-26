@@ -14,7 +14,7 @@ class FunkoRepository {
             val doc = Jsoup.connect(url).get()
             val pops = doc.select(".wikitable:first-of-type tr")
 
-            for (i: Int in 1 until 200) {
+            for (i in 1 until 200) {
                 val name = pops.select("th:nth-last-of-type(1)")
                     .eq(i)
                     .text()
@@ -33,7 +33,6 @@ class FunkoRepository {
 
                 listData.add(PopItem(i, name, img, series))
             }
-
         } catch (e: IOException) {
             e.printStackTrace()
         }
