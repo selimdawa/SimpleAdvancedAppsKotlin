@@ -1,10 +1,10 @@
 package com.flatcode.simpleadvancedapps.movies.screens.detail
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -29,10 +29,10 @@ class DetailFragment : Fragment() {
     ): View {
         _binding = FragmentDetailMovieBinding.inflate(inflater, container, false)
 
-        currentMovie = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getSerializable("movie", MovieItemModel::class.java)!!
-        } else {
-            arguments?.getSerializable("movie") as MovieItemModel
+        arguments?.let { args ->
+            BundleCompat.getSerializable(args, "movie", MovieItemModel::class.java)?.let {
+                currentMovie = it
+            }
         }
 
         return binding.root

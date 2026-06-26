@@ -90,8 +90,8 @@ dependencies {
     implementation(libs.retrofit.converter.gson)   //Gson
     implementation(libs.retrofit.converter.moshi)  //Moshi
     //RxJava
-    implementation(libs.retrofit.adapter.rxjava2)      //Rxjava
-    implementation(libs.rxjava.rxandroid)              //Rxjava
+    implementation(libs.retrofit.adapter.rxjava3)
+    implementation(libs.rxjava3.android)              //Rxjava
     //Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.core)   //Core
     implementation(libs.kotlinx.coroutines.android) //Android

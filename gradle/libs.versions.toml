@@ -22,7 +22,7 @@ lifecycle = "2.11.0"
 common-java8 = "1.1.1"
 retrofit = "3.0.0"
 rxjava-adapter = "3.0.0"
-rxandroid = "2.1.1"
+rxandroid = "3.0.2"
 coroutines = "1.11.0"
 navigation = "2.9.8"
 room = "2.8.4"
@@ -70,8 +70,8 @@ retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.r
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 retrofit-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 #RxJava
-retrofit-adapter-rxjava2 = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "rxjava-adapter" }
-rxjava-rxandroid = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxandroid" }
+retrofit-adapter-rxjava3 = { group = "com.squareup.retrofit2", name = "adapter-rxjava3", version.ref = "rxjava-adapter" }
+rxjava3-android = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid" }
 #Kotlin Coroutines
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }

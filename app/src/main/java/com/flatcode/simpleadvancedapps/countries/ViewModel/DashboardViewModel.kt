@@ -7,10 +7,10 @@ import com.flatcode.simpleadvancedapps.countries.Model.Country
 import com.flatcode.simpleadvancedapps.countries.Service.CountryAPIService
 import com.flatcode.simpleadvancedapps.countries.Service.CountryDatabase
 import com.flatcode.simpleadvancedapps.countries.Util.CustomSharedPreferences
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.observers.DisposableSingleObserver
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(application: Application) : BaseViewModel(application) {
@@ -51,7 +51,8 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
                 .subscribeWith(object : DisposableSingleObserver<List<Country>>() {
                     override fun onSuccess(t: List<Country>) {
                         storeInSQLite(t)
-                        Toast.makeText(getApplication(), "Countries from API", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(getApplication(), "Countries from API", Toast.LENGTH_SHORT)
+                            .show()
                     }
 
                     override fun onError(e: Throwable) {
