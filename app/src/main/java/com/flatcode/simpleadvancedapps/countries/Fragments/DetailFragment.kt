@@ -14,7 +14,8 @@ import com.flatcode.simpleadvancedapps.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
 
-    private var binding: FragmentDetailBinding? = null
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
     private lateinit var viewModel: DetailViewModel
     private var countryUuid = 0
 
@@ -22,8 +23,8 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentDetailBinding.inflate(LayoutInflater.from(context), container, false)
-        return binding!!.root
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class DetailFragment : Fragment() {
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         viewModel.getDataFromRoom(countryUuid)
 
-        binding!!.toolbar.nameSpace.text = DATA.Country_details
+        binding.toolbar.nameSpace.text = DATA.Country_details
 
         observeLiveData()
     }
@@ -44,20 +45,28 @@ class DetailFragment : Fragment() {
     private fun observeLiveData() {
         viewModel.countryLiveData.observe(viewLifecycleOwner) { country ->
             country?.let {
-                binding!!.cName.text = country.countryName
-                binding!!.capName.text = country.countryCapital
-                binding!!.regionName.text = country.countryRegion
-                binding!!.langName.text = country.countryLanguage
-                binding!!.currencyName.text = country.countryCurrency
-                binding!!.detailImg.downloadFromUrl(
-                    false, country.imageURL,
-                    placeholderProgressBar(requireContext())
-                )
-                binding!!.detailImgBlur.downloadFromUrl(
-                    true, country.imageURL,
-                    placeholderProgressBar(requireContext())
-                )
+                with(binding) {
+                    cName.text = country.countryName
+                    capName.text = country.countryCapital
+                    regionName.text = country.countryRegion
+                    langName.text = country.countryLanguage
+                    currencyName.text = country.countryCurrency
+
+                    detailImg.downloadFromUrl(
+                        false, country.imageURL,
+                        placeholderProgressBar(requireContext())
+                    )
+                    detailImgBlur.downloadFromUrl(
+                        true, country.imageURL,
+                        placeholderProgressBar(requireContext())
+                    )
+                }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

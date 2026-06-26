@@ -14,7 +14,8 @@ import com.flatcode.simpleadvancedapps.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
 
-    private var binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentDashboardBinding? = null
+    private val binding get() = _binding!!
     private lateinit var viewModel: DashboardViewModel
     private val countryAdapter = CountryAdapter(arrayListOf())
 
@@ -22,8 +23,8 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentDashboardBinding.inflate(LayoutInflater.from(context), container, false)
-        return binding!!.root
+        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,49 +33,49 @@ class DashboardFragment : Fragment() {
         viewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
         viewModel.refreshData()
 
-        binding!!.toolbar.nameSpace.text = DATA.COUNTRIES
+        with(binding) {
+            toolbar.nameSpace.text = DATA.COUNTRIES
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.adapter = countryAdapter
 
-        binding!!.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding!!.recyclerView.adapter = countryAdapter
-
-        binding!!.swipe.setOnRefreshListener {
-            binding!!.recyclerView.visibility = View.GONE
-            binding!!.errorText.visibility = View.GONE
-            binding!!.refreshBar.visibility = View.VISIBLE
-            viewModel.refreshData()
-            binding!!.swipe.isRefreshing = false
+            swipe.setOnRefreshListener {
+                recyclerView.visibility = View.GONE
+                errorText.visibility = View.GONE
+                refreshBar.visibility = View.VISIBLE
+                viewModel.refreshData()
+                swipe.isRefreshing = false
+            }
         }
         observeLiveData()
     }
 
-    fun observeLiveData() {
+    private fun observeLiveData() {
         viewModel.countries.observe(viewLifecycleOwner) { countries ->
             countries?.let {
-                binding!!.recyclerView.visibility = View.VISIBLE
-                countryAdapter.updateCountryList(countries)
+                binding.recyclerView.visibility = View.VISIBLE
+                countryAdapter.updateCountryList(it)
             }
         }
 
         viewModel.countryError.observe(viewLifecycleOwner) { error ->
-            error?.let {
-                if (it) {
-                    binding!!.errorText.visibility = View.VISIBLE
-                } else {
-                    binding!!.errorText.visibility = View.GONE
-                }
-            }
+            binding.errorText.visibility = if (error == true) View.VISIBLE else View.GONE
         }
 
         viewModel.countryLoading.observe(viewLifecycleOwner) { loading ->
-            loading?.let {
-                if (it) {
-                    binding!!.refreshBar.visibility = View.VISIBLE
-                    binding!!.errorText.visibility = View.GONE
-                    binding!!.recyclerView.visibility = View.GONE
-                } else {
-                    binding!!.refreshBar.visibility = View.GONE
+            if (loading == true) {
+                with(binding) {
+                    refreshBar.visibility = View.VISIBLE
+                    errorText.visibility = View.GONE
+                    recyclerView.visibility = View.GONE
                 }
+            } else {
+                binding.refreshBar.visibility = View.GONE
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

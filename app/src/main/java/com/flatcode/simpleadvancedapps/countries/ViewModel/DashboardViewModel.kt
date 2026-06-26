@@ -27,7 +27,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
 
     fun refreshData() {
         val updateTime = customSharedPreferences.getTime()
-        if (updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
+        if (updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
             getDataFromSQLite()
         } else {
             getDataFromAPI()
@@ -51,8 +51,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
                 .subscribeWith(object : DisposableSingleObserver<List<Country>>() {
                     override fun onSuccess(t: List<Country>) {
                         storeInSQLite(t)
-                        Toast.makeText(getApplication(), "Countries from API", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(getApplication(), "Countries from API", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onError(e: Throwable) {
@@ -76,10 +75,8 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
             dao.deleteAllCountries()
             val listLong = dao.insertAll(*list.toTypedArray())
 
-            var i = 0
-            while (i < list.size) {
-                list[i].uuid = listLong[i].toInt()
-                i += 1
+            list.forEachIndexed { index, country ->
+                country.uuid = listLong[index].toInt()
             }
             showCountries(list)
         }
@@ -87,7 +84,6 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     }
 
     override fun onCleared() {
-        super.onCleared()
         disposable.clear()
     }
 }

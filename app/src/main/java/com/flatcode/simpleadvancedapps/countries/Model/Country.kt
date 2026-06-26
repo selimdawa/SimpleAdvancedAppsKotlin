@@ -29,7 +29,7 @@ data class Country(
 
     @ColumnInfo(name = "flag")
     @SerializedName("flag")
-    val imageURL: String?,
+    val imageURL: String?
 ) {
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
