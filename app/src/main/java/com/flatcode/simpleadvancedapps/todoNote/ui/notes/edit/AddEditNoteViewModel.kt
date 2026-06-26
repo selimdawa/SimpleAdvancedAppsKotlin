@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
-    private val dao: NoteDao, private val state: SavedStateHandle,
+    private val dao: NoteDao,
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     private val addEditNoteEventChannel = Channel<AddEditNoteEvent>()
@@ -37,7 +38,7 @@ class AddEditNoteViewModel @Inject constructor(
 
     fun onSaveClick() {
         if (noteTitle.isBlank()) {
-            ShowInvalidInputMessage("Title cannot be empty")
+            showInvalidInputMessage("Title cannot be empty")
             return
         }
 
@@ -50,8 +51,7 @@ class AddEditNoteViewModel @Inject constructor(
         }
     }
 
-
-    fun ShowInvalidInputMessage(text: String) = viewModelScope.launch {
+    fun showInvalidInputMessage(text: String) = viewModelScope.launch {
         addEditNoteEventChannel.send(AddEditNoteEvent.ShowInvalidInputMessage(text))
     }
 

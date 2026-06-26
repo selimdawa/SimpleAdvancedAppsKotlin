@@ -16,6 +16,7 @@ import com.flatcode.simpleadvancedapps.todoNote.data.PreferencesManager
 import com.flatcode.simpleadvancedapps.todoNote.data.SortOrder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -23,11 +24,12 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class NotesViewModel @Inject constructor(
     private val noteDao: NoteDao,
     private val preferencesManager: PreferencesManager,
-    private val state: SavedStateHandle,
+    state: SavedStateHandle,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 

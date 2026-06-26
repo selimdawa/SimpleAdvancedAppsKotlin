@@ -16,6 +16,7 @@ import com.flatcode.simpleadvancedapps.todoNote.data.Task
 import com.flatcode.simpleadvancedapps.todoNote.data.TaskDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -23,16 +24,17 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class TasksViewModel @Inject constructor(
     private val taskDao: TaskDao,
-    private val preferecesManager: PreferencesManager,
-    private val state: SavedStateHandle,
+    private val preferencesManager: PreferencesManager,
+    state: SavedStateHandle,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     val searchQuery = state.getLiveData("searchQuery", DATA.EMPTY)
-    val preferencesFlow = preferecesManager.preferencesFlow
+    val preferencesFlow = preferencesManager.preferencesFlow
 
     private val taskEventChannel = Channel<TasksEvent>()
     val taskEvent = taskEventChannel.receiveAsFlow()
@@ -47,11 +49,11 @@ class TasksViewModel @Inject constructor(
     }
 
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
-        preferecesManager.updateSortOrder(sortOrder)
+        preferencesManager.updateSortOrder(sortOrder)
     }
 
     fun onHideCompletedClick(hideCompleted: Boolean) = viewModelScope.launch {
-        preferecesManager.updateHideCompleted(hideCompleted)
+        preferencesManager.updateHideCompleted(hideCompleted)
     }
 
     val tasks = tasksFlow.asLiveData()
@@ -102,10 +104,10 @@ class TasksViewModel @Inject constructor(
     }
 
     sealed class TasksEvent {
-        object NavigateToAddScreen : TasksEvent()
+        data object NavigateToAddScreen : TasksEvent()
         data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
         data class ShowTaskSavedConfirmationMessage(val msg: String) : TasksEvent()
-        object NavigateToDeleteAllCompletedTasksScreen : TasksEvent()
+        data object NavigateToDeleteAllCompletedTasksScreen : TasksEvent()
     }
 }

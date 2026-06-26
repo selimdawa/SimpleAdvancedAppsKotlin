@@ -1,8 +1,9 @@
 package com.flatcode.simpleadvancedapps.todoNote.ui.tasks.edit
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.os.bundleOf
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -10,21 +11,32 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentAddEditTaskBinding
 import com.flatcode.simpleadvancedapps.todoNote.util.exhaustive
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AddEditTaskFragment : Fragment(R.layout.fragment_add_edit_task) {
+class AddEditTaskFragment : Fragment() {
+
+    private var _binding: FragmentAddEditTaskBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: AddEditTaskViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAddEditTaskBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentAddEditTaskBinding.bind(view)
         binding.apply {
             taskEditText.setText(viewModel.taskName)
             editTaskCheck.isChecked = viewModel.taskImportance
@@ -39,7 +51,7 @@ class AddEditTaskFragment : Fragment(R.layout.fragment_add_edit_task) {
             floatingActionButtonEditTask.setOnClickListener { viewModel.onSaveClick() }
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.addEditTaskEvent.collect { event ->
                 when (event) {
                     is AddEditTaskViewModel.AddEditTaskEvent.ShowInvalidInputMessage -> {
@@ -47,14 +59,19 @@ class AddEditTaskFragment : Fragment(R.layout.fragment_add_edit_task) {
                     }
                     is AddEditTaskViewModel.AddEditTaskEvent.NavigateBackWithResult -> {
                         binding.taskEditText.clearFocus()
-                        setFragmentResult(
-                            "add_edit_request",
-                            bundleOf("add_edit_result" to event.result)
-                        )
+                        val resultBundle = Bundle().apply {
+                            putInt("add_edit_result", event.result)
+                        }
+                        setFragmentResult("add_edit_request", resultBundle)
                         findNavController().popBackStack()
                     }
                 }.exhaustive
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

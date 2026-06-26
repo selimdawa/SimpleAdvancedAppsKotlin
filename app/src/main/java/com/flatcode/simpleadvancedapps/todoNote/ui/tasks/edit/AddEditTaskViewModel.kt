@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddEditTaskViewModel @Inject constructor(
-    private val dao: TaskDao, private val state: SavedStateHandle,
+    private val dao: TaskDao,
+    private val state: SavedStateHandle
 ) : ViewModel() {
 
     private val addEditTaskEventChannel = Channel<AddEditTaskEvent>()

@@ -3,7 +3,6 @@ package com.flatcode.simpleadvancedapps.todoNote.ui.notes
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.navGraphViewModels
 import com.flatcode.simpleadvancedapps.R
@@ -14,18 +13,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DeleteAllNotes : DialogFragment() {
 
+    private var _binding: DialogCustomDeleteNotesBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel: NotesViewModel by navGraphViewModels(R.id.nav_graph) {
         defaultViewModelProviderFactory
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        val binding: DialogCustomDeleteNotesBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(requireContext()),
-            R.layout.dialog_custom_delete_notes,
-            null,
-            false
-        )
+        _binding = DialogCustomDeleteNotesBinding.inflate(LayoutInflater.from(requireContext()))
 
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setView(binding.root)
@@ -43,5 +39,10 @@ class DeleteAllNotes : DialogFragment() {
         }
 
         return dialog
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

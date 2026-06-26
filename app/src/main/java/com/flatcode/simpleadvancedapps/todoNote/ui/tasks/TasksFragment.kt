@@ -1,13 +1,18 @@
 package com.flatcode.simpleadvancedapps.todoNote.ui.tasks
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -26,7 +31,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClickListener {
+class TasksFragment : Fragment(), TaskAdapter.OnItemClickListener {
+
+    private var _binding: FragmentTasksBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel: TasksViewModel by navGraphViewModels(R.id.nav_graph) {
         defaultViewModelProviderFactory
@@ -34,8 +42,18 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClick
 
     private lateinit var searchView: SearchView
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentTasksBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val binding = FragmentTasksBinding.bind(view)
+        super.onViewCreated(view, savedInstanceState)
+
         val taskAdapter = TaskAdapter(this)
 
         binding.apply {
@@ -57,8 +75,11 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClick
                 ): Boolean = false
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    val task = taskAdapter.currentList[viewHolder.adapterPosition]
-                    viewModel.onTaskSwiped(task)
+                    val position = viewHolder.bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val task = taskAdapter.currentList[position]
+                        viewModel.onTaskSwiped(task)
+                    }
                 }
             }).attachToRecyclerView(tasksRec)
         }
@@ -72,7 +93,7 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClick
             viewModel.onAddEditResult(result)
         }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.taskEvent.collect { event ->
                 when (event) {
                     is TasksViewModel.TasksEvent.ShowUndoDeleteTaskMessage -> {
@@ -87,18 +108,16 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClick
                     }
 
                     is TasksViewModel.TasksEvent.NavigateToAddScreen -> {
-                        val action =
-                            TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
-                                task = null, title = getString(R.string.title_new_task)
-                            )
+                        val action = TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
+                            task = null, title = getString(R.string.title_new_task)
+                        )
                         findNavController().navigate(action)
                     }
 
                     is TasksViewModel.TasksEvent.NavigateToEditTaskScreen -> {
-                        val action =
-                            TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
-                                task = event.task, title = getString(R.string.title_edit_task)
-                            )
+                        val action = TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
+                            task = event.task, title = getString(R.string.title_edit_task)
+                        )
                         findNavController().navigate(action)
                     }
 
@@ -107,15 +126,67 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClick
                     }
 
                     is TasksViewModel.TasksEvent.NavigateToDeleteAllCompletedTasksScreen -> {
-                        val action =
-                            TasksFragmentDirections.actionGlobalDeleteAllCompletedTasksDialogFragment()
+                        val action = TasksFragmentDirections.actionGlobalDeleteAllCompletedTasksDialogFragment()
                         findNavController().navigate(action)
                     }
                 }.exhaustive
             }
         }
 
-        setHasOptionsMenu(true)
+        setupMenu()
+    }
+
+    private fun setupMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_fragment_tasks, menu)
+
+                val searchItem = menu.findItem(R.id.action_search)
+                searchView = searchItem.actionView as SearchView
+
+                searchView.onQueryTextChanged { viewModel.searchQuery.value = it }
+
+                val pendingQuery = viewModel.searchQuery.value
+                if (!pendingQuery.isNullOrEmpty()) {
+                    searchItem.expandActionView()
+                    searchView.setQuery(pendingQuery, false)
+                }
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    menu.findItem(R.id.action_hide_cpmpleted_items).isChecked =
+                        viewModel.preferencesFlow.first().hideCompleted
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_sort_byname -> {
+                        viewModel.onSortOrderSelected(SortOrder.BY_NAME)
+                        true
+                    }
+
+                    R.id.action_sort_bydatecreated -> {
+                        viewModel.onSortOrderSelected(SortOrder.BY_DATE)
+                        true
+                    }
+
+                    R.id.action_hide_cpmpleted_items -> {
+                        menuItem.isChecked = !menuItem.isChecked
+                        viewModel.onHideCompletedClick(menuItem.isChecked)
+                        true
+                    }
+
+                    R.id.action_delete_all_comp_tasks -> {
+                        val action = TasksFragmentDirections.actionGlobalDeleteAllCompletedTasksDialogFragment()
+                        findNavController().navigate(action)
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onItemClick(task: Task) {
@@ -126,59 +197,11 @@ class TasksFragment : Fragment(R.layout.fragment_tasks), TaskAdapter.OnItemClick
         viewModel.onTaskCheckedChanged(task, isChecked)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_fragment_tasks, menu)
-
-        val searchItem = menu.findItem(R.id.action_search)
-        searchView = searchItem.actionView as SearchView
-
-        searchView.onQueryTextChanged { viewModel.searchQuery.value = it }
-
-        val pendingQuery = viewModel.searchQuery.value
-        if (!pendingQuery.isNullOrEmpty()) {
-            searchItem.expandActionView()
-            searchView.setQuery(pendingQuery, false)
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            menu.findItem(R.id.action_hide_cpmpleted_items).isChecked =
-                viewModel.preferencesFlow.first().hideCompleted
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         if (::searchView.isInitialized) {
             searchView.setOnQueryTextListener(null)
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_sort_byname -> {
-                viewModel.onSortOrderSelected(SortOrder.BY_NAME)
-                true
-            }
-
-            R.id.action_sort_bydatecreated -> {
-                viewModel.onSortOrderSelected(SortOrder.BY_DATE)
-                true
-            }
-
-            R.id.action_hide_cpmpleted_items -> {
-                item.isChecked = !item.isChecked
-                viewModel.onHideCompletedClick(item.isChecked)
-                true
-            }
-
-            R.id.action_delete_all_comp_tasks -> {
-                val action =
-                    TasksFragmentDirections.actionGlobalDeleteAllCompletedTasksDialogFragment()
-                findNavController().navigate(action)
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
+        _binding = null
     }
 }
