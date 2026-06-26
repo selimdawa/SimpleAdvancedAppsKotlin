@@ -54,15 +54,14 @@ class CategoriesFragment : Fragment() {
 
     private fun prepareRecyclerView() {
         categoriesAdapter = CategoriesAdapter()
-        binding.rvCategories.apply {
-            adapter = categoriesAdapter
-        }
+        binding.rvCategories.adapter = categoriesAdapter
     }
 
     private fun onCategoryClick() {
         categoriesAdapter.onItemClick = { category ->
-            val intent = Intent(requireContext(), CategoryMealsActivity::class.java)
-            intent.putExtra(HomeFragment.CATEGORY_NAME, category.strCategory)
+            val intent = Intent(requireContext(), CategoryMealsActivity::class.java).apply {
+                putExtra(HomeFragment.CATEGORY_NAME, category.strCategory)
+            }
             startActivity(intent)
         }
     }

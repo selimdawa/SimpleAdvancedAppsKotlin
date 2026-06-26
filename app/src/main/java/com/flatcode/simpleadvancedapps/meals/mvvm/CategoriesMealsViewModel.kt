@@ -13,7 +13,8 @@ import timber.log.Timber
 
 class CategoriesMealsViewModel : ViewModel() {
 
-    val mealsLiveData = MutableLiveData<List<MealsByCategory>>()
+    private val _mealsLiveData = MutableLiveData<List<MealsByCategory>>()
+    val mealsLiveData: LiveData<List<MealsByCategory>> get() = _mealsLiveData
 
     fun getMealsByCategory(categoryName: String) {
         RetrofitInstance.api.getMealsByCategory(categoryName)
@@ -21,16 +22,14 @@ class CategoriesMealsViewModel : ViewModel() {
                 override fun onResponse(
                     call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>,
                 ) {
-                    response.body()?.let { mealsList -> mealsLiveData.value = mealsList.meals }
+                    response.body()?.let { mealsList -> _mealsLiveData.value = mealsList.meals }
                 }
 
                 override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
-                    Timber.tag("CategoryMealsViewModel").e(t.message.toString())
+                    Timber.tag("CategoryMealsViewModel").e(t.message.orEmpty())
                 }
             })
     }
 
-    fun observeCategoriesMealsLiveData(): LiveData<List<MealsByCategory>> {
-        return mealsLiveData
-    }
+    fun observeCategoriesMealsLiveData(): LiveData<List<MealsByCategory>> = mealsLiveData
 }

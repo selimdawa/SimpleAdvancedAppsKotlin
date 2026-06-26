@@ -23,10 +23,11 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealId: String
     private lateinit var mealName: String
     private lateinit var mealThumb: String
-    private lateinit var binding: ActivityMealBinding
+    private var _binding: ActivityMealBinding? = null
+    private val binding get() = _binding!!
     private lateinit var mealMvvm: MealViewModel
     private lateinit var youtubeLink: String
-    private val context = this@MealActivity
+    private val context = this
 
     private var mealToSave: Meal? = null
     private var isMealFavorite = false
@@ -34,7 +35,7 @@ class MealActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityMealBinding.inflate(layoutInflater)
+        _binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val mealDatabase = MealDatabase.getInstance(this)
@@ -55,11 +56,9 @@ class MealActivity : AppCompatActivity() {
     private fun observeFavoriteStatus() {
         mealMvvm.observeFavoritesMealsLiveData().observe(this) { favoritesList ->
             isMealFavorite = favoritesList.any { it.idMeal == mealId }
-            if (isMealFavorite) {
-                binding.btnAddToFav.setImageResource(R.drawable.ic_heart_selected)
-            } else {
-                binding.btnAddToFav.setImageResource(R.drawable.ic_heart_unselected)
-            }
+            binding.btnAddToFav.setImageResource(
+                if (isMealFavorite) R.drawable.ic_heart_selected else R.drawable.ic_heart_unselected
+            )
         }
     }
 
@@ -68,8 +67,7 @@ class MealActivity : AppCompatActivity() {
             mealToSave?.let { meal ->
                 if (isMealFavorite) {
                     mealMvvm.deleteMeal(meal)
-                    Toast.makeText(this, getString(R.string.meal_removed), Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this, getString(R.string.meal_removed), Toast.LENGTH_SHORT).show()
                 } else {
                     mealMvvm.insertMeal(meal)
                     Toast.makeText(this, getString(R.string.meal_saved), Toast.LENGTH_LONG).show()
@@ -92,10 +90,11 @@ class MealActivity : AppCompatActivity() {
             onResponseCase()
             mealToSave = value
 
-            binding.tvCategory.text =
-                getString(R.string.category_placeholder, value?.strCategory.orEmpty())
-            binding.tvArea.text = getString(R.string.area_placeholder, value?.strArea.orEmpty())
-            binding.tvInstructionsSteps.text = value?.strInstructions.orEmpty()
+            with(binding) {
+                tvCategory.text = getString(R.string.category_placeholder, value?.strCategory.orEmpty())
+                tvArea.text = getString(R.string.area_placeholder, value?.strArea.orEmpty())
+                tvInstructionsSteps.text = value?.strInstructions.orEmpty()
+            }
 
             youtubeLink = value?.strYoutube.toString()
         }
@@ -106,37 +105,43 @@ class MealActivity : AppCompatActivity() {
             .load(mealThumb)
             .into(binding.imgMealDetail)
 
-        binding.collapsingToolbar.title = mealName
-        binding.collapsingToolbar.setCollapsedTitleTextColor(
-            ContextCompat.getColor(
-                this,
-                R.color.white
-            )
-        )
-        binding.collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(this, R.color.white))
+        with(binding.collapsingToolbar) {
+            title = mealName
+            setCollapsedTitleTextColor(ContextCompat.getColor(this@MealActivity, R.color.white))
+            setExpandedTitleColor(ContextCompat.getColor(this@MealActivity, R.color.white))
+        }
     }
 
     private fun getMealInformationFromIntent() {
-        mealId = intent.getStringExtra(HomeFragment.MEAL_ID)!!
-        mealName = intent.getStringExtra(HomeFragment.MEAL_NAME)!!
-        mealThumb = intent.getStringExtra(HomeFragment.MEAL_THUMB)!!
+        mealId = intent.getStringExtra(HomeFragment.MEAL_ID).orEmpty()
+        mealName = intent.getStringExtra(HomeFragment.MEAL_NAME).orEmpty()
+        mealThumb = intent.getStringExtra(HomeFragment.MEAL_THUMB).orEmpty()
     }
 
     private fun loadingCase() {
-        binding.progressBar.visibility = View.VISIBLE
-        binding.btnAddToFav.visibility = View.INVISIBLE
-        binding.tvArea.visibility = View.INVISIBLE
-        binding.tvCategory.visibility = View.INVISIBLE
-        binding.tvInstructions.visibility = View.INVISIBLE
-        binding.imgYoutube.visibility = View.INVISIBLE
+        with(binding) {
+            progressBar.visibility = View.VISIBLE
+            btnAddToFav.visibility = View.INVISIBLE
+            tvArea.visibility = View.INVISIBLE
+            tvCategory.visibility = View.INVISIBLE
+            tvInstructions.visibility = View.INVISIBLE
+            imgYoutube.visibility = View.INVISIBLE
+        }
     }
 
     private fun onResponseCase() {
-        binding.progressBar.visibility = View.INVISIBLE
-        binding.btnAddToFav.visibility = View.VISIBLE
-        binding.tvArea.visibility = View.VISIBLE
-        binding.tvCategory.visibility = View.VISIBLE
-        binding.tvInstructions.visibility = View.VISIBLE
-        binding.imgYoutube.visibility = View.VISIBLE
+        with(binding) {
+            progressBar.visibility = View.INVISIBLE
+            btnAddToFav.visibility = View.VISIBLE
+            tvArea.visibility = View.VISIBLE
+            tvCategory.visibility = View.VISIBLE
+            tvInstructions.visibility = View.VISIBLE
+            imgYoutube.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

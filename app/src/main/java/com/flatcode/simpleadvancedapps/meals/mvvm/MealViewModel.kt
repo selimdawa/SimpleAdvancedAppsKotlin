@@ -14,40 +14,39 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import kotlin.collections.get
 
-class MealViewModel(val mealDatabase: MealDatabase) : ViewModel() {
+class MealViewModel(private val mealDatabase: MealDatabase) : ViewModel() {
 
-    private var mealDetailsLiveData = MutableLiveData<Meal>()
+    private val _mealDetailsLiveData = MutableLiveData<Meal>()
+    val mealDetailsLiveData: LiveData<Meal> get() = _mealDetailsLiveData
 
     fun getMealDetail(id: String) {
         RetrofitInstance.api.getMealDetails(id).enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                if (response.body() != null) {
-                    mealDetailsLiveData.value = response.body()!!.meals[0]
-                } else
-                    return
+                response.body()?.meals?.firstOrNull()?.let { meal ->
+                    _mealDetailsLiveData.value = meal
+                }
             }
 
             override fun onFailure(call: Call<MealList>, t: Throwable) {
-                Timber.tag("MealActivity").d(t.message.toString())
+                Timber.tag("MealActivity").d(t.message.orEmpty())
             }
         })
     }
 
-    fun observeMealDetailsLiveData(): LiveData<Meal> {
-        return mealDetailsLiveData
-    }
+    fun observeMealDetailsLiveData(): LiveData<Meal> = mealDetailsLiveData
 
     fun insertMeal(meal: Meal) {
-        viewModelScope.launch(Dispatchers.IO) { mealDatabase.mealDao().upsert(meal) }
+        viewModelScope.launch(Dispatchers.IO) {
+            mealDatabase.mealDao().upsert(meal)
+        }
     }
 
-    fun observeFavoritesMealsLiveData(): LiveData<List<Meal>> {
-        return mealDatabase.mealDao().getAllMeals()
-    }
+    fun observeFavoritesMealsLiveData(): LiveData<List<Meal>> = mealDatabase.mealDao().getAllMeals()
 
     fun deleteMeal(meal: Meal) {
-        viewModelScope.launch(Dispatchers.IO) { mealDatabase.mealDao().delete(meal) }
+        viewModelScope.launch(Dispatchers.IO) {
+            mealDatabase.mealDao().delete(meal)
+        }
     }
 }

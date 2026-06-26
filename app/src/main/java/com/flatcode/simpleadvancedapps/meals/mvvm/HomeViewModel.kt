@@ -16,22 +16,27 @@ import timber.log.Timber
 
 class HomeViewModel(private val mealDatabase: MealDatabase) : ViewModel() {
 
-    val randomMealLiveData = MutableLiveData<Meal>()
-    val popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
-    val categoriesLiveData = MutableLiveData<List<Category>>()
-    var favoritesMealsLiveData = mealDatabase.mealDao().getAllMeals()
+    private val _randomMealLiveData = MutableLiveData<Meal>()
+    val randomMealLiveData: LiveData<Meal> get() = _randomMealLiveData
+
+    private val _popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
+    val popularItemsLiveData: LiveData<List<MealsByCategory>> get() = _popularItemsLiveData
+
+    private val _categoriesLiveData = MutableLiveData<List<Category>>()
+    val categoriesLiveData: LiveData<List<Category>> get() = _categoriesLiveData
+
+    val favoritesMealsLiveData: LiveData<List<Meal>> = mealDatabase.mealDao().getAllMeals()
 
     fun getRandomMeal() {
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                if (response.body() != null) {
-                    val randomMeal: Meal = response.body()!!.meals[0]
-                    randomMealLiveData.value = randomMeal
+                response.body()?.meals?.firstOrNull()?.let { randomMeal ->
+                    _randomMealLiveData.value = randomMeal
                 }
             }
 
             override fun onFailure(call: Call<MealList>, t: Throwable) {
-                Timber.d(t.message.toString())
+                Timber.d(t.message.orEmpty())
             }
         })
     }
@@ -43,14 +48,13 @@ class HomeViewModel(private val mealDatabase: MealDatabase) : ViewModel() {
                     call: Call<MealsByCategoryList>,
                     response: Response<MealsByCategoryList>,
                 ) {
-                    if (response.body() != null) {
-                        val popularItem = response.body()!!.meals
-                        popularItemsLiveData.value = popularItem
+                    response.body()?.meals?.let { popularItem ->
+                        _popularItemsLiveData.value = popularItem
                     }
                 }
 
                 override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
-                    Timber.d(t.message.toString())
+                    Timber.d(t.message.orEmpty())
                 }
             })
     }
@@ -59,12 +63,12 @@ class HomeViewModel(private val mealDatabase: MealDatabase) : ViewModel() {
         RetrofitInstance.api.getCategories().enqueue(object : Callback<CategoryList> {
             override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
                 response.body()?.let { categoryList ->
-                    categoriesLiveData.value = categoryList.categories
+                    _categoriesLiveData.value = categoryList.categories
                 }
             }
 
             override fun onFailure(call: Call<CategoryList>, t: Throwable) {
-                Timber.e(t.message.toString())
+                Timber.e(t.message.orEmpty())
             }
         })
     }
@@ -81,19 +85,11 @@ class HomeViewModel(private val mealDatabase: MealDatabase) : ViewModel() {
         }
     }
 
-    fun observeRandomMealLiveData(): LiveData<Meal> {
-        return randomMealLiveData
-    }
+    fun observeRandomMealLiveData(): LiveData<Meal> = randomMealLiveData
 
-    fun observerPopularItemsLiveData(): LiveData<List<MealsByCategory>> {
-        return popularItemsLiveData
-    }
+    fun observerPopularItemsLiveData(): LiveData<List<MealsByCategory>> = popularItemsLiveData
 
-    fun observeCategoriesLiveData(): LiveData<List<Category>> {
-        return categoriesLiveData
-    }
+    fun observeCategoriesLiveData(): LiveData<List<Category>> = categoriesLiveData
 
-    fun observeFavoritesMealsLiveData(): LiveData<List<Meal>> {
-        return favoritesMealsLiveData
-    }
+    fun observeFavoritesMealsLiveData(): LiveData<List<Meal>> = favoritesMealsLiveData
 }

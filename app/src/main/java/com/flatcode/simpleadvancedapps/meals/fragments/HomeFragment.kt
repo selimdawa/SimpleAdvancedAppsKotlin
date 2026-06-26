@@ -72,17 +72,16 @@ class HomeFragment : Fragment() {
 
     private fun onCategoryClick() {
         categoriesAdapter.onItemClick = { category ->
-            val intent = Intent(requireContext(), CategoryMealsActivity::class.java)
-            intent.putExtra(CATEGORY_NAME, category.strCategory)
+            val intent = Intent(requireContext(), CategoryMealsActivity::class.java).apply {
+                putExtra(CATEGORY_NAME, category.strCategory)
+            }
             startActivity(intent)
         }
     }
 
     private fun prepareCategoriesRecyclerView() {
         categoriesAdapter = CategoriesAdapter()
-        binding.recViewCategories.apply {
-            adapter = categoriesAdapter
-        }
+        binding.recViewCategories.adapter = categoriesAdapter
     }
 
     private fun observerCategoriesLiveData() {
@@ -93,18 +92,17 @@ class HomeFragment : Fragment() {
 
     private fun onPopularItemClick() {
         popularItemsAdapter.onItemClick = { meal ->
-            val intent = Intent(requireContext(), MealActivity::class.java)
-            intent.putExtra(MEAL_ID, meal.idMeal)
-            intent.putExtra(MEAL_NAME, meal.strMeal)
-            intent.putExtra(MEAL_THUMB, meal.strMealThumb)
+            val intent = Intent(requireContext(), MealActivity::class.java).apply {
+                putExtra(MEAL_ID, meal.idMeal)
+                putExtra(MEAL_NAME, meal.strMeal)
+                putExtra(MEAL_THUMB, meal.strMealThumb)
+            }
             startActivity(intent)
         }
     }
 
     private fun preparePopularItemsRecyclerView() {
-        binding.recPopular.apply {
-            adapter = popularItemsAdapter
-        }
+        binding.recPopular.adapter = popularItemsAdapter
     }
 
     private fun observePopularItemsLiveData() {
@@ -116,10 +114,11 @@ class HomeFragment : Fragment() {
     private fun onRandomMealClick() {
         binding.randomCardView.setOnClickListener {
             if (::randomMeal.isInitialized) {
-                val intent = Intent(requireContext(), MealActivity::class.java)
-                intent.putExtra(MEAL_ID, randomMeal.idMeal)
-                intent.putExtra(MEAL_NAME, randomMeal.strMeal)
-                intent.putExtra(MEAL_THUMB, randomMeal.strMealThumb)
+                val intent = Intent(requireContext(), MealActivity::class.java).apply {
+                    putExtra(MEAL_ID, randomMeal.idMeal)
+                    putExtra(MEAL_NAME, randomMeal.strMeal)
+                    putExtra(MEAL_THUMB, randomMeal.strMealThumb)
+                }
                 startActivity(intent)
             }
         }

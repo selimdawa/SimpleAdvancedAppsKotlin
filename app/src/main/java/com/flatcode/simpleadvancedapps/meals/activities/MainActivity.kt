@@ -3,7 +3,7 @@ package com.flatcode.simpleadvancedapps.meals.activities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.Unit.DATA
@@ -21,20 +21,26 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this, homeViewModelFactory)[HomeViewModel::class.java]
     }
 
-    private lateinit var binding: ActivityMainMealsBinding
-    private val context = this@MainActivity
+    private var _binding: ActivityMainMealsBinding? = null
+    private val binding get() = _binding!!
+    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityMainMealsBinding.inflate(layoutInflater)
+        _binding = ActivityMainMealsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.toolbar.nameSpace.text = DATA.MEALS
 
         val bottomNavigationView = binding.btmNav
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment_container)
+        val navController = findNavController(R.id.nav_host_fragment_container)
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

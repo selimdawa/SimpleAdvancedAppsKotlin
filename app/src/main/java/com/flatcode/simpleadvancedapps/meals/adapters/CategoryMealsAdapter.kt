@@ -9,40 +9,35 @@ import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.databinding.ItemMealBinding
 import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategory
 
-class CategoryMealsAdapter : ListAdapter<MealsByCategory, CategoryMealsAdapter.CategoryMealsViewHolder>(MealDiffCallback) {
+class CategoryMealsAdapter : ListAdapter<MealsByCategory, CategoryMealsViewHolder>(MealDiffCallback) {
 
     var onItemClick: ((MealsByCategory) -> Unit)? = null
 
-    class CategoryMealsViewHolder(val binding: ItemMealBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryMealsViewHolder {
-        return CategoryMealsViewHolder(
-            ItemMealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        val binding = ItemMealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CategoryMealsViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CategoryMealsViewHolder, position: Int) {
         val meal = getItem(position)
 
-        Glide.with(holder.itemView.context)
-            .load(meal.strMealThumb)
-            .into(holder.binding.imgMeal)
+        with(holder.binding) {
+            Glide.with(root.context)
+                .load(meal.strMealThumb)
+                .into(imgMeal)
 
-        holder.binding.tvMealName.text = meal.strMeal
-
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(meal)
+            tvMealName.text = meal.strMeal
+            root.setOnClickListener { onItemClick?.invoke(meal) }
         }
     }
 
     private object MealDiffCallback : DiffUtil.ItemCallback<MealsByCategory>() {
-        override fun areItemsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean {
-            return oldItem.idMeal == newItem.idMeal
-        }
+        override fun areItemsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean =
+            oldItem.idMeal == newItem.idMeal
 
-        override fun areContentsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean {
-            return oldItem == newItem
-        }
+        override fun areContentsTheSame(oldItem: MealsByCategory, newItem: MealsByCategory): Boolean =
+            oldItem == newItem
     }
 }
+
+class CategoryMealsViewHolder(val binding: ItemMealBinding) : RecyclerView.ViewHolder(binding.root)

@@ -9,40 +9,35 @@ import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.databinding.ItemCategoryMealBinding
 import com.flatcode.simpleadvancedapps.meals.pojo.Category
 
-class CategoriesAdapter : ListAdapter<Category, CategoriesAdapter.CategoryViewHolder>(CategoryDiffCallback) {
+class CategoriesAdapter : ListAdapter<Category, CategoryViewHolder>(CategoryDiffCallback) {
 
     var onItemClick: ((Category) -> Unit)? = null
 
-    class CategoryViewHolder(val binding: ItemCategoryMealBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        return CategoryViewHolder(
-            ItemCategoryMealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        val binding = ItemCategoryMealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CategoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = getItem(position)
 
-        Glide.with(holder.itemView.context)
-            .load(category.strCategoryThumb)
-            .into(holder.binding.imgCategory)
+        with(holder.binding) {
+            Glide.with(root.context)
+                .load(category.strCategoryThumb)
+                .into(imgCategory)
 
-        holder.binding.tvCategoryName.text = category.strCategory
-
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(category)
+            tvCategoryName.text = category.strCategory
+            root.setOnClickListener { onItemClick?.invoke(category) }
         }
     }
 
     private object CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
-        override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
-            return oldItem.idCategory == newItem.idCategory
-        }
+        override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean =
+            oldItem.idCategory == newItem.idCategory
 
-        override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
-            return oldItem == newItem
-        }
+        override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean =
+            oldItem == newItem
     }
 }
+
+class CategoryViewHolder(val binding: ItemCategoryMealBinding) : RecyclerView.ViewHolder(binding.root)

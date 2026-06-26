@@ -77,9 +77,7 @@ class FavoriteFragment : Fragment() {
 
     private fun prepareRecyclerView() {
         favoritesAdapter = FavoritesMealsAdapter()
-        binding.rvFavorites.apply {
-            adapter = favoritesAdapter
-        }
+        binding.rvFavorites.adapter = favoritesAdapter
     }
 
     private fun observeFavorites() {
@@ -90,10 +88,11 @@ class FavoriteFragment : Fragment() {
 
     private fun onFavoriteItemClick() {
         favoritesAdapter.onItemClick = { meal ->
-            val intent = Intent(requireContext(), MealActivity::class.java)
-            intent.putExtra(HomeFragment.MEAL_ID, meal.idMeal)
-            intent.putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
-            intent.putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+            val intent = Intent(requireContext(), MealActivity::class.java).apply {
+                putExtra(HomeFragment.MEAL_ID, meal.idMeal)
+                putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
+                putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+            }
             startActivity(intent)
         }
     }

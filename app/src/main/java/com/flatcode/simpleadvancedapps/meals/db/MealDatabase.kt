@@ -18,12 +18,8 @@ abstract class MealDatabase : RoomDatabase() {
         fun getInstance(context: Context): MealDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    MealDatabase::class.java,
-                    "meal.db"
-                )
-                    .fallbackToDestructiveMigration(dropAllTables = true)
-                    .build()
+                    context.applicationContext, MealDatabase::class.java, "meal.db"
+                ).fallbackToDestructiveMigration(dropAllTables = true).build()
                 INSTANCE = instance
                 instance
             }

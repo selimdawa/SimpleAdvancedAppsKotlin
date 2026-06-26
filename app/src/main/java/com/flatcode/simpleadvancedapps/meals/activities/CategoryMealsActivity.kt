@@ -14,15 +14,16 @@ import com.flatcode.simpleadvancedapps.meals.mvvm.CategoriesMealsViewModel
 
 class CategoryMealsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityCategoryMealsBinding
+    private var _binding: ActivityCategoryMealsBinding? = null
+    private val binding get() = _binding!!
     private lateinit var categoryMealsViewModel: CategoriesMealsViewModel
     private lateinit var categoryMealsAdapter: CategoryMealsAdapter
-    private val context = this@CategoryMealsActivity
+    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityCategoryMealsBinding.inflate(layoutInflater)
+        _binding = ActivityCategoryMealsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.toolbar.nameSpace.text = DATA.Category_Meals
@@ -31,7 +32,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         onPopularItemClick()
 
         categoryMealsViewModel = ViewModelProvider(this)[CategoriesMealsViewModel::class.java]
-        categoryMealsViewModel.getMealsByCategory(intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!)
+        categoryMealsViewModel.getMealsByCategory(intent.getStringExtra(HomeFragment.CATEGORY_NAME).orEmpty())
         categoryMealsViewModel.observeCategoriesMealsLiveData().observe(this) { mealList ->
             binding.toolbar.nameSpace.text = getString(
                 R.string.category_meals_count,
@@ -44,18 +45,22 @@ class CategoryMealsActivity : AppCompatActivity() {
 
     private fun onPopularItemClick() {
         categoryMealsAdapter.onItemClick = { meal ->
-            val intent = Intent(applicationContext, MealActivity::class.java)
-            intent.putExtra(HomeFragment.MEAL_ID, meal.idMeal)
-            intent.putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
-            intent.putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+            val intent = Intent(applicationContext, MealActivity::class.java).apply {
+                putExtra(HomeFragment.MEAL_ID, meal.idMeal)
+                putExtra(HomeFragment.MEAL_NAME, meal.strMeal)
+                putExtra(HomeFragment.MEAL_THUMB, meal.strMealThumb)
+            }
             startActivity(intent)
         }
     }
 
     private fun prepareRecyclerView() {
         categoryMealsAdapter = CategoryMealsAdapter()
-        binding.rvMeals.apply {
-            adapter = categoryMealsAdapter
-        }
+        binding.rvMeals.adapter = categoryMealsAdapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
