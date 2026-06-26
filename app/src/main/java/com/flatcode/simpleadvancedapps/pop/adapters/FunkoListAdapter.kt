@@ -12,19 +12,19 @@ import com.squareup.picasso.Picasso
 class FunkoListAdapter(private val clickListener: PopListener) :
     ListAdapter<PopItem, FunkoListAdapter.FunkoListViewHolder>(DiffCallback) {
 
-    inner class FunkoListViewHolder(private var binding: ItemPopBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+class FunkoListViewHolder(private var binding: ItemPopBinding) :
+    RecyclerView.ViewHolder(binding.root)
 
-        fun bind(clickListener: PopListener, pop: PopItem) {
-            binding.pop = pop
-            binding.clickListener = clickListener
-            binding.executePendingBindings()
-            Picasso.get()
-                .load(pop.img)
-                .resize(320, 320)
-                .into(binding.imageView)
-        }
-    }
+    //    fun bind(clickListener: PopListener, pop: PopItem) {
+    //        binding.pop = pop
+    //        binding.clickListener = clickListener
+    //        binding.executePendingBindings()
+    //        Picasso.get()
+    //            .load(pop.img)
+    //            .resize(320, 320)
+    //            .into(binding.imageView)
+    //    }
+    //}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FunkoListViewHolder {
         return FunkoListViewHolder(
@@ -34,7 +34,7 @@ class FunkoListAdapter(private val clickListener: PopListener) :
 
     override fun onBindViewHolder(holder: FunkoListViewHolder, position: Int) {
         val pop = getItem(position)
-        holder.bind(clickListener, pop)
+        //holder.bind(clickListener, pop)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<PopItem>() {

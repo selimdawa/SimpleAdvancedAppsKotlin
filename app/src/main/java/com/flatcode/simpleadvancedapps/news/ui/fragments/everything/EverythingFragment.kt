@@ -1,7 +1,8 @@
 package com.flatcode.simpleadvancedapps.news.ui.fragments.everything
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentEverythingBinding
 import com.flatcode.simpleadvancedapps.news.base.BaseFragment
@@ -11,12 +12,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class EverythingFragment :
-    BaseFragment<FragmentEverythingBinding, EverythingViewModel>(R.layout.fragment_everything) {
+class EverythingFragment : BaseFragment<FragmentEverythingBinding, EverythingViewModel>(R.layout.fragment_everything) {
 
-    override val binding by viewBinding(FragmentEverythingBinding::bind)
+    private var _binding: FragmentEverythingBinding? = null
+    override val binding get() = _binding!!
     override val viewModel: EverythingViewModel by viewModels()
     private val adapter = EverythingAdapter()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _binding = FragmentEverythingBinding.bind(view)
+        super.onViewCreated(view, savedInstanceState)
+        initialize()
+        setupSubscribes()
+    }
 
     override fun initialize() {
         setupRecyclerView()
@@ -26,23 +34,29 @@ class EverythingFragment :
         subscribesEverything()
     }
 
-
     private fun setupRecyclerView() {
         binding.recyclerView.adapter = adapter
     }
 
     private fun subscribesEverything() {
-        viewModel.fetchEverything().observe(viewLifecycleOwner) {
-            when (it) {
+        viewModel.fetchEverything().observe(viewLifecycleOwner) { resource ->
+            when (resource) {
                 is Resource.Error -> {
-                    Timber.e(it.message.toString())
+                    Timber.e(resource.message.orEmpty())
                 }
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    adapter.submitList(it.data!!.articles)
+                    resource.data?.articles?.let { articles ->
+                        adapter.submitList(articles)
+                    }
                 }
                 else -> {}
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

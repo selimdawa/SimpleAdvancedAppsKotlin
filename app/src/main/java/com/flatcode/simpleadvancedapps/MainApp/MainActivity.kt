@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
         adapter = MainAdapter(context)
         binding.recyclerView.adapter = adapter
 
-        mainViewModel?.dataMain?.observe(this) { mainArrayList ->
-            adapter?.addList(mainArrayList)
+        mainViewModel?.dataMain?.observe(this) { mainList ->
+            adapter?.addList(mainList as? ArrayList<Main> ?: ArrayList(mainList.orEmpty()))
         }
         mainViewModel?.getItems(binding.recyclerView, binding.bar)
     }
@@ -72,8 +72,8 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
         adapterInfo = MainInfoAdapter(context)
         recyclerView.adapter = adapterInfo
 
-        mainInfoViewModel?.dataMainInfo?.observe(this) { mainInfoArrayList ->
-            adapterInfo?.addList(mainInfoArrayList)
+        mainInfoViewModel?.dataMainInfo?.observe(this) { mainInfoList ->
+            adapterInfo?.submitList(mainInfoList)
         }
         mainInfoViewModel?.getInfoItems()
 

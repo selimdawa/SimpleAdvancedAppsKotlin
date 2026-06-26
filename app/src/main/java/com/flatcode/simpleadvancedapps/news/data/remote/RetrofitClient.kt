@@ -11,12 +11,13 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitClient {
 
-    private val retrofit =
-        Retrofit.Builder().baseUrl(DATA.BASE_URL_NEWS).client(provideOkHttpClient())
-            .addConverterFactory(GsonConverterFactory.create()).build()
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(DATA.BASE_URL_NEWS)
+        .client(provideOkHttpClient())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-    private fun provideOkHttpClient() = OkHttpClient()
-        .newBuilder()
+    private fun provideOkHttpClient() = OkHttpClient().newBuilder()
         .addInterceptor(ApiKeyInterceptor())
         .addInterceptor(provideLoggingInterceptor())
         .callTimeout(30, TimeUnit.SECONDS)
@@ -28,5 +29,5 @@ class RetrofitClient {
     private fun provideLoggingInterceptor() =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    fun provideNewsApiService() = retrofit.create(NewsApiServices::class.java)!!
+    fun provideNewsApiService(): NewsApiServices = retrofit.create(NewsApiServices::class.java)
 }
