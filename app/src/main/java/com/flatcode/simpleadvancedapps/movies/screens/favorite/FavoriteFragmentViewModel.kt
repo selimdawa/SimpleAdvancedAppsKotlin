@@ -7,7 +7,5 @@ import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
 
 class FavoriteFragmentViewModel : ViewModel() {
 
-    fun getAllMovies(): LiveData<List<MovieItemModel>> {
-        return REALIZATION.allMovies
-    }
+    fun getAllMovies(): LiveData<List<MovieItemModel>> = REALIZATION.allMovies
 }

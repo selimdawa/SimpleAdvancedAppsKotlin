@@ -13,16 +13,16 @@ abstract class MoviesRoomDatabase : RoomDatabase() {
     abstract fun getMovieDao(): MoviesDao
 
     companion object {
+        @Volatile
         private var database: MoviesRoomDatabase? = null
+        private val lock = Any()
 
-        fun getInstance(context: Context): MoviesRoomDatabase {
-            return if (database == null) {
-                database =
-                    Room.databaseBuilder(context, MoviesRoomDatabase::class.java, "db").build()
-                database as MoviesRoomDatabase
-            } else {
-                database as MoviesRoomDatabase
-            }
+        fun getInstance(context: Context): MoviesRoomDatabase = database ?: synchronized(lock) {
+            database ?: Room.databaseBuilder(
+                context.applicationContext,
+                MoviesRoomDatabase::class.java,
+                "db"
+            ).build().also { database = it }
         }
     }
 }

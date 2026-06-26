@@ -5,7 +5,6 @@ import com.flatcode.simpleadvancedapps.movies.models.MoviesModel
 import retrofit2.Response
 
 class RetrofitRepository {
-    suspend fun getMovie(): Response<MoviesModel> {
-        return RetrofitInstance.api.getPopularMovie()
-    }
+
+    suspend fun getMovie(): Response<MoviesModel> = RetrofitInstance.api.getPopularMovie()
 }

@@ -15,31 +15,31 @@ import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
 
 class MainFragment : Fragment() {
 
-    private var mBinding: FragmentMainMovieBinding? = null
-    private val binding get() = mBinding!!
-    lateinit var recyclerView: RecyclerView
+    private var _binding: FragmentMainMovieBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
     private val adapter by lazy { MainAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
-        mBinding = FragmentMainMovieBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
+        _binding = FragmentMainMovieBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init()
     }
 
     private fun init() {
-        binding.toolbar.nameSpace.text = DATA.MOVIE
-        binding.toolbar.imageLeft.visibility = View.VISIBLE
-        binding.toolbar.imageLeft.setImageResource(R.drawable.ic_baseline_favorite_24)
-        binding.toolbar.imageLeft.setOnClickListener {
-            MAIN.navController.navigate(R.id.action_mainFragment_to_favoriteFragment)
+        with(binding.toolbar) {
+            nameSpace.text = DATA.MOVIE
+            imageLeft.visibility = View.VISIBLE
+            imageLeft.setImageResource(R.drawable.ic_baseline_favorite_24)
+            imageLeft.setOnClickListener {
+                MAIN.navController.navigate(R.id.action_mainFragment_to_favoriteFragment)
+            }
         }
 
         val viewModel = ViewModelProvider(this)[MainFragmentViewModel::class.java]
@@ -47,18 +47,23 @@ class MainFragment : Fragment() {
         recyclerView = binding.rvMain
         recyclerView.adapter = adapter
         viewModel.getMoviesRetrofit()
-        viewModel.myMovies.observe(viewLifecycleOwner) { list -> adapter.setList(list.body()!!.results) }
+        viewModel.myMovies.observe(viewLifecycleOwner) { list ->
+            list.body()?.results?.let { results ->
+                adapter.submitList(results)
+            }
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mBinding = null
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
         fun clickMovie(model: MovieItemModel) {
-            val bundle = Bundle()
-            bundle.putSerializable("movie", model)
+            val bundle = Bundle().apply {
+                putSerializable("movie", model)
+            }
             MAIN.navController.navigate(R.id.action_mainFragment_to_detailFragment, bundle)
         }
     }

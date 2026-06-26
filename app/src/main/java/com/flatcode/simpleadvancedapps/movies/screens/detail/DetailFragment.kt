@@ -1,5 +1,6 @@
 package com.flatcode.simpleadvancedapps.movies.screens.detail
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,19 +18,24 @@ import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
 
 class DetailFragment : Fragment() {
 
-    private var mBinding: FragmentDetailMovieBinding? = null
-    private val binding get() = mBinding!!
-    lateinit var currentMovie: MovieItemModel
+    private var _binding: FragmentDetailMovieBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var currentMovie: MovieItemModel
     private var isFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        mBinding = FragmentDetailMovieBinding.inflate(inflater, container, false)
-        currentMovie = arguments?.getSerializable("movie") as MovieItemModel
-        return binding.root
+        _binding = FragmentDetailMovieBinding.inflate(inflater, container, false)
 
+        currentMovie = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getSerializable("movie", MovieItemModel::class.java)!!
+        } else {
+            arguments?.getSerializable("movie") as MovieItemModel
+        }
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,36 +48,37 @@ class DetailFragment : Fragment() {
         val valueBool = SaveShared.getFavorite(MAIN, currentMovie.id.toString())
         val viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
-        if (isFavorite != valueBool) {
-            binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-        } else {
-            binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-        }
+        binding.imgDetailFavorite.setImageResource(
+            if (isFavorite != valueBool) R.drawable.ic_baseline_favorite_24
+            else R.drawable.ic_baseline_favorite_border_24
+        )
 
         Glide.with(MAIN).load("$IMAGE_MOVIE${currentMovie.poster_path}")
             .placeholder(R.color.image_profile).into(binding.imgDetail)
 
-        binding.tvTitleDetail.text = currentMovie.title
-        binding.tvDateDetail.text = currentMovie.release_date
-        binding.tvDescription.text = currentMovie.overview
+        with(binding) {
+            tvTitleDetail.text = currentMovie.title
+            tvDateDetail.text = currentMovie.release_date
+            tvDescription.text = currentMovie.overview
 
-        binding.imgDetailFavorite.setOnClickListener {
-            isFavorite = if (isFavorite == valueBool) {
-                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-                SaveShared.setFavorite(MAIN, currentMovie.id.toString(), true)
-                viewModel.insert(currentMovie) {}
-                true
-            } else {
-                binding.imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                viewModel.delete(currentMovie) {}
-                SaveShared.setFavorite(MAIN, currentMovie.id.toString(), false)
-                false
+            imgDetailFavorite.setOnClickListener {
+                isFavorite = if (isFavorite == valueBool) {
+                    imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    SaveShared.setFavorite(MAIN, currentMovie.id.toString(), true)
+                    viewModel.insert(currentMovie) {}
+                    true
+                } else {
+                    imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    viewModel.delete(currentMovie) {}
+                    SaveShared.setFavorite(MAIN, currentMovie.id.toString(), false)
+                    false
+                }
             }
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mBinding = null
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

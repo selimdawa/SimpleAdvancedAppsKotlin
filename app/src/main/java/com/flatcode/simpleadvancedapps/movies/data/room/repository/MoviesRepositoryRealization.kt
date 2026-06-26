@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.flatcode.simpleadvancedapps.movies.data.room.dao.MoviesDao
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
 
-class MoviesRepositoryRealization(private val moviesDao: MoviesDao): MoviesRepository {
+class MoviesRepositoryRealization(private val moviesDao: MoviesDao) : MoviesRepository {
 
     override val allMovies: LiveData<List<MovieItemModel>>
         get() = moviesDao.getAllMovies()
@@ -18,5 +18,4 @@ class MoviesRepositoryRealization(private val moviesDao: MoviesDao): MoviesRepos
         moviesDao.delete(movieItemModel)
         onSuccess()
     }
-
 }

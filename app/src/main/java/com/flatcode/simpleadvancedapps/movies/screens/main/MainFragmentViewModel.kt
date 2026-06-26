@@ -2,6 +2,7 @@ package com.flatcode.simpleadvancedapps.movies.screens.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.Unit.DATA.REALIZATION
@@ -15,12 +16,13 @@ import retrofit2.Response
 class MainFragmentViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = RetrofitRepository()
-    val myMovies: MutableLiveData<Response<MoviesModel>> = MutableLiveData()
-    val context = application
+    private val _myMovies = MutableLiveData<Response<MoviesModel>>()
+    val myMovies: LiveData<Response<MoviesModel>> get() = _myMovies
+    private val context = application
 
     fun getMoviesRetrofit() {
         viewModelScope.launch {
-            myMovies.value = repository.getMovie()
+            _myMovies.value = repository.getMovie()
         }
     }
 

@@ -15,22 +15,21 @@ import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
 
 class FavoriteFragment : Fragment() {
 
-    private var mBinding: FragmentFavoriteMovieBinding? = null
-    private val binding get() = mBinding!!
-    lateinit var recyclerView: RecyclerView
+    private var _binding: FragmentFavoriteMovieBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
     private val adapter by lazy { FavoriteAdapter(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        mBinding = FragmentFavoriteMovieBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoriteMovieBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init()
     }
 
@@ -39,19 +38,21 @@ class FavoriteFragment : Fragment() {
         val viewModel = ViewModelProvider(this)[FavoriteFragmentViewModel::class.java]
         recyclerView = binding.rvFavorite
         recyclerView.adapter = adapter
-        viewModel.getAllMovies()
-            .observe(viewLifecycleOwner) { list -> adapter.setList(list.asReversed()) }
+        viewModel.getAllMovies().observe(viewLifecycleOwner) { list ->
+            adapter.submitList(list.asReversed())
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mBinding = null
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
         fun clickMovie(model: MovieItemModel) {
-            val bundle = Bundle()
-            bundle.putSerializable("movie", model)
+            val bundle = Bundle().apply {
+                putSerializable("movie", model)
+            }
             MAIN.navController.navigate(R.id.action_favoriteFragment_to_detailFragment, bundle)
         }
     }
