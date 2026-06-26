@@ -52,19 +52,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-        }
-    }
     buildFeatures {
-        dataBinding = true
         viewBinding = true
         buildConfig = true
     }
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
-    }
+
 }
 
 dependencies {
@@ -132,4 +124,8 @@ dependencies {
     implementation(libs.timber)              //Timber Log
     implementation(libs.viewbinding.property.delegate) //Binding to libs
     ksp(libs.kotlin.metadata.jvm)                       //Kotlin
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
