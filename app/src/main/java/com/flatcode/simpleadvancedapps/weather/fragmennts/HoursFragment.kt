@@ -17,15 +17,17 @@ import org.json.JSONObject
 
 class HoursFragment : Fragment() {
 
-    lateinit var binding: FragmentHoursBinding
-    lateinit var adapter: WeatherAdapter
+    private var _binding: FragmentHoursBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var adapter: WeatherAdapter
     private val model: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentHoursBinding.inflate(inflater, container, false)
+        _binding = FragmentHoursBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,29 +39,36 @@ class HoursFragment : Fragment() {
         }
     }
 
-    fun initRcView() = with(binding) {
+    fun initRcView() {
         adapter = WeatherAdapter(null)
-        rcViewHours.layoutManager = LinearLayoutManager(requireContext())
-        rcViewHours.adapter = adapter
+        binding.rcViewHours.layoutManager = LinearLayoutManager(requireContext())
+        binding.rcViewHours.adapter = adapter
     }
 
     private fun getHoursList(wItem: WeatherModel): List<WeatherModel> {
         val list = ArrayList<WeatherModel>()
         val hoursArray = JSONArray(wItem.hours)
         for (i in 0 until hoursArray.length()) {
+            val hourObject = hoursArray.getJSONObject(i)
+            val conditionObject = hourObject.getJSONObject("condition")
             val item = WeatherModel(
                 wItem.city,
-                (hoursArray[i] as JSONObject).getString("time"),
-                (hoursArray[i] as JSONObject).getJSONObject("condition")
-                    .getString("text"),
-                (hoursArray[i] as JSONObject).getString("temp_c")
-                    .toFloat().toInt().toString() + "°C", DATA.EMPTY, DATA.EMPTY,
-                (hoursArray[i] as JSONObject).getJSONObject("condition")
-                    .getString("icon"), DATA.EMPTY
+                hourObject.getString("time"),
+                conditionObject.getString("text"),
+                hourObject.getString("temp_c").toFloat().toInt().toString() + "°C",
+                DATA.EMPTY,
+                DATA.EMPTY,
+                conditionObject.getString("icon"),
+                DATA.EMPTY
             )
             list.add(item)
         }
         return list
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

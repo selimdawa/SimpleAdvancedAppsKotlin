@@ -38,9 +38,11 @@ import timber.log.Timber
 
 class MainFragment : Fragment() {
 
+    private var _binding: FragmentMainWeatherBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var fLocationClient: FusedLocationProviderClient
     private lateinit var pLauncher: ActivityResultLauncher<String>
-    private lateinit var binding: FragmentMainWeatherBinding
     private val model: MainViewModel by activityViewModels()
 
     private val fList = listOf(HoursFragment.newInstance(), DaysFragment.newInstance())
@@ -50,7 +52,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentMainWeatherBinding.inflate(inflater, container, false)
+        _binding = FragmentMainWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -67,28 +69,26 @@ class MainFragment : Fragment() {
         checkLocation()
     }
 
-    private fun updateCurrentCard() = with(binding) {
+    private fun updateCurrentCard() {
         model.liveDataCurrent.observe(viewLifecycleOwner) {
             val maxMin = "${it.maxTemp}°C / ${it.minTemp}°C"
-            tvCity.text = it.city
-            tvData.text = it.time
-            tvCondition.text = it.condition
-            tvCurrentTemp.text = it.currentTemp.ifEmpty { maxMin }
-            tvMaxMin.text = if (it.currentTemp.isEmpty()) DATA.EMPTY else maxMin
-            Picasso.get().load("https:" + it.imageUrl).into(imgIcon)
+            binding.tvCity.text = it.city
+            binding.tvData.text = it.time
+            binding.tvCondition.text = it.condition
+            binding.tvCurrentTemp.text = it.currentTemp.ifEmpty { maxMin }
+            binding.tvMaxMin.text = if (it.currentTemp.isEmpty()) DATA.EMPTY else maxMin
+            Picasso.get().load("https:" + it.imageUrl).into(binding.imgIcon)
         }
     }
 
     private fun getWeatherRequest(city: String) {
-
         val queue = Volley.newRequestQueue(requireContext())
-        val url =
-            DATA.BASE_URL_WEATHER + DATA.API_KEY_WEATHER + "&q=" + city + "&days=" + "3" + "&aqi=no&alerts=no"
+        val url = DATA.BASE_URL_WEATHER + DATA.API_KEY_WEATHER + "&q=" + city + "&days=" + "3" + "&aqi=no&alerts=no"
 
         val request = StringRequest(Request.Method.GET, url, { result ->
             parseWeatherData(result)
         }, { error ->
-            Timber.d("Error: $error")
+            Timber.d(error)
         })
         queue.add(request)
     }
@@ -105,14 +105,16 @@ class MainFragment : Fragment() {
         val name = mainObject.getJSONObject("location").getString("name")
 
         for (i in 0 until daysArray.length()) {
-            val day = daysArray[i] as JSONObject
+            val day = daysArray.getJSONObject(i)
+            val dayDetail = day.getJSONObject("day")
+            val condition = dayDetail.getJSONObject("condition")
             val item = WeatherModel(
                 name, day.getString("date"),
-                day.getJSONObject("day").getJSONObject("condition").getString("text"),
+                condition.getString("text"),
                 DATA.EMPTY,
-                day.getJSONObject("day").getString("maxtemp_c").toFloat().toInt().toString(),
-                day.getJSONObject("day").getString("mintemp_c").toFloat().toInt().toString(),
-                day.getJSONObject("day").getJSONObject("condition").getString("icon"),
+                dayDetail.getString("maxtemp_c").toFloat().toInt().toString(),
+                dayDetail.getString("mintemp_c").toFloat().toInt().toString(),
+                condition.getString("icon"),
                 day.getJSONArray("hour").toString()
             )
             list.add(item)
@@ -122,34 +124,36 @@ class MainFragment : Fragment() {
     }
 
     private fun parseCurrentDate(mainObject: JSONObject, weatherItem: WeatherModel) {
-
+        val location = mainObject.getJSONObject("location")
+        val current = mainObject.getJSONObject("current")
+        val condition = current.getJSONObject("condition")
         val item = WeatherModel(
-            mainObject.getJSONObject("location").getString("name"),
-            mainObject.getJSONObject("current").getString("last_updated"),
-            mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
-            mainObject.getJSONObject("current").getString("temp_c") + "°C",
+            location.getString("name"),
+            current.getString("last_updated"),
+            condition.getString("text"),
+            current.getString("temp_c") + "°C",
             weatherItem.maxTemp,
             weatherItem.minTemp,
-            mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
+            condition.getString("icon"),
             weatherItem.hours
         )
         model.liveDataCurrent.value = item
     }
 
-    private fun init() = with(binding) {
+    private fun init() {
         fLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         val adapter = vpAdapter(activity as FragmentActivity, fList)
-        vp.adapter = adapter
+        binding.vp.adapter = adapter
 
-        TabLayoutMediator(tabLayout, vp) { tab, pos ->
+        TabLayoutMediator(binding.tabLayout, binding.vp) { tab, pos ->
             tab.text = tList[pos]
         }.attach()
 
-        ibSync.setOnClickListener {
+        binding.ibSync.setOnClickListener {
             checkLocation()
         }
 
-        ibSearch.setOnClickListener {
+        binding.ibSearch.setOnClickListener {
             DialogManager.searchByNameDialog(requireContext(), object : DialogManager.Listener {
                 override fun onClick(name: String?) {
                     name?.let { it1 -> getWeatherRequest(it1) }
@@ -186,8 +190,10 @@ class MainFragment : Fragment() {
             return
         }
         fLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, ct.token)
-            .addOnCompleteListener {
-                getWeatherRequest("${it.result.latitude},${it.result.longitude}")
+            .addOnCompleteListener { task ->
+                task.result?.let { location ->
+                    getWeatherRequest("${location.latitude},${location.longitude}")
+                }
             }
     }
 
@@ -202,6 +208,11 @@ class MainFragment : Fragment() {
             permissionListener()
             pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

@@ -3,8 +3,6 @@ package com.flatcode.simpleadvancedapps.todoNote.di
 import android.app.Application
 import androidx.room.Room
 import com.flatcode.simpleadvancedapps.todoNote.data.NoteDatabase
-import com.flatcode.simpleadvancedapps.todoNote.data.NoteDao
-import com.flatcode.simpleadvancedapps.todoNote.data.TaskDao
 import com.flatcode.simpleadvancedapps.todoNote.data.TaskDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,31 +19,32 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(app: Application, callBack: TaskDatabase.Callback): TaskDatabase =
+    fun provideDatabase(app: Application, callBack: TaskDatabase.Callback) =
         Room.databaseBuilder(app, TaskDatabase::class.java, "task_database")
-            .fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration(dropAllTables = true)
             .addCallback(callBack)
             .build()
 
     @Provides
-    fun providesDao(db: TaskDatabase): TaskDao = db.taskDao()
+    fun providesDao(db: TaskDatabase) = db.taskDao()
 
     @Provides
     @Singleton
-    fun provideNoteDatabase(app: Application): NoteDatabase =
-        Room.databaseBuilder(app, NoteDatabase::class.java, "note_database")
-            .fallbackToDestructiveMigration()
-            .build()
+    fun provideNoteDatabase(
+        app: Application,
+    ) = Room.databaseBuilder(app, NoteDatabase::class.java, "note_database")
+        .fallbackToDestructiveMigration(dropAllTables = true)
+        .build()
 
     @Provides
-    fun providesNoteDao(db: NoteDatabase): NoteDao = db.notesDao()
+    fun providesNoteDao(db: NoteDatabase) = db.notesDao()
 
+    @ApplicationScope
     @Provides
     @Singleton
-    fun provideApplicationScope(): CoroutineScope = CoroutineScope(SupervisorJob())
+    fun provideApplicationScope() = CoroutineScope(SupervisorJob())
 }
 
 @Qualifier
-@Target(AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ApplicationScope

@@ -1,35 +1,36 @@
 package com.flatcode.simpleadvancedapps.weather.adatpers
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ItemWeatherBinding
 import com.flatcode.simpleadvancedapps.weather.models.WeatherModel
 import com.squareup.picasso.Picasso
 
-class WeatherAdapter(val listener: Listener?) :
+class WeatherAdapter(private val listener: Listener?) :
     ListAdapter<WeatherModel, WeatherAdapter.Holder>(Comparator()) {
 
-    class Holder(view: View, val listener: Listener?) : RecyclerView.ViewHolder(view) {
-        val binding = ItemWeatherBinding.bind(view)
-        var itemTemp: WeatherModel? = null
+    class Holder(
+        private val binding: ItemWeatherBinding,
+        private val listener: Listener?
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        private var itemTemp: WeatherModel? = null
 
         init {
-            itemView.setOnClickListener {
-                itemTemp?.let { it1 -> listener?.onClick(it1) }
+            binding.root.setOnClickListener {
+                itemTemp?.let { item -> listener?.onClick(item) }
             }
         }
 
-        fun bind(item: WeatherModel) = with(binding) {
+        fun bind(item: WeatherModel) {
             itemTemp = item
-            tvDate.text = item.time
-            tvCondition.text = item.condition
-            tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp}°C / ${item.minTemp}°C" }
-            Picasso.get().load("https:" + item.imageUrl).into(imgListIcon)
+            binding.tvDate.text = item.time
+            binding.tvCondition.text = item.condition
+            binding.tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp}°C / ${item.minTemp}°C" }
+            Picasso.get().load("https:" + item.imageUrl).into(binding.imgListIcon)
         }
     }
 
@@ -41,13 +42,11 @@ class WeatherAdapter(val listener: Listener?) :
         override fun areContentsTheSame(oldItem: WeatherModel, newItem: WeatherModel): Boolean {
             return oldItem == newItem
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_weather, parent, false)
-        return Holder(view, listener)
+        val binding = ItemWeatherBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return Holder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
