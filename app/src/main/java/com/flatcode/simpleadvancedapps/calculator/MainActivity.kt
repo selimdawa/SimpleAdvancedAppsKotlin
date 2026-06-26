@@ -12,38 +12,43 @@ import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainCalculatorBinding
-    var context: Context = this@MainActivity
+    private var _binding: ActivityMainCalculatorBinding? = null
+    private val binding get() = _binding!!
+    private val context: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
-        binding = ActivityMainCalculatorBinding.inflate(layoutInflater)
+        _binding = ActivityMainCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         with(binding) {
-            numberZero.appendVal(DATA.Zero, false)
-            numberOne.appendVal(DATA.One, false)
-            numberTwo.appendVal(DATA.Two, false)
-            numberThree.appendVal(DATA.Three, false)
-            numberFour.appendVal(DATA.Four, false)
-            numberFive.appendVal(DATA.Five, false)
-            numberSix.appendVal(DATA.Six, false)
-            numberSeven.appendVal(DATA.Seven, false)
-            numberEight.appendVal(DATA.Eight, false)
-            numberNine.appendVal(DATA.Nine, false)
+            numberZero.appendVal(DATA.Zero)
+            numberOne.appendVal(DATA.One)
+            numberTwo.appendVal(DATA.Two)
+            numberThree.appendVal(DATA.Three)
+            numberFour.appendVal(DATA.Four)
+            numberFive.appendVal(DATA.Five)
+            numberSix.appendVal(DATA.Six)
+            numberSeven.appendVal(DATA.Seven)
+            numberEight.appendVal(DATA.Eight)
+            numberNine.appendVal(DATA.Nine)
 
-            dot.appendVal(DATA.DOT, false)
-            clear.appendVal(DATA.EMPTY, true)
-            divide.appendVal(DATA.divide, false)
-            multiply.appendVal(DATA.multiply, false)
-            minus.appendVal(DATA.minus, false)
-            plus.appendVal(DATA.plus, false)
+            dot.appendVal(DATA.DOT)
+            divide.appendVal(DATA.divide)
+            multiply.appendVal(DATA.multiply)
+            minus.appendVal(DATA.minus)
+            plus.appendVal(DATA.plus)
+
+            clear.setOnClickListener {
+                txtPlaceHolder.text = DATA.EMPTY
+                txtResult.text = DATA.EMPTY
+            }
 
             delete.setOnClickListener {
                 val expression = txtPlaceHolder.text.toString()
                 if (expression.isNotEmpty()) {
-                    txtPlaceHolder.text = expression.substring(0, expression.length - 1)
+                    txtPlaceHolder.text = expression.dropLast(1)
                 }
             }
 
@@ -52,10 +57,10 @@ class MainActivity : AppCompatActivity() {
                     val expression = ExpressionBuilder(txtPlaceHolder.text.toString()).build()
                     val result = expression.evaluate()
                     val longResult = result.toLong()
-                    if (result == longResult.toDouble()) {
-                        "= $longResult".also { txtResult.text = it }
+                    txtResult.text = if (result == longResult.toDouble()) {
+                        "= $longResult"
                     } else {
-                        "= $result".also { txtResult.text = it }
+                        "= $result"
                     }
                 } catch (e: Exception) {
                     Timber.tag("Exception").d("Message: %s", e.message)
@@ -64,14 +69,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun View.appendVal(string: String, isClear: Boolean) {
+    private fun View.appendVal(string: String) {
         setOnClickListener {
-            if (isClear) {
-                binding.txtPlaceHolder.text = DATA.EMPTY
-                binding.txtResult.text = DATA.EMPTY
-            } else {
-                binding.txtPlaceHolder.append(string)
-            }
+            binding.txtPlaceHolder.append(string)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
