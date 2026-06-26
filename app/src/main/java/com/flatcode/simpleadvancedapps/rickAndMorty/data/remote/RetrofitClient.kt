@@ -27,7 +27,7 @@ class RetrofitClient {
     private fun provideLoggingInterceptor() =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    fun provideCharacterApiService() = retrofit.create(CharacterApiService::class.java)
-    fun provideLocationApiService() = retrofit.create(LocationApiService::class.java)
-    fun provideEpisodeApiService() = retrofit.create(EpisodeApiService::class.java)
+    fun provideCharacterApiService(): CharacterApiService = retrofit.create(CharacterApiService::class.java)
+    fun provideLocationApiService(): LocationApiService = retrofit.create(LocationApiService::class.java)
+    fun provideEpisodeApiService(): EpisodeApiService = retrofit.create(EpisodeApiService::class.java)
 }

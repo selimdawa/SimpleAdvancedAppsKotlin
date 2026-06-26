@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentEpisodeBinding
 import com.flatcode.simpleadvancedapps.rickAndMorty.base.BaseFragment
@@ -18,12 +17,15 @@ import timber.log.Timber
 class EpisodeFragment :
     BaseFragment<FragmentEpisodeBinding, EpisodeViewModel>(R.layout.fragment_episode) {
 
-    override val binding by viewBinding(FragmentEpisodeBinding::bind)
+    private var _binding: FragmentEpisodeBinding? = null
+    override val binding get() = _binding!!
+
     override val viewModel: EpisodeViewModel by viewModels()
     private val adapter = EpisodeAdapter(arrayListOf())
     private var count = 1
 
     override fun initialize() {
+        _binding = FragmentEpisodeBinding.bind(requireView())
         setupRecyclerView()
     }
 
@@ -47,18 +49,23 @@ class EpisodeFragment :
 
     private fun subscribeToEpisode() {
         lifecycleScope.launch {
-            viewModel.fetchEpisode(page = count).collect {
-                when (it) {
+            viewModel.fetchEpisode(page = count).collect { resource ->
+                when (resource) {
                     is Resource.Error -> {
-                        Timber.e(it.message.toString())
+                        Timber.e(resource.message.toString())
                     }
                     is Resource.Loading -> {}
                     is Resource.Success -> {
-                        it.data?.let { it1 -> adapter.addNewItems(it1.results) }
-                        Timber.e(it.data?.results.toString())
+                        resource.data?.let { response -> adapter.addNewItems(response.results) }
+                        Timber.e(resource.data?.results.toString())
                     }
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

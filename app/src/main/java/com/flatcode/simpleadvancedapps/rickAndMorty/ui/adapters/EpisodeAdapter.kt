@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.flatcode.simpleadvancedapps.databinding.ItemEpisodeBinding
-import com.flatcode.simpleadvancedapps.rickAndMorty.models.episode.EpisodeModel
+import com.flatcode.simpleadvancedapps.rickAndMorty.models.EpisodeModel
 
 class EpisodeAdapter(private val list: ArrayList<EpisodeModel>) :
     RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
-            EpisodeViewHolder = EpisodeViewHolder(
-        ItemEpisodeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeViewHolder =
+        EpisodeViewHolder(
+            ItemEpisodeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
 
     override fun getItemCount(): Int = list.size
 
@@ -31,7 +31,8 @@ class EpisodeAdapter(private val list: ArrayList<EpisodeModel>) :
     }
 
     fun addNewItems(episodeModel: List<EpisodeModel>) {
+        val startPosition = list.size
         list.addAll(episodeModel)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(startPosition, episodeModel.size)
     }
 }

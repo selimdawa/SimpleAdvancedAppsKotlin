@@ -30,6 +30,8 @@
             android:layout_marginHorizontal="10sp"
             android:layout_marginVertical="10sp"
             android:gravity="center"
+            android:maxLines="4"
+            android:ellipsize="end"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

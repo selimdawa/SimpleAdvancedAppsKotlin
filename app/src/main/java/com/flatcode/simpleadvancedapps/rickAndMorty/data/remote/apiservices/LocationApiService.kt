@@ -10,6 +10,6 @@ interface LocationApiService {
 
     @GET("location")
     suspend fun fetchLocation(
-        @Query("page") page: Int,
+        @Query("page") page: Int
     ): Response<RickAndMortyResponse<LocationModel>>
 }

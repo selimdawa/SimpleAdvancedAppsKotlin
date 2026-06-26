@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.rickAndMorty.models.character
+package com.flatcode.simpleadvancedapps.rickAndMorty.models
 
 import com.flatcode.simpleadvancedapps.rickAndMorty.base.IBaseDiffModel
 import com.google.gson.annotations.SerializedName
@@ -17,5 +17,5 @@ data class CharacterModel(
     @SerializedName("gender")
     val gender: String,
     @SerializedName("image")
-    val image: String,
+    val image: String
 ) : IBaseDiffModel<Int>

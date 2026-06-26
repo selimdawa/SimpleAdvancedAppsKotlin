@@ -29,7 +29,8 @@ class LocationAdapter(private val list: ArrayList<LocationModel>) :
     }
 
     fun addNewItems(locationModel: List<LocationModel>) {
+        val startPosition = list.size
         list.addAll(locationModel)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(startPosition, locationModel.size)
     }
 }

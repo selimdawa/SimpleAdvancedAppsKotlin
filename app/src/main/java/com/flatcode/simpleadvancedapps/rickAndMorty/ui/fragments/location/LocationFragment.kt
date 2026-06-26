@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentLocationBinding
 import com.flatcode.simpleadvancedapps.rickAndMorty.base.BaseFragment
@@ -18,12 +17,15 @@ import timber.log.Timber
 class LocationFragment :
     BaseFragment<FragmentLocationBinding, LocationViewModel>(R.layout.fragment_location) {
 
-    override val binding by viewBinding(FragmentLocationBinding::bind)
+    private var _binding: FragmentLocationBinding? = null
+    override val binding get() = _binding!!
+
     override val viewModel: LocationViewModel by viewModels()
     private val adapter = LocationAdapter(arrayListOf())
     private var count = 1
 
     override fun initialize() {
+        _binding = FragmentLocationBinding.bind(requireView())
         setupRecyclerView()
     }
 
@@ -47,18 +49,23 @@ class LocationFragment :
 
     private fun subscribeToLocation() {
         lifecycleScope.launch {
-            viewModel.fetchLocation(page = count).collect {
-                when (it) {
+            viewModel.fetchLocation(page = count).collect { resource ->
+                when (resource) {
                     is Resource.Error -> {
-                        Timber.e(it.message.toString())
+                        Timber.e(resource.message.toString())
                     }
                     is Resource.Loading -> {}
                     is Resource.Success -> {
-                        it.data?.let { it1 -> adapter.addNewItems(it1.results) }
-                        Timber.e(it.data?.results.toString())
+                        resource.data?.let { response -> adapter.addNewItems(response.results) }
+                        Timber.e(resource.data?.results.toString())
                     }
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

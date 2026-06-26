@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.rickAndMorty.models.episode
+package com.flatcode.simpleadvancedapps.rickAndMorty.models
 
 import com.flatcode.simpleadvancedapps.rickAndMorty.base.IBaseDiffModel
 import com.google.gson.annotations.SerializedName
@@ -15,5 +15,5 @@ data class EpisodeModel(
     @SerializedName("url")
     val url: String,
     @SerializedName("created")
-    val created: String,
+    val created: String
 ) : IBaseDiffModel<Int>
