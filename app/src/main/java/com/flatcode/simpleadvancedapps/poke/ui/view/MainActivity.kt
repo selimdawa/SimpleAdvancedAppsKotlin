@@ -3,7 +3,7 @@ package com.flatcode.simpleadvancedapps.poke.ui.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainPokeBinding
 import com.flatcode.simpleadvancedapps.poke.domain.SelectedListener
 

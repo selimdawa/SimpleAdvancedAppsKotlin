@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentDogBinding
 import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogApiStatus
 import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogViewModel

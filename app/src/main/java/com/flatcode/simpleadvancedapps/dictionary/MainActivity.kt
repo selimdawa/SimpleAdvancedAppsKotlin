@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.flatcode.simpleadvancedapps.Unit.CLASS
-import com.flatcode.simpleadvancedapps.Unit.DATA
-import com.flatcode.simpleadvancedapps.Unit.THEME
-import com.flatcode.simpleadvancedapps.Unit.VOID
+import com.flatcode.simpleadvancedapps.utils.CLASS
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.THEME
+import com.flatcode.simpleadvancedapps.utils.VOID
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainDictionaryBinding
 import org.json.JSONArray
 

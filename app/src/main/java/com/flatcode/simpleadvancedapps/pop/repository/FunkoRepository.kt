@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.pop.repository
 
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.pop.models.PopItem
 import org.jsoup.Jsoup
 import java.io.IOException

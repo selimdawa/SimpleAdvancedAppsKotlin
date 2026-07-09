@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.MainApp
+package com.flatcode.simpleadvancedapps.main
 
 import android.view.View
 import android.widget.ProgressBar
@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.CLASS
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.CLASS
+import com.flatcode.simpleadvancedapps.utils.DATA
 
 class MainViewModel : ViewModel() {
 

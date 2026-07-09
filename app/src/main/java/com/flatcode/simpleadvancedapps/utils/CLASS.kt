@@ -1,7 +1,7 @@
-package com.flatcode.simpleadvancedapps.Unit
+package com.flatcode.simpleadvancedapps.utils
 
-import com.flatcode.simpleadvancedapps.MainApp.MainActivity
-import com.flatcode.simpleadvancedapps.MainApp.SplashActivity
+import com.flatcode.simpleadvancedapps.main.MainActivity
+import com.flatcode.simpleadvancedapps.main.SplashActivity
 import com.flatcode.simpleadvancedapps.dictionary.DefinitionWordActivity
 
 object CLASS {

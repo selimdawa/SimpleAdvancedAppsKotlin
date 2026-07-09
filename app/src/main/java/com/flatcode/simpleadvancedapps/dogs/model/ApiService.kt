@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.dogs.model
 
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

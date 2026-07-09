@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.MainApp
+package com.flatcode.simpleadvancedapps.main
 
 import android.content.Context
 import android.view.LayoutInflater

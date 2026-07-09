@@ -1,9 +1,9 @@
-package com.flatcode.simpleadvancedapps.MainApp
+package com.flatcode.simpleadvancedapps.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 
 class MainInfoViewModel : ViewModel() {
 

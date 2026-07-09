@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.DATA
-import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainMealsBinding
 import com.flatcode.simpleadvancedapps.meals.db.MealDatabase
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel

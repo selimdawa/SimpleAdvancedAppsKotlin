@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.crypto.network
 
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.crypto.model.detail.DetailResponse
 import com.flatcode.simpleadvancedapps.crypto.model.home.CryptoResponse
 import retrofit2.Response

@@ -3,7 +3,7 @@ package com.flatcode.simpleadvancedapps.todoNote.ui.notes.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.todoNote.ADD_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.EDIT_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.data.NoteDao

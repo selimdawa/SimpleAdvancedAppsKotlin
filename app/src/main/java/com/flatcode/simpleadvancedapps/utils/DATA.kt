@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.Unit
+package com.flatcode.simpleadvancedapps.utils
 
 import com.flatcode.simpleadvancedapps.movies.MainActivity
 import com.flatcode.simpleadvancedapps.movies.data.room.repository.MoviesRepositoryRealization

@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simpleadvancedapps.Unit.DATA.REALIZATION
+import com.flatcode.simpleadvancedapps.utils.DATA.REALIZATION
 import com.flatcode.simpleadvancedapps.movies.data.retrofit.RetrofitRepository
 import com.flatcode.simpleadvancedapps.movies.data.room.MoviesRoomDatabase
 import com.flatcode.simpleadvancedapps.movies.data.room.repository.MoviesRepositoryRealization

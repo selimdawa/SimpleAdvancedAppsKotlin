@@ -3,8 +3,8 @@ package com.flatcode.simpleadvancedapps.dictionary
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.simpleadvancedapps.Unit.DATA
-import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityDefinitionWordBinding
 
 class DefinitionWordActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.Unit
+package com.flatcode.simpleadvancedapps.utils
 
 import android.content.Context
 import androidx.preference.PreferenceManager

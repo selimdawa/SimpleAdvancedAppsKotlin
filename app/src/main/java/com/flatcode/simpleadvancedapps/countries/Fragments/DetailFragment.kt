@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.countries.Util.downloadFromUrl
 import com.flatcode.simpleadvancedapps.countries.Util.placeholderProgressBar
 import com.flatcode.simpleadvancedapps.countries.ViewModel.DetailViewModel

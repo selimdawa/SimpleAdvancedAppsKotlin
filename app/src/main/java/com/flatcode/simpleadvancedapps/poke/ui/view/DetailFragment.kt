@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailPokeBinding
 import com.flatcode.simpleadvancedapps.poke.ui.viewmodel.ApiStatusDetail
 import com.flatcode.simpleadvancedapps.poke.ui.viewmodel.DetailsViewModel

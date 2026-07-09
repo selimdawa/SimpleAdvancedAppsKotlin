@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.DATA
-import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityCategoryMealsBinding
 import com.flatcode.simpleadvancedapps.meals.adapters.CategoryMealsAdapter
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment

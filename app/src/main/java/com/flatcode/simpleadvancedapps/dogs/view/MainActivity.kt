@@ -3,7 +3,7 @@ package com.flatcode.simpleadvancedapps.dogs.view
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainDogBinding
 
 class MainActivity : AppCompatActivity() {

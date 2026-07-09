@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.flatcode.simpleadvancedapps.Unit.DATA.IMAGE_CRYPTO
+import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_CRYPTO
 import com.flatcode.simpleadvancedapps.crypto.model.home.Data
 import com.flatcode.simpleadvancedapps.databinding.ItemCryptoBinding
 

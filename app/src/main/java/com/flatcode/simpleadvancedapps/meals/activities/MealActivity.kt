@@ -10,7 +10,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMealBinding
 import com.flatcode.simpleadvancedapps.meals.db.MealDatabase
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment

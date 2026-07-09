@@ -20,7 +20,7 @@ import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainWeatherBinding
 import com.flatcode.simpleadvancedapps.weather.DialogManager
 import com.flatcode.simpleadvancedapps.weather.adatpers.vpAdapter

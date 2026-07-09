@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.poke.core
 
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

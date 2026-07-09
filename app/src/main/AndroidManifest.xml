@@ -20,7 +20,7 @@
         tools:replace="android:supportsRtl"
         tools:targetApi="31">
         <activity
-            android:name=".MainApp.SplashActivity"
+            android:name=".main.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainApp.MainActivity"
+            android:name=".main.MainActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".dogs.view.MainActivity" />
         <activity android:name=".poke.ui.view.MainActivity" />

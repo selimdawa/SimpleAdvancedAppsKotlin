@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.poke.domain.model
 
-import com.flatcode.simpleadvancedapps.Unit.DATA.RAW_URL_POKE
+import com.flatcode.simpleadvancedapps.utils.DATA.RAW_URL_POKE
 import com.flatcode.simpleadvancedapps.poke.data.model.PokeModel
 import java.util.Locale
 

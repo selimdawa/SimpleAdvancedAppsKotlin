@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.news.data.remote.apiservices
 
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.news.models.NewsResponse
 import com.flatcode.simpleadvancedapps.news.models.everything.EverythingNewsItem
 import com.flatcode.simpleadvancedapps.news.models.toparticles.TopArticlesNewsItem

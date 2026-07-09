@@ -4,7 +4,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
 import com.flatcode.simpleadvancedapps.crypto.model.detail.CoinDetail
 import com.flatcode.simpleadvancedapps.crypto.model.detail.DetailResponse

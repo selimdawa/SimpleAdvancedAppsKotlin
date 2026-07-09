@@ -1,21 +1,21 @@
-package com.flatcode.simpleadvancedapps.MainApp
+package com.flatcode.simpleadvancedapps.main
 
 import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.THEME
+import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
@@ -36,9 +36,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.settings, SettingsFragment())
+        supportFragmentManager.beginTransaction().replace(R.id.settings, SettingsFragment())
             .commit()
 
         binding.toolbar.info.setOnClickListener { showDialogAboutApps() }
@@ -58,7 +56,7 @@ class MainActivity : AppCompatActivity(), OnSharedPreferenceChangeListener {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(R.layout.dialog_main_info)
             setCancelable(true)
-            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         }
 
         val lp = WindowManager.LayoutParams().apply {

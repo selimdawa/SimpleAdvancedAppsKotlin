@@ -11,7 +11,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.flatcode.simpleadvancedapps.HiltApplication
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomePopBinding
 import com.flatcode.simpleadvancedapps.pop.adapters.FunkoListAdapter
 import com.flatcode.simpleadvancedapps.pop.adapters.PopListener

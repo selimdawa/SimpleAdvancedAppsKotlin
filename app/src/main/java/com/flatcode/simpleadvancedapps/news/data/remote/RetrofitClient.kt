@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.news.data.remote
 
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.news.data.remote.apiservices.NewsApiServices
 import com.flatcode.simpleadvancedapps.news.data.remote.interceptors.ApiKeyInterceptor
 import okhttp3.OkHttpClient

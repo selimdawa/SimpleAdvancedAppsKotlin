@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.DATA
-import com.flatcode.simpleadvancedapps.Unit.DATA.IMAGE_MOVIE
-import com.flatcode.simpleadvancedapps.Unit.DATA.MAIN
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE
+import com.flatcode.simpleadvancedapps.utils.DATA.MAIN
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailMovieBinding
 import com.flatcode.simpleadvancedapps.movies.SaveShared
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel

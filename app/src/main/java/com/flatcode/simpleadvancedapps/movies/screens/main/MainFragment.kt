@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.DATA
-import com.flatcode.simpleadvancedapps.Unit.DATA.MAIN
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA.MAIN
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainMovieBinding
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
 

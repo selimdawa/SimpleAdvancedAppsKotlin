@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.rickAndMorty.data.remote
 
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.rickAndMorty.data.remote.apiservices.CharacterApiService
 import com.flatcode.simpleadvancedapps.rickAndMorty.data.remote.apiservices.EpisodeApiService
 import com.flatcode.simpleadvancedapps.rickAndMorty.data.remote.apiservices.LocationApiService

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentListPokeBinding
 import com.flatcode.simpleadvancedapps.poke.domain.SelectedListener
 import com.flatcode.simpleadvancedapps.poke.ui.view.adapters.ItemAdapter

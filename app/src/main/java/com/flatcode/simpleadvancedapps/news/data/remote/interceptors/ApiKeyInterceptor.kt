@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.news.data.remote.interceptors
 
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import okhttp3.Interceptor
 import okhttp3.Response
 

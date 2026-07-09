@@ -6,7 +6,7 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.VOID
+import com.flatcode.simpleadvancedapps.utils.VOID
 
 fun ImageView.downloadFromUrl(
     blur: Boolean?,

@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.flatcode.simpleadvancedapps.Unit.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentHoursBinding
 import com.flatcode.simpleadvancedapps.weather.adatpers.WeatherAdapter
 import com.flatcode.simpleadvancedapps.weather.models.MainViewModel
 import com.flatcode.simpleadvancedapps.weather.models.WeatherModel
 import org.json.JSONArray
-import org.json.JSONObject
 
 class HoursFragment : Fragment() {
 

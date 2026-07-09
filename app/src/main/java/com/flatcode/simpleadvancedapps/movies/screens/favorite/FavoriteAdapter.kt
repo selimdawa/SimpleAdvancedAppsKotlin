@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.Unit.DATA.IMAGE_MOVIE_BASIC
-import com.flatcode.simpleadvancedapps.Unit.DATA.MAIN
+import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE_BASIC
+import com.flatcode.simpleadvancedapps.utils.DATA.MAIN
 import com.flatcode.simpleadvancedapps.databinding.ItemMovieBinding
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
 
