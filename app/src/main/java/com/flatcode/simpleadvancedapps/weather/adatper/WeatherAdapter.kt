@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.weather.adatpers
+package com.flatcode.simpleadvancedapps.weather.adatper
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,15 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.databinding.ItemWeatherBinding
-import com.flatcode.simpleadvancedapps.weather.models.WeatherModel
+import com.flatcode.simpleadvancedapps.weather.model.WeatherModel
 import com.squareup.picasso.Picasso
 
 class WeatherAdapter(private val listener: Listener?) :
     ListAdapter<WeatherModel, WeatherAdapter.Holder>(Comparator()) {
 
     class Holder(
-        private val binding: ItemWeatherBinding,
-        private val listener: Listener?
+        private val binding: ItemWeatherBinding, private val listener: Listener?
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var itemTemp: WeatherModel? = null
@@ -29,7 +28,8 @@ class WeatherAdapter(private val listener: Listener?) :
             itemTemp = item
             binding.tvDate.text = item.time
             binding.tvCondition.text = item.condition
-            binding.tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp}°C / ${item.minTemp}°C" }
+            binding.tvTemp.text =
+                item.currentTemp.ifEmpty { "${item.maxTemp}°C / ${item.minTemp}°C" }
             Picasso.get().load("https:" + item.imageUrl).into(binding.imgListIcon)
         }
     }

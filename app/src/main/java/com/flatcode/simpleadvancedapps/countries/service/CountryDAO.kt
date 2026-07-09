@@ -1,9 +1,9 @@
-package com.flatcode.simpleadvancedapps.countries.Service
+package com.flatcode.simpleadvancedapps.countries.service
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.flatcode.simpleadvancedapps.countries.Model.Country
+import com.flatcode.simpleadvancedapps.countries.model.Country
 
 @Dao
 interface CountryDAO {

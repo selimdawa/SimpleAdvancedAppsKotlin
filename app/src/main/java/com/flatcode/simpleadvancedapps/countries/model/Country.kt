@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.countries.Model
+package com.flatcode.simpleadvancedapps.countries.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -28,7 +28,7 @@ class DetailFragment :
 
     override fun onCreateFinished() {
         viewModel.getDetail(DATA.API_KEY_CRYPTO, args.symbol)
-        binding.toolbar.nameSpace.text = DATA.Crypto_details
+        binding.toolbar.nameSpace.text = DATA.CRYPTO_DETAILS
     }
 
     override fun initializeListeners() {}

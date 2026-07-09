@@ -3,10 +3,10 @@ package com.flatcode.simpleadvancedapps.main
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.ImageView
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ItemMainInfoBinding
 
@@ -42,11 +42,7 @@ class MainInfoAdapter(private val context: Context) :
         }
 
         override fun areContentsTheSame(oldItem: MainInfo, newItem: MainInfo): Boolean {
-            return oldItem.s == newItem.s &&
-                    oldItem.s2 == newItem.s2 &&
-                    oldItem.s3 == newItem.s3 &&
-                    oldItem.s4 == newItem.s4 &&
-                    oldItem.s5 == newItem.s5
+            return oldItem.s == newItem.s && oldItem.s2 == newItem.s2 && oldItem.s3 == newItem.s3 && oldItem.s4 == newItem.s4 && oldItem.s5 == newItem.s5
         }
     }
 }

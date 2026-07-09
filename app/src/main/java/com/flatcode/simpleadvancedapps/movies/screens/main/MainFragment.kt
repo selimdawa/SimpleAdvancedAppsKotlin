@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.utils.DATA.MAIN
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainMovieBinding
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
+import com.flatcode.simpleadvancedapps.utils.DATA
 
 class MainFragment : Fragment() {
 
@@ -38,7 +38,7 @@ class MainFragment : Fragment() {
             imageLeft.visibility = View.VISIBLE
             imageLeft.setImageResource(R.drawable.ic_baseline_favorite_24)
             imageLeft.setOnClickListener {
-                MAIN.navController.navigate(R.id.action_mainFragment_to_favoriteFragment)
+                findNavController().navigate(R.id.action_mainFragment_to_favoriteFragment)
             }
         }
 
@@ -48,9 +48,7 @@ class MainFragment : Fragment() {
         recyclerView.adapter = adapter
         viewModel.getMoviesRetrofit()
         viewModel.myMovies.observe(viewLifecycleOwner) { list ->
-            list.body()?.results?.let { results ->
-                adapter.submitList(results)
-            }
+            list.body()?.results?.let { results -> adapter.submitList(results) }
         }
     }
 
@@ -60,11 +58,10 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        fun clickMovie(model: MovieItemModel) {
-            val bundle = Bundle().apply {
-                putSerializable("movie", model)
-            }
-            MAIN.navController.navigate(R.id.action_mainFragment_to_detailFragment, bundle)
+        fun clickMovie(fragment: Fragment, model: MovieItemModel) {
+            val bundle = Bundle().apply { putSerializable("movie", model) }
+            fragment.findNavController()
+                .navigate(R.id.action_mainFragment_to_detailFragment, bundle)
         }
     }
 }

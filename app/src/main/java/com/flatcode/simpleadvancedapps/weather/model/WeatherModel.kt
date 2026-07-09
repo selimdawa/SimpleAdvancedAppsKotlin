@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.weather.models
+package com.flatcode.simpleadvancedapps.weather.model
 
 data class WeatherModel(
     val city: String,

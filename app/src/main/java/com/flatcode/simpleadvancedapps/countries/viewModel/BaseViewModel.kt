@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.countries.ViewModel
+package com.flatcode.simpleadvancedapps.countries.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

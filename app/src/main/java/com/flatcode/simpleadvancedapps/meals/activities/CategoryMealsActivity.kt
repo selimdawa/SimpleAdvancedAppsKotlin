@@ -5,12 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityCategoryMealsBinding
 import com.flatcode.simpleadvancedapps.meals.adapters.CategoryMealsAdapter
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment
 import com.flatcode.simpleadvancedapps.meals.mvvm.CategoriesMealsViewModel
+import com.flatcode.simpleadvancedapps.utils.DATA
 
 class CategoryMealsActivity : AppCompatActivity() {
 
@@ -18,26 +17,24 @@ class CategoryMealsActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private lateinit var categoryMealsViewModel: CategoriesMealsViewModel
     private lateinit var categoryMealsAdapter: CategoryMealsAdapter
-    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         _binding = ActivityCategoryMealsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.nameSpace.text = DATA.Category_Meals
+        binding.toolbar.nameSpace.text = DATA.CATEGORY_MEALS
 
         prepareRecyclerView()
         onPopularItemClick()
 
         categoryMealsViewModel = ViewModelProvider(this)[CategoriesMealsViewModel::class.java]
-        categoryMealsViewModel.getMealsByCategory(intent.getStringExtra(HomeFragment.CATEGORY_NAME).orEmpty())
+        categoryMealsViewModel.getMealsByCategory(
+            intent.getStringExtra(HomeFragment.CATEGORY_NAME).orEmpty()
+        )
         categoryMealsViewModel.observeCategoriesMealsLiveData().observe(this) { mealList ->
             binding.toolbar.nameSpace.text = getString(
-                R.string.category_meals_count,
-                DATA.Category_Meals,
-                mealList.size
+                R.string.category_meals_count, DATA.CATEGORY_MEALS, mealList.size
             )
             categoryMealsAdapter.submitList(mealList)
         }

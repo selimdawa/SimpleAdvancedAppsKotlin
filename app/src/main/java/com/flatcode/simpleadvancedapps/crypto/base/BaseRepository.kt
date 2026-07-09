@@ -1,7 +1,7 @@
 package com.flatcode.simpleadvancedapps.crypto.base
 
 import com.google.gson.Gson
-import com.flatcode.simpleadvancedapps.HiltApplication.Companion.getAppContext
+import com.flatcode.simpleadvancedapps.Application.Companion.getAppContext
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.crypto.model.errorResponse.ErrorResponse
 import com.flatcode.simpleadvancedapps.crypto.utils.NetworkResult

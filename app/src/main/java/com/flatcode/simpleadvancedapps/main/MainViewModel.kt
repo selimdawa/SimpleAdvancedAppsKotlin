@@ -27,7 +27,7 @@ class MainViewModel : ViewModel() {
         get() = listOf(
             Main(R.drawable.ic_home_work, DATA.DOGS, i[0], CLASS.I1),
             Main(R.drawable.ic_flag, DATA.COUNTRIES, i[1], CLASS.I2),
-            Main(R.drawable.ic_calculate, DATA.Calculator, i[2], CLASS.I3),
+            Main(R.drawable.ic_calculate, DATA.CALCULATOR, i[2], CLASS.I3),
             Main(R.drawable.ic_monetization, DATA.CRYPTO, i[3], CLASS.I4),
             Main(R.drawable.ic_words, DATA.DICTIONARY, i[4], CLASS.I5),
             Main(R.drawable.ic_meal, DATA.MEALS, i[5], CLASS.I6),

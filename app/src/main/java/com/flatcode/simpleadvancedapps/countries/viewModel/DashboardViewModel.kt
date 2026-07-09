@@ -1,12 +1,12 @@
-package com.flatcode.simpleadvancedapps.countries.ViewModel
+package com.flatcode.simpleadvancedapps.countries.viewModel
 
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.flatcode.simpleadvancedapps.countries.Model.Country
-import com.flatcode.simpleadvancedapps.countries.Service.CountryAPIService
-import com.flatcode.simpleadvancedapps.countries.Service.CountryDatabase
-import com.flatcode.simpleadvancedapps.countries.Util.CustomSharedPreferences
+import com.flatcode.simpleadvancedapps.countries.model.Country
+import com.flatcode.simpleadvancedapps.countries.service.CountryAPIService
+import com.flatcode.simpleadvancedapps.countries.service.CountryDatabase
+import com.flatcode.simpleadvancedapps.countries.utils.CustomDataStore
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.observers.DisposableSingleObserver
@@ -18,7 +18,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     private val countryApiService = CountryAPIService()
     private val disposable = CompositeDisposable()
 
-    private var customSharedPreferences = CustomSharedPreferences(getApplication())
+    private var customSharedPreferences = CustomDataStore(getApplication())
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
     val countries = MutableLiveData<List<Country>>()
@@ -26,11 +26,13 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     val countryLoading = MutableLiveData<Boolean>()
 
     fun refreshData() {
-        val updateTime = customSharedPreferences.getTime()
-        if (updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
-            getDataFromSQLite()
-        } else {
-            getDataFromAPI()
+        launch {
+            val updateTime = customSharedPreferences.getTimeSync()
+            if (updateTime != 0L && System.nanoTime() - updateTime < refreshTime) {
+                getDataFromSQLite()
+            } else {
+                getDataFromAPI()
+            }
         }
     }
 
@@ -45,8 +47,7 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
     private fun getDataFromAPI() {
         countryLoading.value = true
         disposable.add(
-            countryApiService.getData()
-                .subscribeOn(Schedulers.newThread())
+            countryApiService.getData().subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<Country>>() {
                     override fun onSuccess(t: List<Country>) {
@@ -79,9 +80,10 @@ class DashboardViewModel(application: Application) : BaseViewModel(application) 
             list.forEachIndexed { index, country ->
                 country.uuid = listLong[index].toInt()
             }
+
+            customSharedPreferences.saveTime(System.nanoTime())
             showCountries(list)
         }
-        customSharedPreferences.saveTime(System.nanoTime())
     }
 
     override fun onCleared() {

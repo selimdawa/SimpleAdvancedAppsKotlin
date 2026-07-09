@@ -5,11 +5,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simpleadvancedapps.utils.DATA.REALIZATION
 import com.flatcode.simpleadvancedapps.movies.data.retrofit.RetrofitRepository
 import com.flatcode.simpleadvancedapps.movies.data.room.MoviesRoomDatabase
 import com.flatcode.simpleadvancedapps.movies.data.room.repository.MoviesRepositoryRealization
 import com.flatcode.simpleadvancedapps.movies.models.MoviesModel
+import com.flatcode.simpleadvancedapps.utils.DATA.REALIZATION
 import kotlinx.coroutines.launch
 import retrofit2.Response
 

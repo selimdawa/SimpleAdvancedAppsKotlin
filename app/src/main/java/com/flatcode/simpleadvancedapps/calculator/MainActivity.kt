@@ -1,12 +1,10 @@
 package com.flatcode.simpleadvancedapps.calculator
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainCalculatorBinding
+import com.flatcode.simpleadvancedapps.utils.DATA
 import net.objecthunter.exp4j.ExpressionBuilder
 import timber.log.Timber
 
@@ -14,10 +12,8 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainCalculatorBinding? = null
     private val binding get() = _binding!!
-    private val context: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainCalculatorBinding.inflate(layoutInflater)
         setContentView(binding.root)

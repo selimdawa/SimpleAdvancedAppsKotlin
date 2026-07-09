@@ -1,6 +1,5 @@
 package com.flatcode.simpleadvancedapps.utils
 
-import com.flatcode.simpleadvancedapps.movies.MainActivity
 import com.flatcode.simpleadvancedapps.movies.data.room.repository.MoviesRepositoryRealization
 
 object DATA {
@@ -8,7 +7,7 @@ object DATA {
     //Main
     const val DOGS = "Dogs"
     const val COUNTRIES = "Countries"
-    const val Calculator = "Calculator"
+    const val CALCULATOR = "Calculator"
     const val CRYPTO = "Crypto"
     const val DICTIONARY = "Dictionary"
     const val MEALS = "Meals"
@@ -21,13 +20,13 @@ object DATA {
     const val TODO_NOTE = "TODO-Note"
 
     //Class Name
-    const val Country_details = "Country Details"
-    const val Crypto_details = "Crypto Details"
-    const val meaning_of_the_word = "Meaning Of The Word"
-    const val Category_Meals = "Category Meals"
-    const val Favorite_movies = "Favorite movies"
-    const val Details_Movie = "Details Movie"
-    const val Details_Poke = "Details Poke"
+    const val COUNTRY_DETAILS = "Country Details"
+    const val CRYPTO_DETAILS = "Crypto Details"
+    const val MEANING_OF_THE_WORD = "Meaning Of The Word"
+    const val CATEGORY_MEALS = "Category Meals"
+    const val FAVORITE_MOVIES = "Favorite movies"
+    const val DETAILS_MOVIE = "Details Movie"
+    const val DETAILS_POKE = "Details Poke"
 
     //Other
     const val EMPTY = ""
@@ -87,7 +86,6 @@ object DATA {
         "3/movie/popular?api_key=a036dc05c534b0cd90d6e8a8e2bcf871&language=en-US&page=1"
     const val IMAGE_MOVIE = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
     const val IMAGE_MOVIE_BASIC = "https://image.tmdb.org/t/p/w185/"
-    lateinit var MAIN: MainActivity
     lateinit var REALIZATION: MoviesRepositoryRealization
 
     //News

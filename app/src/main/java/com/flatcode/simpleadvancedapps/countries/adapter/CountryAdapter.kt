@@ -1,14 +1,14 @@
-package com.flatcode.simpleadvancedapps.countries.Adapter
+package com.flatcode.simpleadvancedapps.countries.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.flatcode.simpleadvancedapps.countries.Fragments.DashboardFragmentDirections
-import com.flatcode.simpleadvancedapps.countries.Model.Country
-import com.flatcode.simpleadvancedapps.countries.Util.downloadFromUrl
-import com.flatcode.simpleadvancedapps.countries.Util.placeholderProgressBar
+import com.flatcode.simpleadvancedapps.countries.fragment.DashboardFragmentDirections
+import com.flatcode.simpleadvancedapps.countries.model.Country
 import com.flatcode.simpleadvancedapps.databinding.ItemCountryBinding
+import com.flatcode.simpleadvancedapps.utils.VOID.downloadFromUrl
+import com.flatcode.simpleadvancedapps.utils.VOID.placeholderProgressBar
 
 class CountryAdapter(private val countryList: ArrayList<Country>) :
     RecyclerView.Adapter<CountryViewHolder>() {
@@ -27,20 +27,17 @@ class CountryAdapter(private val countryList: ArrayList<Country>) :
             dName.text = model.countryRegion
 
             item.setOnClickListener { view ->
-                val action = DashboardFragmentDirections.actionDashboardFragmentToDetailFragment(model.uuid)
+                val action =
+                    DashboardFragmentDirections.actionDashboardFragmentToDetailFragment(model.uuid)
                 Navigation.findNavController(view).navigate(action)
             }
 
             imageName.downloadFromUrl(
-                false,
-                model.imageURL,
-                placeholderProgressBar(context)
+                false, model.imageURL, placeholderProgressBar(context)
             )
 
             imageBlur.downloadFromUrl(
-                true,
-                model.imageURL,
-                placeholderProgressBar(context)
+                true, model.imageURL, placeholderProgressBar(context)
             )
         }
     }

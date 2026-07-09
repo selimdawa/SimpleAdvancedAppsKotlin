@@ -15,7 +15,6 @@ material = "1.14.0"
 activityKtx = "1.13.0"
 constraintlayout = "2.2.1"
 picasso = "2.71828"
-preferenceKtx = "1.2.1"
 fragmentKtx = "1.8.9"
 ksp = "2.3.8"
 lifecycle = "2.11.0"
@@ -44,7 +43,6 @@ viewbinding-delegate = "1.5.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 glide-ksp = { module = "com.github.bumptech.glide:ksp", version.ref = "glideKsp" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }

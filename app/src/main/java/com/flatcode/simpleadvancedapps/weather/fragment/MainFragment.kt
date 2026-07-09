@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.weather.fragmennts
+package com.flatcode.simpleadvancedapps.weather.fragment
 
 import android.Manifest
 import android.content.Context
@@ -23,10 +23,10 @@ import com.android.volley.toolbox.Volley
 import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainWeatherBinding
 import com.flatcode.simpleadvancedapps.weather.DialogManager
-import com.flatcode.simpleadvancedapps.weather.adatpers.vpAdapter
+import com.flatcode.simpleadvancedapps.weather.adatper.StateAdapter
 import com.flatcode.simpleadvancedapps.weather.isPermissionGranted
-import com.flatcode.simpleadvancedapps.weather.models.MainViewModel
-import com.flatcode.simpleadvancedapps.weather.models.WeatherModel
+import com.flatcode.simpleadvancedapps.weather.model.MainViewModel
+import com.flatcode.simpleadvancedapps.weather.model.WeatherModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
@@ -142,7 +142,7 @@ class MainFragment : Fragment() {
 
     private fun init() {
         fLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        val adapter = vpAdapter(activity as FragmentActivity, fList)
+        val adapter = StateAdapter(activity as FragmentActivity, fList)
         binding.vp.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.vp) { tab, pos ->

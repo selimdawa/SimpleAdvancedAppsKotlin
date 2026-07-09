@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE
-import com.flatcode.simpleadvancedapps.utils.DATA.MAIN
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailMovieBinding
 import com.flatcode.simpleadvancedapps.movies.SaveShared
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE
+import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
 
@@ -44,16 +45,20 @@ class DetailFragment : Fragment() {
     }
 
     private fun init() {
-        binding.toolbar.nameSpace.text = DATA.Details_Movie
-        val valueBool = SaveShared.getFavorite(MAIN, currentMovie.id.toString())
+        binding.toolbar.nameSpace.text = DATA.DETAILS_MOVIE
         val viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
-        binding.imgDetailFavorite.setImageResource(
-            if (isFavorite != valueBool) R.drawable.ic_baseline_favorite_24
-            else R.drawable.ic_baseline_favorite_border_24
-        )
+        lifecycleScope.launch {
+            val valueBool = SaveShared.getFavorite(requireContext(), currentMovie.id.toString())
+            isFavorite = valueBool
 
-        Glide.with(MAIN).load("$IMAGE_MOVIE${currentMovie.poster_path}")
+            binding.imgDetailFavorite.setImageResource(
+                if (valueBool) R.drawable.ic_baseline_favorite_24
+                else R.drawable.ic_baseline_favorite_border_24
+            )
+        }
+
+        Glide.with(binding.root.context).load("$IMAGE_MOVIE${currentMovie.poster_path}")
             .placeholder(R.color.image_profile).into(binding.imgDetail)
 
         with(binding) {
@@ -62,16 +67,18 @@ class DetailFragment : Fragment() {
             tvDescription.text = currentMovie.overview
 
             imgDetailFavorite.setOnClickListener {
-                isFavorite = if (isFavorite == valueBool) {
-                    imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-                    SaveShared.setFavorite(MAIN, currentMovie.id.toString(), true)
-                    viewModel.insert(currentMovie) {}
-                    true
-                } else {
-                    imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                    viewModel.delete(currentMovie) {}
-                    SaveShared.setFavorite(MAIN, currentMovie.id.toString(), false)
-                    false
+                lifecycleScope.launch {
+                    if (!isFavorite) {
+                        imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                        SaveShared.setFavorite(requireContext(), currentMovie.id.toString(), true)
+                        viewModel.insert(currentMovie) {}
+                        isFavorite = true
+                    } else {
+                        imgDetailFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                        viewModel.delete(currentMovie) {}
+                        SaveShared.setFavorite(requireContext(), currentMovie.id.toString(), false)
+                        isFavorite = false
+                    }
                 }
             }
         }

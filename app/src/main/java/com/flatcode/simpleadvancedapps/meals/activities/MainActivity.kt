@@ -6,12 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainMealsBinding
 import com.flatcode.simpleadvancedapps.meals.db.MealDatabase
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModelFactory
+import com.flatcode.simpleadvancedapps.utils.DATA
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,10 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainMealsBinding? = null
     private val binding get() = _binding!!
-    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainMealsBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -3,15 +3,15 @@ package com.flatcode.simpleadvancedapps.movies.screens.favorite
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE_BASIC
-import com.flatcode.simpleadvancedapps.utils.DATA.MAIN
 import com.flatcode.simpleadvancedapps.databinding.ItemMovieBinding
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
+import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE_BASIC
 
 class FavoriteAdapter(private val context: Context) :
     ListAdapter<MovieItemModel, FavoriteViewHolder>(MovieDiffCallback) {
@@ -28,19 +28,22 @@ class FavoriteAdapter(private val context: Context) :
             tvTitle.text = model.title
             tvDate.text = model.release_date
 
-            Glide.with(MAIN)
-                .load("$IMAGE_MOVIE_BASIC${model.poster_path}")
-                .placeholder(R.color.image_profile)
-                .into(itemImg)
+            Glide.with(context).load("$IMAGE_MOVIE_BASIC${model.poster_path}")
+                .placeholder(R.color.image_profile).into(itemImg)
         }
     }
 
     override fun onViewAttachedToWindow(holder: FavoriteViewHolder) {
         super.onViewAttachedToWindow(holder)
-        holder.itemView.setOnClickListener {
+        holder.itemView.setOnClickListener { view ->
             val position = holder.bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                FavoriteFragment.clickMovie(getItem(position))
+                val movie = getItem(position)
+                val bundle = android.os.Bundle().apply {
+                    putSerializable("movie", movie)
+                }
+                view.findNavController()
+                    .navigate(R.id.action_favoriteFragment_to_detailFragment, bundle)
             }
         }
     }

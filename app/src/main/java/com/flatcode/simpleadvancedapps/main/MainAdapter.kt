@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
+import com.flatcode.simpleadvancedapps.databinding.ItemMainBinding
 import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.utils.VOID
-import com.flatcode.simpleadvancedapps.databinding.ItemMainBinding
 
 class MainAdapter(private val context: Context) : RecyclerView.Adapter<MainViewHolder>() {
 

@@ -10,7 +10,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMealBinding
 import com.flatcode.simpleadvancedapps.meals.db.MealDatabase
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment
@@ -27,13 +26,11 @@ class MealActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private lateinit var mealMvvm: MealViewModel
     private lateinit var youtubeLink: String
-    private val context = this
 
     private var mealToSave: Meal? = null
     private var isMealFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         _binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -67,7 +64,8 @@ class MealActivity : AppCompatActivity() {
             mealToSave?.let { meal ->
                 if (isMealFavorite) {
                     mealMvvm.deleteMeal(meal)
-                    Toast.makeText(this, getString(R.string.meal_removed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.meal_removed), Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     mealMvvm.insertMeal(meal)
                     Toast.makeText(this, getString(R.string.meal_saved), Toast.LENGTH_LONG).show()
@@ -91,7 +89,8 @@ class MealActivity : AppCompatActivity() {
             mealToSave = value
 
             with(binding) {
-                tvCategory.text = getString(R.string.category_placeholder, value?.strCategory.orEmpty())
+                tvCategory.text =
+                    getString(R.string.category_placeholder, value?.strCategory.orEmpty())
                 tvArea.text = getString(R.string.area_placeholder, value?.strArea.orEmpty())
                 tvInstructionsSteps.text = value?.strInstructions.orEmpty()
             }
@@ -101,9 +100,7 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun setInformationInViews() {
-        Glide.with(applicationContext)
-            .load(mealThumb)
-            .into(binding.imgMealDetail)
+        Glide.with(applicationContext).load(mealThumb).into(binding.imgMealDetail)
 
         with(binding.collapsingToolbar) {
             title = mealName

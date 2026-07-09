@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     var context = this@MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)

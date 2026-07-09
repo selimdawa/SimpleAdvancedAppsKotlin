@@ -4,21 +4,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainWeatherBinding
-import com.flatcode.simpleadvancedapps.weather.fragmennts.MainFragment
+import com.flatcode.simpleadvancedapps.weather.fragment.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainWeatherBinding? = null
     private val binding get() = _binding!!
-    var context = this@MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //binding.toolbar.nameSpace.text = DATA.Weather
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.placeholder, MainFragment.newInstance()).commit()

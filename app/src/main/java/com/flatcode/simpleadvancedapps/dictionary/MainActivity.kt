@@ -1,27 +1,23 @@
 package com.flatcode.simpleadvancedapps.dictionary
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.flatcode.simpleadvancedapps.databinding.ActivityMainDictionaryBinding
 import com.flatcode.simpleadvancedapps.utils.CLASS
 import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.utils.VOID
-import com.flatcode.simpleadvancedapps.databinding.ActivityMainDictionaryBinding
 import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainDictionaryBinding? = null
     private val binding get() = _binding!!
-    private val context: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainDictionaryBinding.inflate(layoutInflater)
         setContentView(binding.root)

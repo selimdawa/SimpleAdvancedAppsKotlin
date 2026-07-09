@@ -38,7 +38,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.nameSpace.text = DATA.Details_Poke
+        binding.toolbar.nameSpace.text = DATA.DETAILS_POKE
 
         observeStatus()
         observe()

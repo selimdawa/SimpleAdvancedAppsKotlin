@@ -1,19 +1,15 @@
 package com.flatcode.simpleadvancedapps.countries
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.flatcode.simpleadvancedapps.utils.THEME
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainCountryBinding
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainCountryBinding? = null
     private val binding get() = _binding!!
-    private val context: Context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        THEME.setThemeOfApp(context)
         super.onCreate(savedInstanceState)
         _binding = ActivityMainCountryBinding.inflate(layoutInflater)
         setContentView(binding.root)

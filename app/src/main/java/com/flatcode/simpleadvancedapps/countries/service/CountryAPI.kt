@@ -1,7 +1,7 @@
-package com.flatcode.simpleadvancedapps.countries.Service
+package com.flatcode.simpleadvancedapps.countries.service
 
 import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.countries.Model.Country
+import com.flatcode.simpleadvancedapps.countries.model.Country
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.GET
 

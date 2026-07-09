@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.countries.Fragments
+package com.flatcode.simpleadvancedapps.countries.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.countries.Util.downloadFromUrl
-import com.flatcode.simpleadvancedapps.countries.Util.placeholderProgressBar
-import com.flatcode.simpleadvancedapps.countries.ViewModel.DetailViewModel
+import com.flatcode.simpleadvancedapps.utils.VOID.downloadFromUrl
+import com.flatcode.simpleadvancedapps.utils.VOID.placeholderProgressBar
+import com.flatcode.simpleadvancedapps.countries.viewModel.DetailViewModel
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
@@ -37,7 +37,7 @@ class DetailFragment : Fragment() {
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         viewModel.getDataFromRoom(countryUuid)
 
-        binding.toolbar.nameSpace.text = DATA.Country_details
+        binding.toolbar.nameSpace.text = DATA.COUNTRY_DETAILS
 
         observeLiveData()
     }

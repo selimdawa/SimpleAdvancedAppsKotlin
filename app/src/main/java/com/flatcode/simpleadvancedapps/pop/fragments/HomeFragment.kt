@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.flatcode.simpleadvancedapps.HiltApplication
+import com.flatcode.simpleadvancedapps.Application
 import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomePopBinding
 import com.flatcode.simpleadvancedapps.pop.adapters.FunkoListAdapter
@@ -24,7 +24,7 @@ class HomeFragment : Fragment() {
 
     private val viewModel: FunkoViewModel by activityViewModels {
         FunkoViewModel.FunkoViewModelFactory(
-            (activity?.application as HiltApplication).repository
+            (activity?.application as Application).repository
         )
     }
 
