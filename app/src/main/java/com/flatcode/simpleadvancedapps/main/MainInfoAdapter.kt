@@ -28,7 +28,6 @@ class MainInfoAdapter(private val context: Context) :
             check(model.s2 == true, navigation)
             check(model.s3 == true, room)
             check(model.s4 == true, coroutines)
-            check(model.s5 == true, rxJava)
         }
     }
 

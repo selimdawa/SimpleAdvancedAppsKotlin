@@ -49,10 +49,10 @@ class MainActivity : AppCompatActivity() {
             val entries = resources.getStringArray(R.array.reply_entries)
             val values = resources.getStringArray(R.array.reply_values)
             AlertDialog.Builder(this).setTitle("Select Theme").setItems(entries) { _, which ->
-                    lifecycleScope.launch {
-                        dataStore.edit { prefs -> prefs[themeKey] = values[which] }
-                    }
-                }.show()
+                lifecycleScope.launch {
+                    dataStore.edit { prefs -> prefs[themeKey] = values[which] }
+                }
+            }.show()
         }
 
         binding.toolbar.info.setOnClickListener { showDialogAboutApps() }
