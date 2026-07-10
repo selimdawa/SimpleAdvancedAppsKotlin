@@ -10,40 +10,24 @@ class MainInfoViewModel : ViewModel() {
     private val _dataMainInfo = MutableLiveData<List<MainInfo>>()
     val dataMainInfo: LiveData<List<MainInfo>> get() = _dataMainInfo
 
-    private val s = booleanArrayOf(
-        false, false, false, true, false, false, false, false, true, true, false, false, true
-    )
-
-    private val s2 = booleanArrayOf(
-        false, true, false, true, false, true, true, true, true, true, false, false, true
-    )
-
-    private val s3 = booleanArrayOf(
-        false, false, false, false, false, true, false, true, false, false, false, false, true
-    )
-
-    private val s4 = booleanArrayOf(
-        true, true, false, true, false, true, true, true, false, false, false, true, true
-    )
-
     fun getInfoItems() {
         _dataMainInfo.value = dataInfo
     }
 
     private val dataInfo: List<MainInfo>
         get() = listOf(
-            MainInfo(DATA.DOGS, s[0], s2[0], s3[0], s4[0]),
-            MainInfo(DATA.COUNTRIES, s[1], s2[1], s3[1], s4[1]),
-            MainInfo(DATA.CALCULATOR, s[2], s2[2], s3[2], s4[2]),
-            MainInfo(DATA.CRYPTO, s[3], s2[3], s3[3], s4[3]),
-            MainInfo(DATA.DICTIONARY, s[4], s2[4], s3[4], s4[4]),
-            MainInfo(DATA.MEALS, s[5], s2[5], s3[5], s4[5]),
-            MainInfo(DATA.POP, s[6], s2[6], s3[6], s4[6]),
-            MainInfo(DATA.MOVIE, s[7], s2[7], s3[7], s4[7]),
-            MainInfo(DATA.NEWS, s[8], s2[8], s3[8], s4[8]),
-            MainInfo(DATA.RICK_AND_MORTY, s[9], s2[9], s3[9], s4[9]),
-            MainInfo(DATA.WEATHER, s[10], s2[10], s3[10], s4[10]),
-            MainInfo(DATA.POKE, s[11], s2[11], s3[11], s4[11]),
-            MainInfo(DATA.TODO_NOTE, s[12], s2[12], s3[12], s4[12])
+            MainInfo(DATA.DOGS, 1, 1, 0, 1),
+            MainInfo(DATA.COUNTRIES, 0, 1, 0, 1),
+            MainInfo(DATA.CALCULATOR, 0, 0, 0, 0),
+            MainInfo(DATA.CRYPTO, 1, 1, 0, 1),
+            MainInfo(DATA.DICTIONARY, 0, 0, 0, 0),
+            MainInfo(DATA.MEALS, 0, 1, 1, 1),
+            MainInfo(DATA.POP, 0, 1, 0, 1),
+            MainInfo(DATA.MOVIE, 0, 1, 1, 1),
+            MainInfo(DATA.NEWS, 1, 1, 0, 0),
+            MainInfo(DATA.RICK_AND_MORTY, 1, 1, 0, 0),
+            MainInfo(DATA.WEATHER, 0, 0, 0, 0),
+            MainInfo(DATA.POKE, 0, 0, 0, 1),
+            MainInfo(DATA.TODO_NOTE, 1, 1, 1, 1)
         )
 }

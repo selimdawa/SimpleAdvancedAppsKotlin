@@ -24,10 +24,10 @@ class MainInfoAdapter(private val context: Context) :
         with(holder.binding) {
             name.text = model.title
 
-            check(model.s == true, daggerHilt)
-            check(model.s2 == true, navigation)
-            check(model.s3 == true, room)
-            check(model.s4 == true, coroutines)
+            check(model.s == 1, daggerHilt)
+            check(model.s2 == 1, navigation)
+            check(model.s3 == 1, room)
+            check(model.s4 == 1, coroutines)
         }
     }
 
@@ -41,7 +41,7 @@ class MainInfoAdapter(private val context: Context) :
         }
 
         override fun areContentsTheSame(oldItem: MainInfo, newItem: MainInfo): Boolean {
-            return oldItem.s == newItem.s && oldItem.s2 == newItem.s2 && oldItem.s3 == newItem.s3 && oldItem.s4 == newItem.s4 && oldItem.s5 == newItem.s5
+            return oldItem.s == newItem.s && oldItem.s2 == newItem.s2 && oldItem.s3 == newItem.s3 && oldItem.s4 == newItem.s4
         }
     }
 }

@@ -2,9 +2,8 @@ package com.flatcode.simpleadvancedapps.main
 
 class MainInfo(
     var title: String? = null,
-    var s: Boolean? = null,
-    var s2: Boolean? = null,
-    var s3: Boolean? = null,
-    var s4: Boolean? = null,
-    var s5: Boolean? = null
+    var s: Int? = null,
+    var s2: Int? = null,
+    var s3: Int? = null,
+    var s4: Int? = null,
 )
