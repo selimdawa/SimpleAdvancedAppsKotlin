@@ -3,7 +3,9 @@ package com.flatcode.simpleadvancedapps.dogs.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainDogBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainDogBinding? = null

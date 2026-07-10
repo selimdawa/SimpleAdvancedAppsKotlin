@@ -1,20 +1,24 @@
 package com.flatcode.simpleadvancedapps.dogs.viewmodel
 
-import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simpleadvancedapps.dogs.service.ApiService
+import com.flatcode.simpleadvancedapps.dogs.service.DogApi
 import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.dogs.model.DogApi
-import com.flatcode.simpleadvancedapps.dogs.model.DogApiService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 enum class DogApiStatus { LOADING, ERROR, DONE, START }
 
-class DogViewModel : ViewModel() {
+@HiltViewModel
+class DogViewModel @Inject constructor(
+    private val apiService: ApiService, private val connectivityManager: ConnectivityManager
+) : ViewModel() {
 
     private val _breedsList = MutableLiveData<Array<String>>()
     val breedsList: LiveData<Array<String>> get() = _breedsList
@@ -29,8 +33,8 @@ class DogViewModel : ViewModel() {
     private val _photosDog = MutableLiveData<List<String>>()
     val photosDog: LiveData<List<String>> get() = _photosDog
 
-    fun getDogPhotosList(context: Context, item: String) {
-        if (!isInternetAvailable(context)) {
+    fun getDogPhotosList(item: String) {
+        if (!isInternetAvailable()) {
             _photosDog.value = emptyList()
             _status.value = DogApiStatus.ERROR
             return
@@ -49,22 +53,21 @@ class DogViewModel : ViewModel() {
         }
     }
 
-    private fun isInternetAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private fun isInternetAvailable(): Boolean {
         val network = connectivityManager.activeNetwork ?: return false
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
         return activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
     private suspend fun connection1(t: String): DogApi {
-        return DogApiService.retrofitService.getListImg(t.lowercase())
+        return apiService.getListImg(t.lowercase())
     }
 
     private suspend fun connection2(t: String): DogApi {
         val list = t.split(DATA.SPACE)
         val breed = list[0].lowercase()
         val subBreed = list[1].lowercase()
-        return DogApiService.retrofitService.getListImg(breed, subBreed)
+        return apiService.getListImg(breed, subBreed)
     }
 
     private fun converter(list: DogApi): List<String> {

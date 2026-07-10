@@ -14,9 +14,7 @@ class DogAdapter : ListAdapter<String, DogViewHolder>(DiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
         val binding = ItemListBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+            LayoutInflater.from(parent.context), parent, false
         )
         return DogViewHolder(binding)
     }
@@ -27,7 +25,8 @@ class DogAdapter : ListAdapter<String, DogViewHolder>(DiffCallBack) {
 
     companion object DiffCallBack : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
+        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean =
+            oldItem == newItem
     }
 }
 
@@ -39,17 +38,13 @@ class DogViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHol
             crossfade(300)
             placeholder(R.drawable.loading_animation)
             error(R.color.image_profile)
-            listener(
-                onStart = { _ ->
-                    (binding.imageView.drawable as? Animatable)?.start()
-                },
-                onSuccess = { _, _ ->
-                    (binding.imageView.drawable as? Animatable)?.stop()
-                },
-                onError = { _, _ ->
-                    (binding.imageView.drawable as? Animatable)?.stop()
-                }
-            )
+            listener(onStart = { _ ->
+                (binding.imageView.drawable as? Animatable)?.start()
+            }, onSuccess = { _, _ ->
+                (binding.imageView.drawable as? Animatable)?.stop()
+            }, onError = { _, _ ->
+                (binding.imageView.drawable as? Animatable)?.stop()
+            })
         }
     }
 }
