@@ -43,7 +43,7 @@ class CharacterAdapter(private val context: Context?, val list: ArrayList<Charac
             binding.tvNameCharacter.text = name
             binding.tvStatus.text = status
 
-            if (status == DATA.Alive) {
+            if (status == DATA.ALIVE) {
                 binding.cvIndicator.setImageResource(R.color.green)
             } else {
                 binding.cvIndicator.setImageResource(R.color.red)
@@ -52,7 +52,7 @@ class CharacterAdapter(private val context: Context?, val list: ArrayList<Charac
             binding.tvSpecies.text = species
 
             if (type == DATA.EMPTY) {
-                binding.tvType.text = DATA.Unknown
+                binding.tvType.text = DATA.UNKNOWN
             } else {
                 binding.tvType.text = type
             }

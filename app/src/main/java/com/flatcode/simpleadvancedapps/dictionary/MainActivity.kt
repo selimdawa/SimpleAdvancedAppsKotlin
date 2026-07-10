@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private fun extractDefinitionFromJason(response: String) {
         val jsonArray = JSONArray(response)
         val firstIndex = jsonArray.getJSONObject(0)
-        val getShotDefinition = firstIndex.getJSONArray(DATA.Short_Def)
+        val getShotDefinition = firstIndex.getJSONArray(DATA.SHORT_DEF)
         val firstShortDefinition = getShotDefinition.get(0)
 
         VOID.IntentExtra(

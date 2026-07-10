@@ -31,28 +31,28 @@ object DATA {
     //Other
     const val EMPTY = ""
     const val SPACE = " "
-    const val Unknown = "Unknown"
+    const val UNKNOWN = "Unknown"
 
     //Calculator
-    const val Zero = "0"
-    const val One = "1"
-    const val Two = "2"
-    const val Three = "3"
-    const val Four = "4"
-    const val Five = "5"
-    const val Six = "6"
-    const val Seven = "7"
-    const val Eight = "8"
-    const val Nine = "9"
+    const val ZERO = "0"
+    const val ONE = "1"
+    const val TWO = "2"
+    const val THREE = "3"
+    const val FOUR = "4"
+    const val FIVE = "5"
+    const val SIX = "6"
+    const val SEVEN = "7"
+    const val EIGHT = "8"
+    const val NINE = "9"
     const val DOT = "."
-    const val divide = "/"
-    const val multiply = "*"
-    const val minus = "-"
-    const val plus = "+"
+    const val DIVIDE = "/"
+    const val MULTIPLY = "*"
+    const val MINUS = "-"
+    const val PLUS = "+"
 
     //Dictionary
     const val DICTIONARY_KEY = "WORD_DEFINITION"
-    const val Short_Def = "shortdef"
+    const val SHORT_DEF = "shortdef"
     const val DICTIONARY_API_KEY = "a13b6fd3-80c2-44de-a1a4-d40b14184662"
     const val DICTIONARY_BASIC_URL =
         "https://www.dictionaryapi.com/api/v3/references/learners/json/"
@@ -62,11 +62,13 @@ object DATA {
     const val API_KEY_CRYPTO = "e15a2a51-07b1-4d7c-bbff-ae29b8df3b29"
     const val LIMIT_CRYPTO = "10"
     const val IMAGE_CRYPTO = "https://s2.coinmarketcap.com/static/img/coins/128x128/"
+
+    @Suppress("UNUSED_VARIABLE", "unused")
     const val LATEST_CRYPTO = "v1/cryptocurrency/listings/latest"
     const val INFO_CRYPTO = "v2/cryptocurrency/info"
 
     //Rick & Morty
-    const val Alive = "Alive"
+    const val ALIVE = "Alive"
     const val BASE_URL_RICK_AND_MORTY = "https://rickandmortyapi.com/api/"
 
     //Country
@@ -82,7 +84,7 @@ object DATA {
 
     //Movies
     const val BASE_URL_MOVIES = "https://api.themoviedb.org/"
-    const val popular_MOVIES =
+    const val POPULAR_MOVIES =
         "3/movie/popular?api_key=a036dc05c534b0cd90d6e8a8e2bcf871&language=en-US&page=1"
     const val IMAGE_MOVIE = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
     const val IMAGE_MOVIE_BASIC = "https://image.tmdb.org/t/p/w185/"

@@ -19,22 +19,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            numberZero.appendVal(DATA.Zero)
-            numberOne.appendVal(DATA.One)
-            numberTwo.appendVal(DATA.Two)
-            numberThree.appendVal(DATA.Three)
-            numberFour.appendVal(DATA.Four)
-            numberFive.appendVal(DATA.Five)
-            numberSix.appendVal(DATA.Six)
-            numberSeven.appendVal(DATA.Seven)
-            numberEight.appendVal(DATA.Eight)
-            numberNine.appendVal(DATA.Nine)
+            numberZero.appendVal(DATA.ZERO)
+            numberOne.appendVal(DATA.ONE)
+            numberTwo.appendVal(DATA.TWO)
+            numberThree.appendVal(DATA.THREE)
+            numberFour.appendVal(DATA.FOUR)
+            numberFive.appendVal(DATA.FIVE)
+            numberSix.appendVal(DATA.SIX)
+            numberSeven.appendVal(DATA.SEVEN)
+            numberEight.appendVal(DATA.EIGHT)
+            numberNine.appendVal(DATA.NINE)
 
             dot.appendVal(DATA.DOT)
-            divide.appendVal(DATA.divide)
-            multiply.appendVal(DATA.multiply)
-            minus.appendVal(DATA.minus)
-            plus.appendVal(DATA.plus)
+            divide.appendVal(DATA.DIVIDE)
+            multiply.appendVal(DATA.MULTIPLY)
+            minus.appendVal(DATA.MINUS)
+            plus.appendVal(DATA.PLUS)
 
             clear.setOnClickListener {
                 txtPlaceHolder.text = DATA.EMPTY

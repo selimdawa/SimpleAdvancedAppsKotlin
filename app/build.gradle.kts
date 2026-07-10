@@ -20,15 +20,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    //signingConfigs {
-    //    create("release") {
-    //        storeFile =
-    //            file("D:\\MyProjects\\Kotlin\\Simple Advanced Apps\\Simple Advanced Apps\\SimpleAdvancedApps.jks")
-    //        storePassword = "00000000"
-    //        keyAlias = "SimpleAdvancedApps"
-    //        keyPassword = "00000000"
-    //    }
-    //}
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -38,16 +29,7 @@ android {
             )
         }
     }
-    //buildTypes {
-    //    getByName("release") {
-    //        signingConfig = signingConfigs.getByName("release")
-    //        //isMinifyEnabled = true
-    //        //isShrinkResources = true
-    //        proguardFiles(
-    //            getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-    //        )
-    //    }
-    //}
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -120,7 +102,6 @@ dependencies {
     implementation(libs.play.services.location)     //Weather Location
     implementation(libs.datastore.preferences)   //DataStore
     implementation(libs.timber)              //Timber Log
-    implementation(libs.viewbinding.property.delegate) //Binding to libs
     ksp(libs.kotlin.metadata.jvm)                       //Kotlin
 }
 
