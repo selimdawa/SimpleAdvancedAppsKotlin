@@ -18,13 +18,13 @@ picasso = "2.71828"
 fragmentKtx = "1.8.9"
 ksp = "2.3.8"
 lifecycle = "2.11.0"
-common-java8 = "1.1.1"
 retrofit = "3.0.0"
 coroutines = "1.11.0"
 navigation = "2.9.8"
 room = "2.8.4"
 okhttp-bom = "5.4.0"
 hilt = "2.60.1"
+hiltNavigation = "1.2.0"
 coil = "2.7.0"
 gson = "2.14.0"
 jsoup = "1.22.2"
@@ -59,7 +59,6 @@ picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
-lifecycle-common-java8 = { group = "android.arch.lifecycle", name = "common-java8", version.ref = "common-java8" }
 #Retrofit
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
@@ -82,6 +81,7 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor" 
 #Dagger - Hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-navigation-fragment = { group = "androidx.hilt", name = "hilt-navigation-fragment", version.ref = "hiltNavigation" }
 #Others
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }

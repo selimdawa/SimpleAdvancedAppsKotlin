@@ -56,7 +56,7 @@ dependencies {
     implementation(libs.glide)            //Glide image
     ksp(libs.glide.ksp)                   //Glide compiler
     implementation(libs.glide.transformations)           //Glide Blur
-    implementation(libs.landscapist.glide)       //Glide
+    implementation(libs.landscapist.glide)       //Glide Landscapist
     implementation(libs.picasso)              //Picasso
     implementation(libs.coil)                            //Coil
     implementation(libs.lottie)                  //Lottie Files
@@ -65,7 +65,6 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.lifecycle.common.java8)
     //Retrofit
     implementation(libs.retrofit.core) //Retrofit
     implementation(libs.retrofit.converter.gson)   //Gson
@@ -78,16 +77,17 @@ dependencies {
     implementation(libs.navigation.ui.ktx)      //Navigation Components
     implementation(libs.navigation.dynamic.features)
     //Room
-    implementation(libs.room.runtime)          //Room
-    ksp(libs.room.compiler)                    //Room Compiler
-    implementation(libs.room.ktx)              //Room Kotlin
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.ktx)
     //OkHttp
-    implementation(platform(libs.okhttp.bom)) //OkHttp
-    implementation(libs.okhttp.core)                      //OkHttp
-    implementation(libs.okhttp.logging)         //OkHttp
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp.core)
+    implementation(libs.okhttp.logging)
     //Dagger - Hilt
-    implementation(libs.hilt.android)     //Dagger Hilt
-    ksp(libs.hilt.android.compiler)      //Dagger Hilt Compiler
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.navigation.fragment)
     //Other's
     implementation(libs.gson)                    //Gson
     implementation(libs.jsoup)                            //Jsoup

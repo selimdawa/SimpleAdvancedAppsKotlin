@@ -13,7 +13,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentDogBinding
@@ -27,7 +27,7 @@ class DogFragment : Fragment(), AdapterView.OnItemClickListener {
 
     private var _binding: FragmentDogBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: DogViewModel by viewModels()
+    private val viewModel: DogViewModel by hiltNavGraphViewModels(R.id.nav_graph)
     private val dogAdapter = DogAdapter()
     private var lastSelectedBreed: String? = null
     private var networkCallback: ConnectivityManager.NetworkCallback? = null

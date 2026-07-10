@@ -2,6 +2,7 @@ package com.flatcode.simpleadvancedapps.dogs.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainDogBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainDogBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment
     }
 
     override fun onDestroy() {
