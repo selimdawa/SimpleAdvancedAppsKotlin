@@ -9,7 +9,7 @@ object CLASS {
     val SPLASH: Class<*> = SplashActivity::class.java
     val I1: Class<*> = com.flatcode.simpleadvancedapps.dogs.view.MainActivity::class.java
     val I2: Class<*> = com.flatcode.simpleadvancedapps.countries.MainActivity::class.java
-    val I3: Class<*> = com.flatcode.simpleadvancedapps.calculator.MainActivity::class.java
+    val I3: Class<*> = com.flatcode.simpleadvancedapps.calculator.view.MainActivity::class.java
     val I4: Class<*> = com.flatcode.simpleadvancedapps.crypto.ui.MainActivity::class.java
     val I5: Class<*> = com.flatcode.simpleadvancedapps.dictionary.MainActivity::class.java
     val I6: Class<*> = com.flatcode.simpleadvancedapps.meals.activities.MainActivity::class.java

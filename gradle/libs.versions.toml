@@ -24,7 +24,7 @@ navigation = "2.9.8"
 room = "2.8.4"
 okhttp-bom = "5.4.0"
 hilt = "2.60.1"
-hiltNavigation = "1.2.0"
+hiltNavigation = "1.4.0"
 coil = "2.7.0"
 gson = "2.14.0"
 jsoup = "1.22.2"
@@ -73,7 +73,6 @@ navigation-dynamic-features = { group = "androidx.navigation", name = "navigatio
 #Room
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 #OkHttp
 okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttp-bom" }
 okhttp-core = { group = "com.squareup.okhttp3", name = "okhttp" }

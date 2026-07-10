@@ -40,7 +40,7 @@
             android:theme="@style/ToDoTheme.MainApp"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".pop.MainActivity" />
-        <activity android:name=".calculator.MainActivity" />
+        <activity android:name=".calculator.view.MainActivity" />
         <activity android:name=".crypto.ui.MainActivity" />
         <activity android:name=".rickAndMorty.ui.activity.MainActivity" />
         <activity android:name=".news.ui.activity.MainActivity" />

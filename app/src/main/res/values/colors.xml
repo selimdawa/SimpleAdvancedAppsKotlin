@@ -33,6 +33,8 @@
     <color name="night_corner_five_2">#2E3192</color>
     <color name="night_corner_six">#A748FC</color>
     <color name="night_corner_six_2">#00695C</color>
+    //Calculator
+    <color name="gray2">#757575</color>
     //Wordpress
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
