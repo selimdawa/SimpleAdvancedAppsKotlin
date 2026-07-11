@@ -6,22 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.bumptech.glide.Glide
+import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomeMealsBinding
 import com.flatcode.simpleadvancedapps.meals.activities.CategoryMealsActivity
-import com.flatcode.simpleadvancedapps.meals.activities.MainActivity
 import com.flatcode.simpleadvancedapps.meals.activities.MealActivity
 import com.flatcode.simpleadvancedapps.meals.adapters.CategoriesAdapter
 import com.flatcode.simpleadvancedapps.meals.adapters.MostPopularAdapter
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeMealsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.nav_graph_meals)
+
     private lateinit var randomMeal: Meal
     private lateinit var popularItemsAdapter: MostPopularAdapter
     private lateinit var categoriesAdapter: CategoriesAdapter
@@ -35,7 +39,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = (requireActivity() as MainActivity).viewModel
         popularItemsAdapter = MostPopularAdapter()
     }
 
@@ -127,9 +130,7 @@ class HomeFragment : Fragment() {
     private fun observerRandomMeal() {
         viewModel.observeRandomMealLiveData().observe(viewLifecycleOwner) { meal ->
             meal?.let {
-                Glide.with(this)
-                    .load(it.strMealThumb)
-                    .into(binding.imgRandomMeal)
+                Glide.with(this).load(it.strMealThumb).into(binding.imgRandomMeal)
 
                 this.randomMeal = it
             }

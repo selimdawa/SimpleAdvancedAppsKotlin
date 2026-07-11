@@ -4,27 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMealBinding
-import com.flatcode.simpleadvancedapps.meals.db.MealDatabase
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment
 import com.flatcode.simpleadvancedapps.meals.mvvm.MealViewModel
-import com.flatcode.simpleadvancedapps.meals.mvvm.MealViewModelFactory
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MealActivity : AppCompatActivity() {
 
     private lateinit var mealId: String
     private lateinit var mealName: String
     private lateinit var mealThumb: String
+
     private var _binding: ActivityMealBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mealMvvm: MealViewModel
+
+    private val mealMvvm: MealViewModel by viewModels()
     private lateinit var youtubeLink: String
 
     private var mealToSave: Meal? = null
@@ -34,10 +36,6 @@ class MealActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val mealDatabase = MealDatabase.getInstance(this)
-        val viewModelFactory = MealViewModelFactory(mealDatabase)
-        mealMvvm = ViewModelProvider(this, viewModelFactory)[MealViewModel::class.java]
 
         getMealInformationFromIntent()
         setInformationInViews()

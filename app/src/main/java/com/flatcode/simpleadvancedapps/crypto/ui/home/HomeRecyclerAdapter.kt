@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_CRYPTO
 import com.flatcode.simpleadvancedapps.crypto.model.home.Data
 import com.flatcode.simpleadvancedapps.databinding.ItemCryptoBinding
+import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_CRYPTO
 
 class HomeRecyclerAdapter(private val listener: ItemClickListener) :
     RecyclerView.Adapter<HomeRecyclerAdapter.MViewHolder>() {
@@ -32,7 +32,9 @@ class HomeRecyclerAdapter(private val listener: ItemClickListener) :
             }
 
             binding.root.setOnClickListener {
-                listener.onItemClick(coin, binding.ivRowImage, binding.tvRowTitle, binding.tvRowSymbol)
+                listener.onItemClick(
+                    coin, binding.ivRowImage, binding.tvRowTitle, binding.tvRowSymbol
+                )
             }
         }
 
@@ -61,8 +63,7 @@ class HomeRecyclerAdapter(private val listener: ItemClickListener) :
     }
 
     private class CryptoDiffCallback(
-        private val oldList: List<Data>,
-        private val newList: List<Data>
+        private val oldList: List<Data>, private val newList: List<Data>
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize() = oldList.size

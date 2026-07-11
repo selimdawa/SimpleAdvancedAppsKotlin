@@ -17,11 +17,11 @@ class MainInfoViewModel : ViewModel() {
     private val dataInfo: List<MainInfo>
         get() = listOf(
             MainInfo(DATA.DOGS, 1, 1, 0, 1),
-            MainInfo(DATA.COUNTRIES, 0, 1, 0, 1),
-            MainInfo(DATA.CALCULATOR, 0, 0, 0, 0),
+            MainInfo(DATA.COUNTRIES, 1, 1, 1, 1),
+            MainInfo(DATA.CALCULATOR, 1, 1, 1, 1),
             MainInfo(DATA.CRYPTO, 1, 1, 0, 1),
             MainInfo(DATA.DICTIONARY, 0, 0, 0, 0),
-            MainInfo(DATA.MEALS, 0, 1, 1, 1),
+            MainInfo(DATA.MEALS, 1, 1, 1, 1),
             MainInfo(DATA.POP, 0, 1, 0, 1),
             MainInfo(DATA.MOVIE, 0, 1, 1, 1),
             MainInfo(DATA.NEWS, 1, 1, 0, 0),

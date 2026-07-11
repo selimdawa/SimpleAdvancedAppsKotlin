@@ -9,10 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
 import com.flatcode.simpleadvancedapps.crypto.model.home.Data
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomeBinding
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,9 +43,7 @@ class HomeFragment :
                     isCurrentlyLoadingMore = false
                 }
             }
-            isLoading.observe(viewLifecycleOwner) { loading ->
-                handleViews(loading)
-            }
+            isLoading.observe(viewLifecycleOwner) { loading -> handleViews(loading) }
             onError.observe(viewLifecycleOwner) { message ->
                 Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
                 isCurrentlyLoadingMore = false
@@ -62,8 +60,7 @@ class HomeFragment :
                 val id = coin.id
                 if (!symbol.isNullOrEmpty() && id != null) {
                     val navigation = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                        symbol = symbol,
-                        coinId = id
+                        symbol = symbol, coinId = id
                     )
                     findNavController().navigate(navigation)
                 }

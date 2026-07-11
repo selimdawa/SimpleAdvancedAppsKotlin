@@ -5,30 +5,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategory
 import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategoryList
-import com.flatcode.simpleadvancedapps.meals.retrofit.RetrofitInstance
+import com.flatcode.simpleadvancedapps.meals.retrofit.MealApi
+import dagger.hilt.android.lifecycle.HiltViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import javax.inject.Inject
 
-class CategoriesMealsViewModel : ViewModel() {
+@HiltViewModel
+class CategoriesMealsViewModel @Inject constructor(private val mealApi: MealApi) : ViewModel() {
 
     private val _mealsLiveData = MutableLiveData<List<MealsByCategory>>()
     val mealsLiveData: LiveData<List<MealsByCategory>> get() = _mealsLiveData
 
     fun getMealsByCategory(categoryName: String) {
-        RetrofitInstance.api.getMealsByCategory(categoryName)
-            .enqueue(object : Callback<MealsByCategoryList> {
-                override fun onResponse(
-                    call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>,
-                ) {
-                    response.body()?.let { mealsList -> _mealsLiveData.value = mealsList.meals }
-                }
+        mealApi.getMealsByCategory(categoryName).enqueue(object : Callback<MealsByCategoryList> {
+            override fun onResponse(
+                call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>,
+            ) {
+                response.body()?.let { mealsList -> _mealsLiveData.value = mealsList.meals }
+            }
 
-                override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
-                    Timber.tag("CategoryMealsViewModel").e(t.message.orEmpty())
-                }
-            })
+            override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
+                Timber.tag("CategoryMealsViewModel").e(t.message.orEmpty())
+            }
+        })
     }
 
     fun observeCategoriesMealsLiveData(): LiveData<List<MealsByCategory>> = mealsLiveData

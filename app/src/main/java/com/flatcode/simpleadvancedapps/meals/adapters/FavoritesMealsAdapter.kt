@@ -9,11 +9,14 @@ import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.databinding.ItemMealBinding
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
 
-class FavoritesMealsAdapter : ListAdapter<Meal, FavoritesMealsAdapterViewHolder>(MealDiffCallback) {
+class FavoritesMealsAdapter :
+    ListAdapter<Meal, FavoritesMealsAdapter.FavoritesMealsAdapterViewHolder>(MealDiffCallback) {
 
     var onItemClick: ((Meal) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesMealsAdapterViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup, viewType: Int
+    ): FavoritesMealsAdapterViewHolder {
         val binding = ItemMealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FavoritesMealsAdapterViewHolder(binding)
     }
@@ -22,22 +25,20 @@ class FavoritesMealsAdapter : ListAdapter<Meal, FavoritesMealsAdapterViewHolder>
         val meal = getItem(position)
 
         with(holder.binding) {
-            Glide.with(root.context)
-                .load(meal.strMealThumb)
-                .into(imgMeal)
+            Glide.with(root.context).load(meal.strMealThumb).into(imgMeal)
 
             tvMealName.text = meal.strMeal
             root.setOnClickListener { onItemClick?.invoke(meal) }
         }
     }
 
+    class FavoritesMealsAdapterViewHolder(val binding: ItemMealBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
     private object MealDiffCallback : DiffUtil.ItemCallback<Meal>() {
         override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean =
             oldItem.idMeal == newItem.idMeal
 
-        override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean =
-            oldItem == newItem
+        override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean = oldItem == newItem
     }
 }
-
-class FavoritesMealsAdapterViewHolder(val binding: ItemMealBinding) : RecyclerView.ViewHolder(binding.root)

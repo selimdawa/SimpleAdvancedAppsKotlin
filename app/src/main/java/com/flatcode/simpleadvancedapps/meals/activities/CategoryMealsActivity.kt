@@ -2,20 +2,23 @@ package com.flatcode.simpleadvancedapps.meals.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityCategoryMealsBinding
 import com.flatcode.simpleadvancedapps.meals.adapters.CategoryMealsAdapter
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment
 import com.flatcode.simpleadvancedapps.meals.mvvm.CategoriesMealsViewModel
 import com.flatcode.simpleadvancedapps.utils.DATA
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CategoryMealsActivity : AppCompatActivity() {
 
     private var _binding: ActivityCategoryMealsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var categoryMealsViewModel: CategoriesMealsViewModel
+
+    private val categoryMealsViewModel: CategoriesMealsViewModel by viewModels()
     private lateinit var categoryMealsAdapter: CategoryMealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +31,6 @@ class CategoryMealsActivity : AppCompatActivity() {
         prepareRecyclerView()
         onPopularItemClick()
 
-        categoryMealsViewModel = ViewModelProvider(this)[CategoriesMealsViewModel::class.java]
         categoryMealsViewModel.getMealsByCategory(
             intent.getStringExtra(HomeFragment.CATEGORY_NAME).orEmpty()
         )

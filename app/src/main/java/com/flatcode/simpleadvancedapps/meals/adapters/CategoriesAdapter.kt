@@ -9,12 +9,14 @@ import com.bumptech.glide.Glide
 import com.flatcode.simpleadvancedapps.databinding.ItemCategoryMealBinding
 import com.flatcode.simpleadvancedapps.meals.pojo.Category
 
-class CategoriesAdapter : ListAdapter<Category, CategoryViewHolder>(CategoryDiffCallback) {
+class CategoriesAdapter :
+    ListAdapter<Category, CategoriesAdapter.CategoryViewHolder>(CategoryDiffCallback) {
 
     var onItemClick: ((Category) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        val binding = ItemCategoryMealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemCategoryMealBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CategoryViewHolder(binding)
     }
 
@@ -22,14 +24,15 @@ class CategoriesAdapter : ListAdapter<Category, CategoryViewHolder>(CategoryDiff
         val category = getItem(position)
 
         with(holder.binding) {
-            Glide.with(root.context)
-                .load(category.strCategoryThumb)
-                .into(imgCategory)
+            Glide.with(root.context).load(category.strCategoryThumb).into(imgCategory)
 
             tvCategoryName.text = category.strCategory
             root.setOnClickListener { onItemClick?.invoke(category) }
         }
     }
+
+    class CategoryViewHolder(val binding: ItemCategoryMealBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     private object CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
         override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean =
@@ -39,5 +42,3 @@ class CategoriesAdapter : ListAdapter<Category, CategoryViewHolder>(CategoryDiff
             oldItem == newItem
     }
 }
-
-class CategoryViewHolder(val binding: ItemCategoryMealBinding) : RecyclerView.ViewHolder(binding.root)

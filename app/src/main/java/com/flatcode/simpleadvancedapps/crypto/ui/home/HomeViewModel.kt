@@ -42,6 +42,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                     }
                     isLoading.value = false
                 }
+
                 is NetworkResult.Error -> {
                     onError.value = request.message
                     isLoading.value = false

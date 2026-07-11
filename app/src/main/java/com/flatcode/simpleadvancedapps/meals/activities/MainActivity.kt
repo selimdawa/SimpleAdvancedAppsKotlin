@@ -2,23 +2,15 @@ package com.flatcode.simpleadvancedapps.meals.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainMealsBinding
-import com.flatcode.simpleadvancedapps.meals.db.MealDatabase
-import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
-import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModelFactory
 import com.flatcode.simpleadvancedapps.utils.DATA
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    val viewModel: HomeViewModel by lazy {
-        val mealDatabase = MealDatabase.getInstance(this)
-        val homeViewModelFactory = HomeViewModelFactory(mealDatabase)
-        ViewModelProvider(this, homeViewModelFactory)[HomeViewModel::class.java]
-    }
 
     private var _binding: ActivityMainMealsBinding? = null
     private val binding get() = _binding!!
@@ -30,10 +22,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.toolbar.nameSpace.text = DATA.MEALS
 
-        val bottomNavigationView = binding.btmNav
-        val navController = findNavController(R.id.nav_host_fragment_container)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        NavigationUI.setupWithNavController(bottomNavigationView, navController)
+        NavigationUI.setupWithNavController(binding.btmNav, navController)
     }
 
     override fun onDestroy() {

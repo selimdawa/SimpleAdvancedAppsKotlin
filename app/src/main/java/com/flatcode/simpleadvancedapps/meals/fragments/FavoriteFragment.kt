@@ -6,28 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.meals.activities.MainActivity
+import com.flatcode.simpleadvancedapps.databinding.FragmentFavoriteMealsBinding
 import com.flatcode.simpleadvancedapps.meals.activities.MealActivity
 import com.flatcode.simpleadvancedapps.meals.adapters.FavoritesMealsAdapter
-import com.flatcode.simpleadvancedapps.databinding.FragmentFavoriteMealsBinding
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteMealsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.nav_graph_meals)
     private lateinit var favoritesAdapter: FavoritesMealsAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = (requireActivity() as MainActivity).viewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

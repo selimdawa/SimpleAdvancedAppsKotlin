@@ -29,7 +29,7 @@ object VOID {
     fun Glide(context: Context?, Url: String?, Image: ImageView) {
         try {
             Glide.with(context!!).load(Url).placeholder(R.color.image_profile).into(Image)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             Image.setImageResource(R.color.image_profile)
         }
     }
