@@ -4,21 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainMovieBinding
-import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.movies.models.MoviesUiState
+import com.flatcode.simpleadvancedapps.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainMovieBinding? = null
     private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
-    private val adapter by lazy { MainAdapter() }
+    private val viewModel: MainFragmentViewModel by hiltNavGraphViewModels(R.id.nav_graph_movie)
+
+    private val adapter by lazy {
+        MainAdapter { movie ->
+            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(movie)
+            findNavController().navigate(action)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -33,35 +40,38 @@ class MainFragment : Fragment() {
     }
 
     private fun init() {
-        with(binding.toolbar) {
-            nameSpace.text = DATA.MOVIE
-            imageLeft.visibility = View.VISIBLE
-            imageLeft.setImageResource(R.drawable.ic_baseline_favorite_24)
-            imageLeft.setOnClickListener {
-                findNavController().navigate(R.id.action_mainFragment_to_favoriteFragment)
-            }
+        binding.toolbar.nameSpace.text = getString(R.string.movies)
+        binding.toolbar.imageLeft.visibility = View.VISIBLE
+        binding.toolbar.imageLeft.setImageResource(R.drawable.ic_baseline_favorite_24)
+
+        binding.toolbar.imageLeft.setOnClickListener {
+            val action = MainFragmentDirections.actionMainFragmentToFavoriteFragment()
+            findNavController().navigate(action)
         }
 
-        val viewModel = ViewModelProvider(this)[MainFragmentViewModel::class.java]
-        viewModel.initDatabase()
-        recyclerView = binding.rvMain
-        recyclerView.adapter = adapter
-        viewModel.getMoviesRetrofit()
-        viewModel.myMovies.observe(viewLifecycleOwner) { list ->
-            list.body()?.results?.let { results -> adapter.submitList(results) }
+        binding.rvMain.adapter = adapter
+
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is MoviesUiState.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+
+                is MoviesUiState.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    adapter.listMovies = state.movies
+                }
+
+                is MoviesUiState.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        fun clickMovie(fragment: Fragment, model: MovieItemModel) {
-            val bundle = Bundle().apply { putSerializable("movie", model) }
-            fragment.findNavController()
-                .navigate(R.id.action_mainFragment_to_detailFragment, bundle)
-        }
     }
 }

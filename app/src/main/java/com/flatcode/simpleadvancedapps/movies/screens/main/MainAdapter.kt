@@ -2,63 +2,67 @@ package com.flatcode.simpleadvancedapps.movies.screens.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE_BASIC
 import com.flatcode.simpleadvancedapps.databinding.ItemMovieBinding
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
+import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE_BASIC
+import com.flatcode.simpleadvancedapps.utils.loadImage
 
-class MainAdapter : ListAdapter<MovieItemModel, MainViewHolder>(MovieDiffCallback) {
+class MainAdapter(private val onMovieClick: (MovieItemModel) -> Unit) :
+    RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MainViewHolder(binding)
-    }
+    private val diffCallback = object : DiffUtil.ItemCallback<MovieItemModel>() {
+        override fun areItemsTheSame(oldItem: MovieItemModel, newItem: MovieItemModel): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val model = getItem(position)
-
-        with(holder.binding) {
-            tvTitle.text = model.title
-            tvDate.text = model.release_date
-
-            Glide.with(holder.binding.root.context)
-                .load("$IMAGE_MOVIE_BASIC${model.poster_path}")
-                .placeholder(R.color.image_profile)
-                .into(itemImg)
+        override fun areContentsTheSame(oldItem: MovieItemModel, newItem: MovieItemModel): Boolean {
+            return oldItem == newItem
         }
     }
 
-    override fun onViewAttachedToWindow(holder: MainViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        holder.itemView.setOnClickListener { view ->
-            val position = holder.bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                val movie = getItem(position)
-                val bundle = android.os.Bundle().apply {
-                    putSerializable("movie", movie)
+    private val differ = AsyncListDiffer(this, diffCallback)
+
+    var listMovies: List<MovieItemModel>
+        get() = differ.currentList
+        set(value) = differ.submitList(value)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(listMovies[position])
+    }
+
+    override fun getItemCount(): Int = listMovies.size
+
+    inner class ViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(model: MovieItemModel) {
+            binding.tvTitle.text = model.title
+            binding.tvDate.text = model.release_date
+
+            binding.itemImg.loadImage("$IMAGE_MOVIE_BASIC${model.poster_path}")
+
+            itemView.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onMovieClick(listMovies[position])
                 }
-                view.findNavController().navigate(R.id.action_mainFragment_to_detailFragment, bundle)
             }
         }
+
+        fun unbind() {
+            itemView.setOnClickListener(null)
+        }
     }
 
-    override fun onViewDetachedFromWindow(holder: MainViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        holder.itemView.setOnClickListener(null)
-    }
-
-    private object MovieDiffCallback : DiffUtil.ItemCallback<MovieItemModel>() {
-        override fun areItemsTheSame(oldItem: MovieItemModel, newItem: MovieItemModel): Boolean =
-            oldItem.id == newItem.id
-
-        override fun areContentsTheSame(oldItem: MovieItemModel, newItem: MovieItemModel): Boolean =
-            oldItem == newItem
+    override fun onViewRecycled(holder: ViewHolder) {
+        super.onViewRecycled(holder)
+        holder.unbind()
     }
 }
-
-class MainViewHolder(val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root)

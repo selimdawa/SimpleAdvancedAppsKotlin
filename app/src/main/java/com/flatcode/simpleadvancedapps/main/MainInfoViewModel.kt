@@ -23,7 +23,7 @@ class MainInfoViewModel : ViewModel() {
             MainInfo(DATA.DICTIONARY, 0, 0, 0, 0),
             MainInfo(DATA.MEALS, 1, 1, 1, 1),
             MainInfo(DATA.POP, 0, 1, 0, 1),
-            MainInfo(DATA.MOVIE, 0, 1, 1, 1),
+            MainInfo(DATA.MOVIE, 1, 1, 1, 1),
             MainInfo(DATA.NEWS, 1, 1, 0, 0),
             MainInfo(DATA.RICK_AND_MORTY, 1, 1, 0, 0),
             MainInfo(DATA.WEATHER, 0, 0, 0, 0),

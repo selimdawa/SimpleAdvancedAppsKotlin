@@ -1,7 +1,5 @@
 package com.flatcode.simpleadvancedapps.utils
 
-import com.flatcode.simpleadvancedapps.movies.data.room.repository.MoviesRepositoryRealization
-
 object DATA {
 
     //Main
@@ -24,8 +22,6 @@ object DATA {
     const val CRYPTO_DETAILS = "Crypto Details"
     const val MEANING_OF_THE_WORD = "Meaning Of The Word"
     const val CATEGORY_MEALS = "Category Meals"
-    const val FAVORITE_MOVIES = "Favorite movies"
-    const val DETAILS_MOVIE = "Details Movie"
     const val DETAILS_POKE = "Details Poke"
 
     //Other
@@ -88,7 +84,6 @@ object DATA {
         "3/movie/popular?api_key=a036dc05c534b0cd90d6e8a8e2bcf871&language=en-US&page=1"
     const val IMAGE_MOVIE = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
     const val IMAGE_MOVIE_BASIC = "https://image.tmdb.org/t/p/w185/"
-    lateinit var REALIZATION: MoviesRepositoryRealization
 
     //News
     const val BASE_URL_NEWS = "https://newsapi.org/v2/"

@@ -13,7 +13,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoRetrofit
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -53,6 +58,7 @@ object NetworkModule {
         return GsonConverterFactory.create(gson)
     }
 
+    @CryptoRetrofit
     @Singleton
     @Provides
     fun provideRetrofitInstance(
@@ -68,7 +74,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiFactory(retrofit: Retrofit): CryptoApi {
+    fun provideApiFactory(@CryptoRetrofit retrofit: Retrofit): CryptoApi {
         return retrofit.create(CryptoApi::class.java)
     }
 }

@@ -225,6 +225,12 @@
     <string name="weight">Weight :</string>
     <string name="metro"> %sm</string>
     <string name="kilo"> %skg</string>
+    //Movies
+    <string name="movies">Movies</string>
+    <string name="favorite_movies">Favorite movies</string>
+    <string name="details_movie">Details Movie</string>
+    <string name="no_favorites_yet">No favorites yet</string>
+    <string name="error_fetching_movies">Error fetching movies. Please try again.</string>
     //Pop
     <string name="search_et">Search by name or series</string>
     <string name="no_internet_connection">NO INTERNET CONNECTION</string>

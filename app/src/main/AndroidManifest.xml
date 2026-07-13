@@ -44,9 +44,7 @@
         <activity android:name=".crypto.ui.MainActivity" />
         <activity android:name=".rickAndMorty.ui.activity.MainActivity" />
         <activity android:name=".news.ui.activity.MainActivity" />
-        <activity
-            android:name=".weather.MainActivity"
-            android:theme="@style/Theme.NoActionBar" />
+        <activity android:name=".weather.MainActivity" />
         <activity android:name=".dictionary.DefinitionWordActivity" />
         <activity android:name=".dictionary.MainActivity" />
         <activity android:name=".meals.activities.CategoryMealsActivity" />

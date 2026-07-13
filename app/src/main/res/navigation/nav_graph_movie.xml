@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_graph_movie"
     app:startDestination="@id/mainFragment">
 
     <fragment
@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_detailFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="movie"
+            app:argType="com.flatcode.simpleadvancedapps.movies.models.MovieItemModel" />
     </fragment>
 
 </navigation>

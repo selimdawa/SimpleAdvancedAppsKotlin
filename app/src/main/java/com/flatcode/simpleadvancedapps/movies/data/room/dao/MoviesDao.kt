@@ -10,12 +10,11 @@ import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
 
 @Dao
 interface MoviesDao {
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(moviesItemModel: MovieItemModel)
+    fun insert(moviesItemModel: MovieItemModel)
 
     @Delete
-    suspend fun delete(moviesItemModel: MovieItemModel)
+    fun delete(moviesItemModel: MovieItemModel)
 
     @Query("SELECT * from movie_table")
     fun getAllMovies(): LiveData<List<MovieItemModel>>
