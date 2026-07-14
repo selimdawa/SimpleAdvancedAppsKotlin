@@ -5,7 +5,6 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.navArgs
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
-import com.flatcode.simpleadvancedapps.crypto.model.detail.DetailResponse
 import com.flatcode.simpleadvancedapps.crypto.utils.NetworkResult
 import com.flatcode.simpleadvancedapps.crypto.utils.loadImage
 import com.flatcode.simpleadvancedapps.crypto.utils.toast
@@ -28,30 +27,25 @@ class DetailFragment :
     override fun initializeListeners() {}
 
     override fun observeEvents() {
+        collectLifecycleFlow(viewModel.localDetail) { entity ->
+            entity?.let {
+                with(binding) {
+                    ivDetail.loadImage("${DATA.IMAGE_CRYPTO}${it.id}.png")
+                    tvDetailTitle.text = it.name
+                    tvDetailSymbol.text = it.symbol
+                    tvDetailDescription.text = it.description
+                }
+            }
+        }
+
         collectLifecycleFlow(viewModel.detailState) { state ->
             when (state) {
-                is NetworkResult.Loading -> handleView(isLoading = true)
-                is NetworkResult.Success -> {
-                    handleView(isLoading = false)
-                    parseData(state.data)
-                }
-
+                is NetworkResult.Loading -> handleView(isLoading = viewModel.localDetail.value == null)
+                is NetworkResult.Success -> handleView(isLoading = false)
                 is NetworkResult.Error -> {
                     handleView(isLoading = false)
                     toast(state.message)
                 }
-            }
-        }
-    }
-
-    private fun parseData(response: DetailResponse?) {
-        val coin = response?.data?.get(viewModel.symbol)?.firstOrNull()
-        coin?.let {
-            with(binding) {
-                ivDetail.loadImage("${DATA.IMAGE_CRYPTO}${viewModel.coinId}.png")
-                tvDetailTitle.text = it.name
-                tvDetailSymbol.text = it.symbol
-                tvDetailDescription.text = it.description
             }
         }
     }

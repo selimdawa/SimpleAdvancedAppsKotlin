@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.flatcode.simpleadvancedapps.crypto.db.AppDatabase
 import com.flatcode.simpleadvancedapps.crypto.db.dao.CoinDao
+import com.flatcode.simpleadvancedapps.crypto.db.dao.CoinDetailDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,5 +28,10 @@ object DatabaseModule {
     @Provides
     fun provideCoinDao(database: AppDatabase): CoinDao {
         return database.coinDao()
+    }
+
+    @Provides
+    fun provideCoinDetailDao(database: AppDatabase): CoinDetailDao {
+        return database.coinDetailDao()
     }
 }

@@ -5,20 +5,27 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
-import com.flatcode.simpleadvancedapps.databinding.FragmentHomeBinding
 import com.flatcode.simpleadvancedapps.crypto.model.home.Data
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.crypto.utils.DataStoreManager
 import com.flatcode.simpleadvancedapps.crypto.utils.toast
+import com.flatcode.simpleadvancedapps.databinding.FragmentHomeBinding
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(FragmentHomeBinding::inflate) {
+
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
 
     override val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.nav_graph_crypto)
     private lateinit var mAdapter: HomeRecyclerAdapter
@@ -63,6 +70,9 @@ class HomeFragment :
                 val symbol = coin.symbol
                 val id = coin.id
                 if (!symbol.isNullOrEmpty() && (id != null)) {
+                    lifecycleScope.launch {
+                        dataStoreManager.saveLastNav(id, symbol)
+                    }
                     val navigation = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
                         symbol = symbol,
                         coinId = id,
