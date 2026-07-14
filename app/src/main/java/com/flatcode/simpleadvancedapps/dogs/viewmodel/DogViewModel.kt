@@ -37,18 +37,19 @@ class DogViewModel @Inject constructor(
 
     fun getDogPhotosList(breed: String) {
         viewModelScope.launch {
-            _uiState.update { DogUiState.Loading }
+            if (_uiState.value !is DogUiState.Success) {
+                _uiState.update { DogUiState.Loading }
+            }
+
             try {
                 repository.getDogsByBreed(breed, networkHelper.isNetworkConnected())
                     .collect { photos ->
-                        if (photos.isNotEmpty()) {
-                            _uiState.update { DogUiState.Success(photos) }
-                        } else {
-                            _uiState.update { DogUiState.Error }
-                        }
+                        _uiState.update { DogUiState.Success(photos) }
                     }
             } catch (_: Exception) {
-                _uiState.update { DogUiState.Error }
+                if (_uiState.value !is DogUiState.Success) {
+                    _uiState.update { DogUiState.Error }
+                }
             }
         }
     }

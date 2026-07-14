@@ -2,9 +2,7 @@ package com.flatcode.simpleadvancedapps.dogs.data
 
 import com.flatcode.simpleadvancedapps.dogs.service.ApiService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,6 +12,11 @@ class DogRepository @Inject constructor(
     private val dogDao: DogDao,
 ) {
     fun getDogsByBreed(breed: String, isOnline: Boolean): Flow<List<String>> = flow {
+        val localData = dogDao.getDogsByBreedOnce(breed).map { it.imageUrl }
+        if (localData.isNotEmpty()) {
+            emit(localData)
+        }
+
         if (isOnline) {
             try {
                 val lowercaseBreed = breed.lowercase()
@@ -27,12 +30,13 @@ class DogRepository @Inject constructor(
                 val entities = response.images.map { DogEntity(it, breed) }
                 dogDao.deleteDogsByBreed(breed)
                 dogDao.insertDogs(entities)
-            } catch (_: Exception) {
+
+                emit(entities.map { it.imageUrl })
+            } catch (e: Exception) {
+                if (localData.isEmpty()) throw e
             }
+        } else if (localData.isEmpty()) {
+            throw Exception("No internet and no cached data")
         }
-        emitAll(
-            dogDao.getDogsByBreed(breed).map { entities ->
-                entities.map { it.imageUrl }
-            })
     }
 }

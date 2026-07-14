@@ -11,6 +11,9 @@ interface DogDao {
     @Query("SELECT * FROM dogs WHERE breed = :breed")
     fun getDogsByBreed(breed: String): Flow<List<DogEntity>>
 
+    @Query("SELECT * FROM dogs WHERE breed = :breed")
+    suspend fun getDogsByBreedOnce(breed: String): List<DogEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDogs(dogs: List<DogEntity>)
 
