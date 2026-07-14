@@ -4,14 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import com.flatcode.simpleadvancedapps.pop.repository.FunkoRepository
 import com.flatcode.simpleadvancedapps.utils.applyAppTheme
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class Application : Application() {
-
-    val repository: FunkoRepository by lazy { FunkoRepository() }
 
     companion object {
         private lateinit var instance: Application

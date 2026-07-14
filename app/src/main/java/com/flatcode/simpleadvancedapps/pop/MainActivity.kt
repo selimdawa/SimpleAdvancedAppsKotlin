@@ -10,7 +10,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainPopBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainPopBinding? = null
@@ -28,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        if (ev!!.action == MotionEvent.ACTION_DOWN) {
+        if (ev?.action == MotionEvent.ACTION_DOWN) {
             val v = currentFocus
             if (v is EditText) {
                 val outRect = Rect()

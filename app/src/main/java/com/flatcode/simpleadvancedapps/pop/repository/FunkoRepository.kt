@@ -1,41 +1,78 @@
 package com.flatcode.simpleadvancedapps.pop.repository
 
+import android.content.Context
+import androidx.lifecycle.LiveData
+import com.flatcode.simpleadvancedapps.pop.db.PopDao
+import com.flatcode.simpleadvancedapps.pop.model.PopItem
 import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.pop.models.PopItem
-import org.jsoup.Jsoup
-import java.io.IOException
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FunkoRepository {
+@Singleton
+class FunkoRepository @Inject constructor(
+    @ApplicationContext private val context: Context, private val popDao: PopDao
+) {
 
-    fun getFunkoPops(): MutableList<PopItem> {
-        val listData = mutableListOf<PopItem>()
-        try {
-            val url = DATA.BASE_URL_POP
-            val doc = Jsoup.connect(url).get()
-            val pops = doc.select(".wikitable:first-of-type tr")
+    val pops: LiveData<List<PopItem>> = popDao.getAllPops()
 
-            for (i in 1 until 200) {
-                val name = pops.select("th:nth-last-of-type(1)")
-                    .eq(i)
-                    .text()
-
-                val imgUrl = pops.select("td:nth-of-type(1)").eq(i - 1)
-
-                val img = if (imgUrl.toString() == "<td> </td>") {
-                    DATA.IMAGE_POP
-                } else {
-                    imgUrl.select("a").attr("href")
+    suspend fun refreshPops() {
+        withContext(Dispatchers.IO) {
+            try {
+                val jsonString = context.assets.open(DATA.FILE_POP).bufferedReader().use {
+                    it.readText()
                 }
 
-                val series = pops.select("td:nth-of-type(4)")
-                    .eq(i - 1)
-                    .text()
+                val jsonArray = JSONArray(jsonString)
+                val listData = mutableListOf<PopItem>()
+                val limit = jsonArray.length()
 
-                listData.add(PopItem(i, name, img, series))
+                for (i in 0 until limit) {
+                    if (listData.size >= 200) break
+
+                    val item = jsonArray.getJSONObject(i)
+                    val img = item.optString("imageName", "")
+                    val name = item.optString("title", DATA.UNKNOWN)
+
+                    val seriesJson = item.optJSONArray("series")
+                    val seriesList = mutableListOf<String>()
+                    if (seriesJson != null) {
+                        for (j in 0 until seriesJson.length()) {
+                            seriesList.add(seriesJson.getString(j))
+                        }
+                    }
+
+                    if (img.isEmpty() || img.contains(
+                            "placeholder", ignoreCase = true
+                        ) || !img.startsWith("http") || name == DATA.UNKNOWN || name.isBlank() || seriesList.any {
+                            it.contains("Keychain", true) || it.contains(
+                                "Pocket", true
+                            ) || it.contains("Pins", true)
+                        } || img.contains("Keychains", ignoreCase = true)
+                    ) {
+                        continue
+                    }
+
+                    val series = if (seriesList.isNotEmpty()) {
+                        seriesList.joinToString(", ")
+                    } else {
+                        DATA.UNKNOWN
+                    }
+
+                    listData.add(PopItem(i, name, img, series))
+                }
+
+                if (listData.isNotEmpty()) {
+                    popDao.deleteAllPops()
+                    popDao.insertPops(listData)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
-        return listData
     }
 }
