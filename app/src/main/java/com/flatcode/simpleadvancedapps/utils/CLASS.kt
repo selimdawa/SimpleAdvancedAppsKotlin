@@ -2,7 +2,6 @@ package com.flatcode.simpleadvancedapps.utils
 
 import com.flatcode.simpleadvancedapps.main.MainActivity
 import com.flatcode.simpleadvancedapps.main.SplashActivity
-import com.flatcode.simpleadvancedapps.dictionary.DefinitionWordActivity
 
 object CLASS {
     val MAIN: Class<*> = MainActivity::class.java
@@ -21,5 +20,4 @@ object CLASS {
     val I11: Class<*> = com.flatcode.simpleadvancedapps.weather.MainActivity::class.java
     val I12: Class<*> = com.flatcode.simpleadvancedapps.poke.ui.view.MainActivity::class.java
     val I13: Class<*> = com.flatcode.simpleadvancedapps.todoNote.MainActivity::class.java
-    val Definition_Word = DefinitionWordActivity::class.java
 }

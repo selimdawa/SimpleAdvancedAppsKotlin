@@ -15,7 +15,7 @@ class MainViewModel : ViewModel() {
     private val _dataMain = MutableLiveData<List<Main>>()
     val dataMain: LiveData<List<Main>> get() = _dataMain
 
-    private val i = intArrayOf(1, 1, 1, 1, 2, 3, 1, 1, 1, 1, 1, 1, 1)
+    private val i = intArrayOf(1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1)
 
     fun getItems(recyclerView: RecyclerView, bar: ProgressBar) {
         _dataMain.value = data

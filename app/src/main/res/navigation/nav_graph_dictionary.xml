@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_dictionary"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.littleapp.dictionary.fragment.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main_dictionary">
+        <action
+            android:id="@+id/action_mainFragment_to_definitionWordFragment"
+            app:destination="@id/definitionWordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/definitionWordFragment"
+        android:name="com.flatcode.simpleadvancedapps.dictionary.fragment.DefinitionWordFragment"
+        android:label="DefinitionWordFragment"
+        tools:layout="@layout/fragment_definition_word" />
+</navigation>

@@ -20,7 +20,7 @@ class MainInfoViewModel : ViewModel() {
             MainInfo(Constants.COUNTRIES, 1, 1, 1, 1),
             MainInfo(Constants.CALCULATOR, 1, 1, 1, 1),
             MainInfo(Constants.CRYPTO, 1, 1, 0, 1),
-            MainInfo(Constants.DICTIONARY, 0, 0, 0, 0),
+            MainInfo(Constants.DICTIONARY, 1, 1, 1, 1),
             MainInfo(Constants.MEALS, 1, 1, 1, 1),
             MainInfo(Constants.POP, 0, 1, 0, 1),
             MainInfo(Constants.MOVIE, 1, 1, 1, 1),
