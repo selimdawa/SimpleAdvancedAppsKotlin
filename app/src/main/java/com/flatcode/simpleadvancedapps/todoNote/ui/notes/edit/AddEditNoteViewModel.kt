@@ -3,7 +3,7 @@ package com.flatcode.simpleadvancedapps.todoNote.ui.notes.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.todoNote.ADD_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.EDIT_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.data.NoteDao
@@ -24,13 +24,13 @@ class AddEditNoteViewModel @Inject constructor(
     val addEditNoteEvent = addEditNoteEventChannel.receiveAsFlow()
 
     val note = state.get<Notes>("Note")
-    var noteTitle = state.get<String>("noteTitle") ?: note?.title ?: Constants.EMPTY
+    var noteTitle = state.get<String>("noteTitle") ?: note?.title ?: DATA.EMPTY
         set(value) {
             field = value
             state["noteTitle"] = value
         }
 
-    var noteContent = state.get<String>("noteContent") ?: note?.content ?: Constants.EMPTY
+    var noteContent = state.get<String>("noteContent") ?: note?.content ?: DATA.EMPTY
         set(value) {
             field = value
             state["noteContent"] = value

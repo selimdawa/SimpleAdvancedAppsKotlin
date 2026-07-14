@@ -3,64 +3,69 @@ package com.flatcode.simpleadvancedapps.crypto.ui.home
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
-import com.flatcode.simpleadvancedapps.crypto.model.home.Data
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomeBinding
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.crypto.model.home.Data
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.crypto.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment :
     BaseFragment<FragmentHomeBinding, HomeViewModel>(FragmentHomeBinding::inflate) {
 
-    override val viewModel by viewModels<HomeViewModel>()
+    override val viewModel: HomeViewModel by hiltNavGraphViewModels(R.id.nav_graph_crypto)
     private lateinit var mAdapter: HomeRecyclerAdapter
     private var isCurrentlyLoadingMore = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getData(Constants.API_KEY_CRYPTO, Constants.LIMIT_CRYPTO)
+        viewModel.getData(DATA.API_KEY_CRYPTO, DATA.LIMIT_CRYPTO)
     }
 
     override fun onCreateFinished() {
-        binding.toolbar.nameSpace.text = Constants.CRYPTO
+        binding.toolbar.nameSpace.text = DATA.CRYPTO
         setupRecyclerView()
     }
 
     override fun initializeListeners() {}
 
     override fun observeEvents() {
-        with(viewModel) {
-            cryptoList.observe(viewLifecycleOwner) { dataList ->
-                dataList?.let {
-                    mAdapter.setList(it)
-                    isCurrentlyLoadingMore = false
-                }
-            }
-            isLoading.observe(viewLifecycleOwner) { loading -> handleViews(loading) }
-            onError.observe(viewLifecycleOwner) { message ->
-                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
-                isCurrentlyLoadingMore = false
-            }
+        collectLifecycleFlow(viewModel.cryptoList) { dataList ->
+            mAdapter.setList(dataList)
+            isCurrentlyLoadingMore = false
+        }
+
+        collectLifecycleFlow(viewModel.isLoading) { loading ->
+            handleViews(loading)
+        }
+
+        collectLifecycleFlow(viewModel.error) { message ->
+            toast(message)
+            if (message != null) isCurrentlyLoadingMore = false
         }
     }
 
     private fun setupRecyclerView() {
         mAdapter = HomeRecyclerAdapter(object : ItemClickListener {
             override fun onItemClick(
-                coin: Data, ivRowImage: ImageView, tvRowTitle: TextView, tvRowSymbol: TextView
+                coin: Data,
+                ivRowImage: ImageView,
+                tvRowTitle: TextView,
+                tvRowSymbol: TextView,
             ) {
                 val symbol = coin.symbol
                 val id = coin.id
-                if (!symbol.isNullOrEmpty() && id != null) {
+                if (!symbol.isNullOrEmpty() && (id != null)) {
                     val navigation = HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                        symbol = symbol, coinId = id
+                        symbol = symbol,
+                        coinId = id,
                     )
                     findNavController().navigate(navigation)
                 }
@@ -79,9 +84,9 @@ class HomeFragment :
                         val totalItemCount = layoutManager.itemCount
                         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-                        if (!isCurrentlyLoadingMore && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
+                        if ((!isCurrentlyLoadingMore) && (visibleItemCount + firstVisibleItemPosition >= totalItemCount)) {
                             isCurrentlyLoadingMore = true
-                            viewModel.loadNextPage(Constants.API_KEY_CRYPTO)
+                            viewModel.loadNextPage(DATA.API_KEY_CRYPTO)
                         }
                     }
                 }
@@ -90,13 +95,11 @@ class HomeFragment :
     }
 
     private fun handleViews(isLoading: Boolean) {
-        with(binding) {
-            if (viewModel.isFirstPage()) {
-                rvHome.isVisible = !isLoading
-                pbHome.isVisible = isLoading
-            } else {
-                pbHome.isVisible = false
-            }
+        if (viewModel.isFirstPage()) {
+            binding.rvHome.isVisible = !isLoading
+            binding.pbHome.isVisible = isLoading
+        } else {
+            binding.pbHome.isVisible = false
         }
     }
 }

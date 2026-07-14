@@ -1,9 +1,9 @@
 package com.flatcode.simpleadvancedapps.crypto.di
 
-import com.google.gson.Gson
 import com.flatcode.simpleadvancedapps.BuildConfig
-import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.crypto.network.CryptoApi
+import com.flatcode.simpleadvancedapps.utils.DATA
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,20 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Qualifier
 import javax.inject.Singleton
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class CryptoRetrofit
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class CryptoOkHttp
-
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class CryptoInterceptor
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -38,7 +25,6 @@ object NetworkModule {
         return Gson()
     }
 
-    @CryptoInterceptor
     @Singleton
     @Provides
     fun provideHttpLoggerInterceptor(): HttpLoggingInterceptor {
@@ -51,15 +37,11 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
-    @CryptoOkHttp
     @Singleton
     @Provides
-    fun provideHttpClint(@CryptoInterceptor httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
-        return OkHttpClient.Builder()
-            .readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .addInterceptor(httpLoggingInterceptor)
-            .build()
+    fun provideHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        return OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(httpLoggingInterceptor).build()
     }
 
     @Singleton
@@ -68,23 +50,19 @@ object NetworkModule {
         return GsonConverterFactory.create(gson)
     }
 
-    @CryptoRetrofit
     @Singleton
     @Provides
     fun provideRetrofitInstance(
-        @CryptoOkHttp okHttpClient: OkHttpClient,
+        okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL_CRYPTO)
-            .client(okHttpClient)
-            .addConverterFactory(gsonConverterFactory)
-            .build()
+        return Retrofit.Builder().baseUrl(DATA.BASE_URL_CRYPTO).client(okHttpClient)
+            .addConverterFactory(gsonConverterFactory).build()
     }
 
     @Singleton
     @Provides
-    fun provideApiFactory(@CryptoRetrofit retrofit: Retrofit): CryptoApi {
+    fun provideApiFactory(retrofit: Retrofit): CryptoApi {
         return retrofit.create(CryptoApi::class.java)
     }
 }

@@ -15,7 +15,7 @@ import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainDictionaryBinding
 import com.flatcode.simpleadvancedapps.dictionary.utils.UiState
 import com.flatcode.simpleadvancedapps.dictionary.viewmodel.MainViewModel
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -42,7 +42,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        binding.toolbar.nameSpace.text = Constants.DICTIONARY
+        binding.toolbar.nameSpace.text = DATA.DICTIONARY
     }
 
     private fun setupListeners() {

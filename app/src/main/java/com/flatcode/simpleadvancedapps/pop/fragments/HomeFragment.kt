@@ -11,7 +11,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.flatcode.simpleadvancedapps.Application
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomePopBinding
 import com.flatcode.simpleadvancedapps.pop.adapters.FunkoListAdapter
 import com.flatcode.simpleadvancedapps.pop.adapters.PopListener
@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
         })
 
         binding.apply {
-            toolbar.nameSpace.text = Constants.POP
+            toolbar.nameSpace.text = DATA.POP
             recyclerView.adapter = adapter
             progressBar.visibility = View.VISIBLE
             searchEtLayout.visibility = View.INVISIBLE

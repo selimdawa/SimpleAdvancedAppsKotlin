@@ -7,7 +7,7 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.todoNote.ADD_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.EDIT_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.data.NoteDao
@@ -33,7 +33,7 @@ class NotesViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    val searchQuery = state.getLiveData("noteSearchQuery", Constants.EMPTY)
+    val searchQuery = state.getLiveData("noteSearchQuery", DATA.EMPTY)
 
     private val noteEventChannel = Channel<NotesEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()

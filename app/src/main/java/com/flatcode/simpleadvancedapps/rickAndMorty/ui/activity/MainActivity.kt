@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainRickBinding
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainRickBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.nameSpace.text = Constants.RICK_AND_MORTY
+        binding.toolbar.nameSpace.text = DATA.RICK_AND_MORTY
 
         val fragmentManager: FragmentManager = supportFragmentManager
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)

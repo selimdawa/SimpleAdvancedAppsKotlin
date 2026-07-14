@@ -19,7 +19,7 @@ import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentDogBinding
 import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogApiStatus
 import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogViewModel
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,7 +48,7 @@ class DogFragment : Fragment(), AdapterView.OnItemClickListener {
         with(binding) {
             recyclerViewDog.adapter = dogAdapter
             recyclerViewDog.layoutManager = LinearLayoutManager(requireContext())
-            toolbar.nameSpace.text = Constants.DOGS
+            toolbar.nameSpace.text = DATA.DOGS
         }
 
         observer()

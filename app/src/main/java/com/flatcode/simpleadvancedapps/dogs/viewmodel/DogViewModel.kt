@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.dogs.service.ApiService
 import com.flatcode.simpleadvancedapps.dogs.service.DogApi
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,7 +43,7 @@ class DogViewModel @Inject constructor(
         _status.value = DogApiStatus.LOADING
         viewModelScope.launch {
             try {
-                val list = if (Constants.SPACE in item) connection2(item) else connection1(item)
+                val list = if (DATA.SPACE in item) connection2(item) else connection1(item)
                 _photosDog.value = converter(list)
                 _status.value = DogApiStatus.DONE
             } catch (_: Exception) {
@@ -64,7 +64,7 @@ class DogViewModel @Inject constructor(
     }
 
     private suspend fun connection2(t: String): DogApi {
-        val list = t.split(Constants.SPACE)
+        val list = t.split(DATA.SPACE)
         val breed = list[0].lowercase()
         val subBreed = list[1].lowercase()
         return apiService.getListImg(breed, subBreed)

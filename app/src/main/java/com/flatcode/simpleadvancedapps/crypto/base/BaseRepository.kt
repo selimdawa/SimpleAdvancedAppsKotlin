@@ -1,10 +1,10 @@
 package com.flatcode.simpleadvancedapps.crypto.base
 
-import com.google.gson.Gson
 import com.flatcode.simpleadvancedapps.Application.Companion.getAppContext
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.crypto.model.errorResponse.ErrorResponse
 import com.flatcode.simpleadvancedapps.crypto.utils.NetworkResult
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException

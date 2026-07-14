@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentHoursBinding
 import com.flatcode.simpleadvancedapps.weather.adatper.WeatherAdapter
 import com.flatcode.simpleadvancedapps.weather.model.MainViewModel
@@ -55,10 +55,10 @@ class HoursFragment : Fragment() {
                 hourObject.getString("time"),
                 conditionObject.getString("text"),
                 hourObject.getString("temp_c").toFloat().toInt().toString() + "°C",
-                Constants.EMPTY,
-                Constants.EMPTY,
+                DATA.EMPTY,
+                DATA.EMPTY,
                 conditionObject.getString("icon"),
-                Constants.EMPTY
+                DATA.EMPTY
             )
             list.add(item)
         }

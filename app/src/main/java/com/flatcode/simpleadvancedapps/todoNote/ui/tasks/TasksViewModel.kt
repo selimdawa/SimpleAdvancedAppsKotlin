@@ -7,7 +7,7 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.todoNote.ADD_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.EDIT_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.data.PreferencesManager
@@ -33,7 +33,7 @@ class TasksViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    val searchQuery = state.getLiveData("searchQuery", Constants.EMPTY)
+    val searchQuery = state.getLiveData("searchQuery", DATA.EMPTY)
     val preferencesFlow = preferencesManager.preferencesFlow
 
     private val taskEventChannel = Channel<TasksEvent>()

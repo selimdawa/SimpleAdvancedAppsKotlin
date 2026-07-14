@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ItemMainBinding
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.utils.VOID
 
 class MainAdapter(private val context: Context) : RecyclerView.Adapter<MainViewHolder>() {
@@ -31,7 +31,7 @@ class MainAdapter(private val context: Context) : RecyclerView.Adapter<MainViewH
 
             if (number != 0) {
                 this.number.visibility = View.VISIBLE
-                this.number.text = "${Constants.EMPTY}$number"
+                this.number.text = "${DATA.EMPTY}$number"
             } else {
                 this.number.visibility = View.GONE
             }

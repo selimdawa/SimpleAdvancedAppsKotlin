@@ -1,78 +1,63 @@
 package com.flatcode.simpleadvancedapps.crypto.ui.detail
 
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.navArgs
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
-import com.flatcode.simpleadvancedapps.crypto.model.detail.CoinDetail
 import com.flatcode.simpleadvancedapps.crypto.model.detail.DetailResponse
+import com.flatcode.simpleadvancedapps.crypto.utils.NetworkResult
 import com.flatcode.simpleadvancedapps.crypto.utils.loadImage
+import com.flatcode.simpleadvancedapps.crypto.utils.toast
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailCryptoBinding
-import com.google.gson.Gson
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONArray
-import org.json.JSONObject
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailFragment :
     BaseFragment<FragmentDetailCryptoBinding, DetailViewModel>(FragmentDetailCryptoBinding::inflate) {
 
-    @Inject
-    lateinit var gson: Gson
-
-    override val viewModel by viewModels<DetailViewModel>()
-    private val args by navArgs<DetailFragmentArgs>()
+    private val args: DetailFragmentArgs by navArgs()
+    override val viewModel: DetailViewModel by hiltNavGraphViewModels(R.id.nav_graph_crypto)
 
     override fun onCreateFinished() {
-        viewModel.getDetail(Constants.API_KEY_CRYPTO, args.symbol)
-        binding.toolbar.nameSpace.text = Constants.CRYPTO_DETAILS
+        binding.toolbar.nameSpace.text = DATA.CRYPTO_DETAILS
+        viewModel.getDetail(args.symbol, args.coinId)
     }
 
     override fun initializeListeners() {}
 
     override fun observeEvents() {
-        with(viewModel) {
-            detailResponse.observe(viewLifecycleOwner) { response ->
-                parseData(response)
-            }
-            isLoading.observe(viewLifecycleOwner) { loading ->
-                handleView(loading)
-            }
-            onError.observe(viewLifecycleOwner) { message ->
-                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+        collectLifecycleFlow(viewModel.detailState) { state ->
+            when (state) {
+                is NetworkResult.Loading -> handleView(isLoading = true)
+                is NetworkResult.Success -> {
+                    handleView(isLoading = false)
+                    parseData(state.data)
+                }
+
+                is NetworkResult.Error -> {
+                    handleView(isLoading = false)
+                    toast(state.message)
+                }
             }
         }
     }
 
     private fun parseData(response: DetailResponse?) {
-        try {
-            val json = gson.toJson(response?.data)
-            val jsonObject = JSONObject(json)
-            val jsonArray = jsonObject.optJSONArray(args.symbol) ?: JSONArray()
-            val firstObject = jsonArray.optJSONObject(0)?.toString()
-
-            if (!firstObject.isNullOrEmpty()) {
-                val coin = gson.fromJson(firstObject, CoinDetail::class.java)
-                coin?.let {
-                    with(binding) {
-                        ivDetail.loadImage("${Constants.IMAGE_CRYPTO}${args.coinId}.png")
-                        tvDetailTitle.text = it.name
-                        tvDetailSymbol.text = it.symbol
-                        tvDetailDescription.text = it.description
-                    }
-                }
+        val coin = response?.data?.get(viewModel.symbol)?.firstOrNull()
+        coin?.let {
+            with(binding) {
+                ivDetail.loadImage("${DATA.IMAGE_CRYPTO}${viewModel.coinId}.png")
+                tvDetailTitle.text = it.name
+                tvDetailSymbol.text = it.symbol
+                tvDetailDescription.text = it.description
             }
-        } catch (_: Exception) {
         }
     }
 
     private fun handleView(isLoading: Boolean) {
-        with(binding) {
-            detailGroup.isVisible = !isLoading
-            pbDetail.isVisible = isLoading
-        }
+        binding.detailGroup.isVisible = !isLoading
+        binding.pbDetail.isVisible = isLoading
     }
 }

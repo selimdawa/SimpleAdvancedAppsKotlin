@@ -14,7 +14,7 @@ import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentDefinitionWordBinding
 import com.flatcode.simpleadvancedapps.dictionary.utils.UiState
 import com.flatcode.simpleadvancedapps.dictionary.viewmodel.MainViewModel
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -41,7 +41,7 @@ class DefinitionWordFragment : Fragment() {
 
     private fun setupToolbar() {
         binding.toolbar.apply {
-            nameSpace.text = Constants.MEANING_OF_THE_WORD
+            nameSpace.text = DATA.MEANING_OF_THE_WORD
             imageLeft.apply {
                 visibility = View.VISIBLE
                 setImageResource(R.drawable.ic_back)

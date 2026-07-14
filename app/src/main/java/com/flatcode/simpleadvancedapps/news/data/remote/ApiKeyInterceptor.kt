@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.news.data.remote
 
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -10,7 +10,7 @@ class ApiKeyInterceptor : Interceptor {
         val originalUrl = originalRequest.url
         
         val url = originalUrl.newBuilder()
-            .addQueryParameter("apiKey", Constants.API_NEWS)
+            .addQueryParameter("apiKey", DATA.API_NEWS)
             .build()
             
         val requestBuilder = originalRequest.newBuilder()

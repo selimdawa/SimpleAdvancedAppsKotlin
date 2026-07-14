@@ -2,7 +2,7 @@ package com.flatcode.simpleadvancedapps.news.di
 
 import com.flatcode.simpleadvancedapps.news.data.remote.ApiKeyInterceptor
 import com.flatcode.simpleadvancedapps.news.data.remote.NewsApiServices
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,7 +56,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(@NewsOkHttp okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl(Constants.BASE_URL_NEWS).client(okHttpClient)
+        return Retrofit.Builder().baseUrl(DATA.BASE_URL_NEWS).client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
 

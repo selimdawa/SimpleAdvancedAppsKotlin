@@ -11,7 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailMovieBinding
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
-import com.flatcode.simpleadvancedapps.utils.Constants.IMAGE_MOVIE
+import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE
 import com.flatcode.simpleadvancedapps.utils.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

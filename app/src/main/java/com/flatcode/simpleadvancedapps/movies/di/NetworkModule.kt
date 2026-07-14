@@ -1,7 +1,7 @@
 package com.flatcode.simpleadvancedapps.movies.di
 
 import com.flatcode.simpleadvancedapps.movies.data.retrofit.api.ApiService
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL_MOVIES)
+            .baseUrl(DATA.BASE_URL_MOVIES)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

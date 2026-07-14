@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailPokeBinding
 import com.flatcode.simpleadvancedapps.poke.ui.viewmodel.ApiStatusDetail
 import com.flatcode.simpleadvancedapps.poke.ui.viewmodel.DetailsViewModel
@@ -38,7 +38,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.nameSpace.text = Constants.DETAILS_POKE
+        binding.toolbar.nameSpace.text = DATA.DETAILS_POKE
 
         observeStatus()
         observe()

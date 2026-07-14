@@ -3,7 +3,7 @@ package com.flatcode.simpleadvancedapps.dictionary.data.repository
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.dictionary.data.local.WordDao
 import com.flatcode.simpleadvancedapps.dictionary.data.local.WordEntity
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -24,7 +24,7 @@ class DictionaryRepository @Inject constructor(
             return cachedWord.definition
         }
 
-        val url = "${Constants.DICTIONARY_BASIC_URL}$word?key=${Constants.DICTIONARY_API_KEY}"
+        val url = "${DATA.DICTIONARY_BASIC_URL}$word?key=${DATA.DICTIONARY_API_KEY}"
         val response = fetchFromNetwork(url)
         val definition = extractDefinitionFromJson(response)
 
@@ -47,7 +47,7 @@ class DictionaryRepository @Inject constructor(
     private fun extractDefinitionFromJson(response: String): String {
         val jsonArray = JSONArray(response)
         val firstIndex = jsonArray.getJSONObject(0)
-        val getShotDefinition = firstIndex.getJSONArray(Constants.SHORT_DEF)
+        val getShotDefinition = firstIndex.getJSONArray(DATA.SHORT_DEF)
         return getShotDefinition.getString(0)
     }
 }

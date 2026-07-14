@@ -9,7 +9,7 @@ import com.flatcode.simpleadvancedapps.databinding.ActivityCategoryMealsBinding
 import com.flatcode.simpleadvancedapps.meals.adapters.CategoryMealsAdapter
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment
 import com.flatcode.simpleadvancedapps.meals.mvvm.CategoriesMealsViewModel
-import com.flatcode.simpleadvancedapps.utils.Constants
+import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,7 +26,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         _binding = ActivityCategoryMealsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.nameSpace.text = Constants.CATEGORY_MEALS
+        binding.toolbar.nameSpace.text = DATA.CATEGORY_MEALS
 
         prepareRecyclerView()
         onPopularItemClick()
@@ -36,7 +36,7 @@ class CategoryMealsActivity : AppCompatActivity() {
         )
         categoryMealsViewModel.observeCategoriesMealsLiveData().observe(this) { mealList ->
             binding.toolbar.nameSpace.text = getString(
-                R.string.category_meals_count, Constants.CATEGORY_MEALS, mealList.size
+                R.string.category_meals_count, DATA.CATEGORY_MEALS, mealList.size
             )
             categoryMealsAdapter.submitList(mealList)
         }
