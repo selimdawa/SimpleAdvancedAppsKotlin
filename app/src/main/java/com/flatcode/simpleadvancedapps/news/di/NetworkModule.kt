@@ -12,12 +12,26 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class NewsRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class NewsOkHttp
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class NewsInterceptor
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @NewsInterceptor
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -26,10 +40,11 @@ object NetworkModule {
         }
     }
 
+    @NewsOkHttp
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        loggingInterceptor: HttpLoggingInterceptor
+        @NewsInterceptor loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor())
             .addInterceptor(loggingInterceptor).callTimeout(30, TimeUnit.SECONDS)
@@ -37,16 +52,17 @@ object NetworkModule {
             .writeTimeout(30, TimeUnit.SECONDS).build()
     }
 
+    @NewsRetrofit
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(@NewsOkHttp okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder().baseUrl(Constants.BASE_URL_NEWS).client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
     @Provides
     @Singleton
-    fun provideNewsApiService(retrofit: Retrofit): NewsApiServices {
+    fun provideNewsApiService(@NewsRetrofit retrofit: Retrofit): NewsApiServices {
         return retrofit.create(NewsApiServices::class.java)
     }
 }

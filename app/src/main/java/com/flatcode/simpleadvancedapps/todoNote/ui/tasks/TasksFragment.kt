@@ -36,7 +36,7 @@ class TasksFragment : Fragment(), TaskAdapter.OnItemClickListener {
     private var _binding: FragmentTasksBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TasksViewModel by navGraphViewModels(R.id.nav_graph) {
+    private val viewModel: TasksViewModel by navGraphViewModels(R.id.nav_graph_todo) {
         defaultViewModelProviderFactory
     }
 

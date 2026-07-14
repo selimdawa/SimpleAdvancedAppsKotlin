@@ -19,7 +19,7 @@ class EverythingFragment :
     BaseFragment<FragmentEverythingBinding, EverythingViewModel>(R.layout.fragment_everything) {
 
     override val binding by viewBinding(FragmentEverythingBinding::bind)
-    override val viewModel: EverythingViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    override val viewModel: EverythingViewModel by hiltNavGraphViewModels(R.id.nav_graph_news)
     private val adapter = EverythingAdapter()
 
     override fun initialize() {

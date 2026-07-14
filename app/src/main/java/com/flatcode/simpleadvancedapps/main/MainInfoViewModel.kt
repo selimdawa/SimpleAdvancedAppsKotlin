@@ -24,7 +24,7 @@ class MainInfoViewModel : ViewModel() {
             MainInfo(Constants.MEALS, 1, 1, 1, 1),
             MainInfo(Constants.POP, 0, 1, 0, 1),
             MainInfo(Constants.MOVIE, 1, 1, 1, 1),
-            MainInfo(Constants.NEWS, 1, 1, 0, 0),
+            MainInfo(Constants.NEWS, 1, 1, 1, 1),
             MainInfo(Constants.RICK_AND_MORTY, 1, 1, 0, 0),
             MainInfo(Constants.WEATHER, 0, 0, 0, 0),
             MainInfo(Constants.POKE, 0, 0, 0, 1),

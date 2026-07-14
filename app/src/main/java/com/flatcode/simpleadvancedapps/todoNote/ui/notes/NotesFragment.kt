@@ -33,7 +33,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener {
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: NotesViewModel by navGraphViewModels(R.id.nav_graph) {
+    private val viewModel: NotesViewModel by navGraphViewModels(R.id.nav_graph_todo) {
         defaultViewModelProviderFactory
     }
 

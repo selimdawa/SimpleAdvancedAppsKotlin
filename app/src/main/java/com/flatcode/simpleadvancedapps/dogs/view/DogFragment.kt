@@ -27,7 +27,7 @@ class DogFragment : Fragment(), AdapterView.OnItemClickListener {
 
     private var _binding: FragmentDogBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: DogViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    private val viewModel: DogViewModel by hiltNavGraphViewModels(R.id.nav_graph_dogs)
     private val dogAdapter = DogAdapter()
     private var lastSelectedBreed: String? = null
     private var networkCallback: ConnectivityManager.NetworkCallback? = null

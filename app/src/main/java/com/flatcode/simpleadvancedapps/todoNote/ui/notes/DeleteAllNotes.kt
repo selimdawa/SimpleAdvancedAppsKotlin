@@ -16,7 +16,7 @@ class DeleteAllNotes : DialogFragment() {
     private var _binding: DialogCustomDeleteNotesBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: NotesViewModel by navGraphViewModels(R.id.nav_graph) {
+    private val viewModel: NotesViewModel by navGraphViewModels(R.id.nav_graph_todo) {
         defaultViewModelProviderFactory
     }
 

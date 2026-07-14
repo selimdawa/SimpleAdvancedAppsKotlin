@@ -20,6 +20,14 @@ import javax.inject.Singleton
 @Retention(AnnotationRetention.BINARY)
 annotation class CryptoRetrofit
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoOkHttp
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoInterceptor
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -30,6 +38,7 @@ object NetworkModule {
         return Gson()
     }
 
+    @CryptoInterceptor
     @Singleton
     @Provides
     fun provideHttpLoggerInterceptor(): HttpLoggingInterceptor {
@@ -42,9 +51,10 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
+    @CryptoOkHttp
     @Singleton
     @Provides
-    fun provideHttpClint(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideHttpClint(@CryptoInterceptor httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
@@ -62,7 +72,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideRetrofitInstance(
-        okHttpClient: OkHttpClient,
+        @CryptoOkHttp okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()

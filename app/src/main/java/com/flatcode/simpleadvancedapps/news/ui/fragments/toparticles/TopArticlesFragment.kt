@@ -19,7 +19,7 @@ class TopArticlesFragment :
     BaseFragment<FragmentTopArticlesBinding, TopArticlesViewModel>(R.layout.fragment_top_articles) {
 
     override val binding by viewBinding(FragmentTopArticlesBinding::bind)
-    override val viewModel: TopArticlesViewModel by hiltNavGraphViewModels(R.id.nav_graph)
+    override val viewModel: TopArticlesViewModel by hiltNavGraphViewModels(R.id.nav_graph_news)
     private val adapter = TopArticlesAdapter()
 
     override fun initialize() {
