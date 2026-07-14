@@ -212,8 +212,8 @@
     //Dictionary
     <string name="hint_search">Enter your word</string>
     <string name="button_find">find</string>
-    //Poke
-    <string name="pokemon_image">Pokemon Image</string>
+    //Pokémon
+    <string name="pokemon_image">Pokémon Image</string>
     <string name="type">Type :</string>
     <string name="hp">Hp :</string>
     <string name="speed">Speed :</string>
@@ -302,6 +302,4 @@
     <string name="task">Task</string>
     <string name="empty">Empty</string>
     <string name="_0">0</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

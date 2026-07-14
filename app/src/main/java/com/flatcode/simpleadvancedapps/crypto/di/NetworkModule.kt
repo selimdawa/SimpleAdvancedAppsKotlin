@@ -13,18 +13,41 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoOkHttp
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoGson
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoInterceptor
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CryptoConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @CryptoGson
     @Provides
     @Singleton
     fun provideGson(): Gson {
         return Gson()
     }
 
+    @CryptoInterceptor
     @Singleton
     @Provides
     fun provideHttpLoggerInterceptor(): HttpLoggingInterceptor {
@@ -37,24 +60,27 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
+    @CryptoOkHttp
     @Singleton
     @Provides
-    fun provideHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideHttpClient(@CryptoInterceptor httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS).addInterceptor(httpLoggingInterceptor).build()
     }
 
+    @CryptoConverterFactory
     @Singleton
     @Provides
-    fun provideConverterFactory(gson: Gson): GsonConverterFactory {
+    fun provideConverterFactory(@CryptoGson gson: Gson): GsonConverterFactory {
         return GsonConverterFactory.create(gson)
     }
 
+    @CryptoRetrofit
     @Singleton
     @Provides
     fun provideRetrofitInstance(
-        okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory,
+        @CryptoOkHttp okHttpClient: OkHttpClient,
+        @CryptoConverterFactory gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder().baseUrl(DATA.BASE_URL_CRYPTO).client(okHttpClient)
             .addConverterFactory(gsonConverterFactory).build()
@@ -62,7 +88,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiFactory(retrofit: Retrofit): CryptoApi {
+    fun provideApiFactory(@CryptoRetrofit retrofit: Retrofit): CryptoApi {
         return retrofit.create(CryptoApi::class.java)
     }
 }

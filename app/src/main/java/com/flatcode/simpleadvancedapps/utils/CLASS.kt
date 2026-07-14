@@ -18,6 +18,6 @@ object CLASS {
     val I10: Class<*> =
         com.flatcode.simpleadvancedapps.rickAndMorty.ui.activity.MainActivity::class.java
     val I11: Class<*> = com.flatcode.simpleadvancedapps.weather.MainActivity::class.java
-    val I12: Class<*> = com.flatcode.simpleadvancedapps.poke.ui.view.MainActivity::class.java
+    val I12: Class<*> = com.flatcode.simpleadvancedapps.pokemon.ui.view.MainActivity::class.java
     val I13: Class<*> = com.flatcode.simpleadvancedapps.todoNote.MainActivity::class.java
 }

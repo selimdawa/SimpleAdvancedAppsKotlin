@@ -140,7 +140,7 @@ One | Two | Three
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/a/AVvXsEhnqF_NXHMhE6cgqMvxU0LDrpUQ1n4jZq3VC0MlZFCwzzXF5x8ruVGrJKlLoRJ9VlSObkgrVsI3_HF_CcdrXsthENEQNawbrkRmoGgs2Ypf5bT65N-6W8uwcA-23rN-BxMXDNJt-Vz-kOk01BdBjDjs0D59xv4ZNH745UynqSypO65z3g71rdlgw-5KOA) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEiuXsfjAioX9UPjjam79mzh5LuTtaAxePyrT3N2zidTMNfLY1BzwFiS6DPVZDGZnm6bbuysOfOQX4s2K4gNWLsM7cS1H62gEmC5gBXZqbV6VPtHQWWmmTTilFnImwHvjbYJstrrnKLQyCm5wKSXN6CAcDjgtXEo6p4jCFwZ8YtxFgaBzHEmrihfdIOMJw) | ![](https://blogger.googleusercontent.com/img/a/AVvXsEit09OnhMIpEzIyqLtCj6xUlPGPZpp7pNyLkCKv9iNrM2T3N7E7Gm0ElXQsyiB-q6Of4d-0zsqsIl5gMhW1C9p_U2IX6LK4Wjg_jUNrEikcmRWPD4yjANhJ-7v6UW601s6kGRrMoJginIM9rMDc_YLn2yiK1_zuPhHVrJPbPO6bvxQnAiyZB00aSQPodg) | 
 
-# `.12 Poke` :
+# `.12 Pokémon` :
  
 ## Day Mode
 One | Two | Three 
@@ -163,8 +163,6 @@ One | Two | Three
 One | Two | Three 
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQVH5FnSpB8T0915WzZg6RfhGFCvhUr3AeGhsHRDmWY0rfC9m5pCaJ4E6BR3m6mVbcQNdhOvCg04h4wUAobr7ZtETfPf2i1p5n7lYUHqsE3t9q_GqSTro907KsC7F2YCp7C8wXpB4y0ToKzQsdQYu1iSRyyNOXIUz79ZUfXdMY6GgE_MaMMCYaURHYwOE/s1280/photo_2026-06-17_05-31-14.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhR8JcfZSjHeCvCny-ptgyDLnXtsDbNgdNHFjjD6vSUpjDLl8XT3B2cWHRrWKq2ZzFZeHlO5tEi3Ejm_MFGZI07gOH3DwMJAVRW_atGYzK_ljrVkfWPVlp_LG75uojasbOcDdbURNcuEDp13exrgQEBe_0pVY0Pd4mPHfvQy6lPVOjS3f2I2sH3QsYpuoA/s1280/photo_2026-06-17_05-31-14%20(2).jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQ9zgfyWd4B0ZpBuEreQURtiIN7aA1Lj0kZgsDBct43HHyGhjMS2g9jcVG04EPhbVAYy5ACkkCdEvc8g1FlGHTygI4ZsQnB_b8w4BSt_kHvueQL5Gk2pS6y9DNlP6Oz-0N8GmhH2VB7hj3lW4yYe9gxEjCli_sZ9DjtfddK0yJ-csvysmD2Hg26sWmgU4/s1280/photo_2026-06-17_05-31-14%20(3).jpg) | 
-
-- Note ⛔ : In the Pop app - the malfunction is due to an API issue on the official website.
 
 <a href='https://play.google.com/store/apps/details?id=com.flatcode.simpleadvancedapps'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="170px"/></a>
 <br />

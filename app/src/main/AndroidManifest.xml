@@ -38,7 +38,7 @@
             android:screenOrientation="portrait"
             tools:ignore="all" />
         <activity
-            android:name=".poke.ui.view.MainActivity"
+            android:name=".pokemon.ui.view.MainActivity"
             android:screenOrientation="portrait"
             tools:ignore="all" />
         <activity

@@ -14,7 +14,7 @@ object DATA {
     const val NEWS = "News"
     const val RICK_AND_MORTY = "Rick & Morty"
     const val WEATHER = "Weather"
-    const val POKE = "Poke"
+    const val POKE = "Pokémon"
     const val TODO_NOTE = "TODO-Note"
 
     //Class Name
@@ -22,7 +22,7 @@ object DATA {
     const val CRYPTO_DETAILS = "Crypto Details"
     const val MEANING_OF_THE_WORD = "Meaning Of The Word"
     const val CATEGORY_MEALS = "Category Meals"
-    const val DETAILS_POKE = "Details Poke"
+    const val DETAILS_POKE = "Pokémon Details"
 
     //Other
     const val EMPTY = ""
@@ -89,7 +89,7 @@ object DATA {
     const val BASE_URL_NEWS = "https://newsapi.org/v2/"
     const val API_NEWS = "45df755913c947ea82988b1dad81c6e7"
 
-    //Poke
+    //Pokémon
     const val BASE_URL_POKE = "https://pokeapi.co/api/v2/"
     const val RAW_URL_POKE =
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
