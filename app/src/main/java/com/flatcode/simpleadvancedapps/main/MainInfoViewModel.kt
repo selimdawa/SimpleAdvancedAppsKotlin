@@ -16,7 +16,7 @@ class MainInfoViewModel : ViewModel() {
 
     private val dataInfo: List<MainInfo>
         get() = listOf(
-            MainInfo(DATA.DOGS, 1, 1, 0, 1),
+            MainInfo(DATA.DOGS, 1, 1, 1, 1),
             MainInfo(DATA.COUNTRIES, 1, 1, 1, 1),
             MainInfo(DATA.CALCULATOR, 1, 1, 1, 1),
             MainInfo(DATA.CRYPTO, 1, 1, 1, 1),

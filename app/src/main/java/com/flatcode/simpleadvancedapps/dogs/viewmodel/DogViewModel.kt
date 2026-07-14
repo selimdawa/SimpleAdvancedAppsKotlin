@@ -1,76 +1,59 @@
 package com.flatcode.simpleadvancedapps.dogs.viewmodel
 
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.flatcode.simpleadvancedapps.dogs.service.ApiService
-import com.flatcode.simpleadvancedapps.dogs.service.DogApi
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.dogs.data.DogRepository
+import com.flatcode.simpleadvancedapps.dogs.utils.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-enum class DogApiStatus { LOADING, ERROR, DONE, START }
+sealed interface DogUiState {
+    data object Start : DogUiState
+    data object Loading : DogUiState
+    data class Success(val photos: List<String>) : DogUiState
+    data object Error : DogUiState
+}
 
 @HiltViewModel
 class DogViewModel @Inject constructor(
-    private val apiService: ApiService, private val connectivityManager: ConnectivityManager
+    private val repository: DogRepository,
+    private val networkHelper: NetworkHelper,
 ) : ViewModel() {
 
-    private val _breedsList = MutableLiveData<Array<String>>()
-    val breedsList: LiveData<Array<String>> get() = _breedsList
+    private val _uiState = MutableStateFlow<DogUiState>(DogUiState.Start)
+    val uiState: StateFlow<DogUiState> = _uiState.asStateFlow()
+
+    private val _breedsList = MutableStateFlow<List<String>>(emptyList())
+    val breedsList: StateFlow<List<String>> = _breedsList.asStateFlow()
 
     fun setBreedsList(list: Array<String>) {
-        _breedsList.value = list
+        _breedsList.value = list.toList()
     }
 
-    private val _status = MutableLiveData(DogApiStatus.START)
-    val status: LiveData<DogApiStatus> get() = _status
-
-    private val _photosDog = MutableLiveData<List<String>>()
-    val photosDog: LiveData<List<String>> get() = _photosDog
-
-    fun getDogPhotosList(item: String) {
-        if (!isInternetAvailable()) {
-            _photosDog.value = emptyList()
-            _status.value = DogApiStatus.ERROR
-            return
-        }
-
-        _status.value = DogApiStatus.LOADING
+    fun getDogPhotosList(breed: String) {
         viewModelScope.launch {
+            _uiState.update { DogUiState.Loading }
             try {
-                val list = if (DATA.SPACE in item) connection2(item) else connection1(item)
-                _photosDog.value = converter(list)
-                _status.value = DogApiStatus.DONE
+                repository.getDogsByBreed(breed, networkHelper.isNetworkConnected())
+                    .collect { photos ->
+                        if (photos.isNotEmpty()) {
+                            _uiState.update { DogUiState.Success(photos) }
+                        } else {
+                            _uiState.update { DogUiState.Error }
+                        }
+                    }
             } catch (_: Exception) {
-                _status.value = DogApiStatus.ERROR
-                _photosDog.value = emptyList()
+                _uiState.update { DogUiState.Error }
             }
         }
     }
 
-    private fun isInternetAvailable(): Boolean {
-        val network = connectivityManager.activeNetwork ?: return false
-        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-        return activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-    }
-
-    private suspend fun connection1(t: String): DogApi {
-        return apiService.getListImg(t.lowercase())
-    }
-
-    private suspend fun connection2(t: String): DogApi {
-        val list = t.split(DATA.SPACE)
-        val breed = list[0].lowercase()
-        val subBreed = list[1].lowercase()
-        return apiService.getListImg(breed, subBreed)
-    }
-
-    private fun converter(list: DogApi): List<String> {
-        return list.images.toList()
+    fun retryLastBreed(breed: String?) {
+        breed?.let { getDogPhotosList(it) }
     }
 }

@@ -14,13 +14,19 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentDogBinding
-import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogApiStatus
+import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogUiState
 import com.flatcode.simpleadvancedapps.dogs.viewmodel.DogViewModel
 import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.dogs.utils.toast
+import com.flatcode.simpleadvancedapps.dogs.utils.visibleIf
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DogFragment : Fragment(), AdapterView.OnItemClickListener {
@@ -51,53 +57,49 @@ class DogFragment : Fragment(), AdapterView.OnItemClickListener {
             toolbar.nameSpace.text = DATA.DOGS
         }
 
-        observer()
+        observeViewModel()
         registerNetworkCallback()
     }
 
-    private fun observer() {
-        viewModel.breedsList.observe(viewLifecycleOwner) { newList ->
-            val adapter = ArrayAdapter(requireContext(), R.layout.list_breeds, newList)
-            with(binding.autoCompleteTextView) {
-                setAdapter(adapter)
-                onItemClickListener = this@DogFragment
-            }
-        }
-
-        viewModel.photosDog.observe(viewLifecycleOwner) { photos ->
-            dogAdapter.submitList(photos)
-        }
-
-        viewModel.status.observe(viewLifecycleOwner) { status ->
-            with(binding) {
-                when (status) {
-                    DogApiStatus.START -> {
-                        statusImageError.visibility = View.GONE
-                        recyclerViewDog.visibility = View.VISIBLE
+    private fun observeViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.breedsList.collect { newList ->
+                        if (newList.isNotEmpty()) {
+                            val adapter =
+                                ArrayAdapter(requireContext(), R.layout.list_breeds, newList)
+                            with(binding.autoCompleteTextView) {
+                                setAdapter(adapter)
+                                onItemClickListener = this@DogFragment
+                            }
+                        }
                     }
+                }
 
-                    DogApiStatus.LOADING -> {
-                        statusImageError.visibility = View.GONE
-                        recyclerViewDog.visibility = View.GONE
-                    }
-
-                    DogApiStatus.ERROR -> {
-                        statusImageError.visibility = View.VISIBLE
-                        recyclerViewDog.visibility = View.GONE
-                    }
-
-                    DogApiStatus.DONE -> {
-                        statusImageError.visibility = View.GONE
-                        recyclerViewDog.visibility = View.VISIBLE
+                launch {
+                    viewModel.uiState.collect { state ->
+                        handleUiState(state)
                     }
                 }
             }
         }
     }
 
+    private fun handleUiState(state: DogUiState) {
+        with(binding) {
+            statusImageError.visibleIf(state is DogUiState.Error)
+            recyclerViewDog.visibleIf(state !is DogUiState.Loading && state !is DogUiState.Error)
+
+            if (state is DogUiState.Success) {
+                dogAdapter.submitList(state.photos)
+            }
+        }
+    }
+
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val item = parent?.getItemAtPosition(position).toString()
-        Toast.makeText(requireContext(), item, Toast.LENGTH_LONG).show()
+        val item = parent?.getItemAtPosition(position).toString().trim()
+        requireContext().toast(item, Toast.LENGTH_LONG)
 
         lastSelectedBreed = item
         viewModel.getDogPhotosList(item)
@@ -115,11 +117,8 @@ class DogFragment : Fragment(), AdapterView.OnItemClickListener {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
                 activity?.runOnUiThread {
-                    val currentStatus = viewModel.status.value
-                    val breedToFetch = lastSelectedBreed
-
-                    if (currentStatus == DogApiStatus.ERROR && breedToFetch != null) {
-                        viewModel.getDogPhotosList(breedToFetch)
+                    if (viewModel.uiState.value is DogUiState.Error) {
+                        viewModel.retryLastBreed(lastSelectedBreed)
                     }
                 }
             }
