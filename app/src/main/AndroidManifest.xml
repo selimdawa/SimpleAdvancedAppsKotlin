@@ -21,7 +21,8 @@
         <activity
             android:name=".main.SplashActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="all">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,26 +31,74 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".dogs.view.MainActivity" />
-        <activity android:name=".poke.ui.view.MainActivity" />
-        <activity android:name=".movies.MainActivity" />
-        <activity android:name=".countries.MainActivity" />
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".dogs.view.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".poke.ui.view.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".movies.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".countries.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
         <activity
             android:name=".todoNote.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ToDoTheme.MainApp"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".pop.MainActivity" />
-        <activity android:name=".calculator.view.MainActivity" />
-        <activity android:name=".crypto.ui.MainActivity" />
-        <activity android:name=".rickAndMorty.ui.activity.MainActivity" />
-        <activity android:name=".news.ui.activity.MainActivity" />
-        <activity android:name=".weather.MainActivity" />
-        <activity android:name=".dictionary.DefinitionWordActivity" />
-        <activity android:name=".dictionary.MainActivity" />
-        <activity android:name=".meals.activities.CategoryMealsActivity" />
-        <activity android:name=".meals.activities.MealActivity" />
-        <activity android:name=".meals.activities.MainActivity" />
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="all" />
+        <activity
+            android:name=".pop.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".calculator.view.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".crypto.ui.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".rickAndMorty.ui.activity.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".news.ui.activity.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".weather.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".dictionary.DefinitionWordActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".dictionary.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".meals.activities.CategoryMealsActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".meals.activities.MealActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
+        <activity
+            android:name=".meals.activities.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="all" />
 
     </application>
 

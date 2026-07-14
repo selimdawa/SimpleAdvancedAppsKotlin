@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.crypto.network
 
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.crypto.model.detail.DetailResponse
 import com.flatcode.simpleadvancedapps.crypto.model.home.CryptoResponse
 import retrofit2.Response
@@ -17,7 +17,7 @@ interface CryptoApi {
         @Query("start") start: String
     ): Response<CryptoResponse>
 
-    @GET(DATA.INFO_CRYPTO)
+    @GET(Constants.INFO_CRYPTO)
     suspend fun getDetail(
         @Header("X-CMC_PRO_API_KEY") apiKey: String,
         @Query("symbol") symbol: String,

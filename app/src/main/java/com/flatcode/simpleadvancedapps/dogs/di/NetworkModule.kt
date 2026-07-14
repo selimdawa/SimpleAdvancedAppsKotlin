@@ -3,7 +3,7 @@ package com.flatcode.simpleadvancedapps.dogs.di
 import android.content.Context
 import android.net.ConnectivityManager
 import com.flatcode.simpleadvancedapps.dogs.service.ApiService
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +35,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(DATA.BASE_URL_DOGS).build()
+            .baseUrl(Constants.BASE_URL_DOGS).build()
     }
 
     @Provides

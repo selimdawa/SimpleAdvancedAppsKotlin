@@ -3,7 +3,7 @@ package com.flatcode.simpleadvancedapps.dictionary
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.simpleadvancedapps.databinding.ActivityDefinitionWordBinding
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 
 class DefinitionWordActivity : AppCompatActivity() {
 
@@ -16,8 +16,8 @@ class DefinitionWordActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            toolbar.nameSpace.text = DATA.MEANING_OF_THE_WORD
-            tvDefinition.text = intent.getStringExtra(DATA.DICTIONARY_KEY)
+            toolbar.nameSpace.text = Constants.MEANING_OF_THE_WORD
+            tvDefinition.text = intent.getStringExtra(Constants.DICTIONARY_KEY)
         }
     }
 

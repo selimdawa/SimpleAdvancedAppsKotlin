@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
 import com.flatcode.simpleadvancedapps.crypto.model.home.Data
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomeBinding
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,11 +25,11 @@ class HomeFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getData(DATA.API_KEY_CRYPTO, DATA.LIMIT_CRYPTO)
+        viewModel.getData(Constants.API_KEY_CRYPTO, Constants.LIMIT_CRYPTO)
     }
 
     override fun onCreateFinished() {
-        binding.toolbar.nameSpace.text = DATA.CRYPTO
+        binding.toolbar.nameSpace.text = Constants.CRYPTO
         setupRecyclerView()
     }
 
@@ -81,7 +81,7 @@ class HomeFragment :
 
                         if (!isCurrentlyLoadingMore && (visibleItemCount + firstVisibleItemPosition) >= totalItemCount) {
                             isCurrentlyLoadingMore = true
-                            viewModel.loadNextPage(DATA.API_KEY_CRYPTO)
+                            viewModel.loadNextPage(Constants.API_KEY_CRYPTO)
                         }
                     }
                 }

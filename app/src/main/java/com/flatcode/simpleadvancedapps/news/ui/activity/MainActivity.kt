@@ -7,21 +7,20 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainNewsBinding
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private var _binding: ActivityMainNewsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: ActivityMainNewsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainNewsBinding.inflate(layoutInflater)
+        binding = ActivityMainNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.nameSpace.text = DATA.NEWS
+        binding.toolbar.nameSpace.text = Constants.NEWS
 
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
@@ -29,10 +28,5 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigation.setupWithNavController(navController)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

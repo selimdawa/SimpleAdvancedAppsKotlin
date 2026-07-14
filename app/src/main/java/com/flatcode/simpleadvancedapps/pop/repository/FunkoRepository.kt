@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.pop.repository
 
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.pop.models.PopItem
 import org.jsoup.Jsoup
 import java.io.IOException
@@ -10,7 +10,7 @@ class FunkoRepository {
     fun getFunkoPops(): MutableList<PopItem> {
         val listData = mutableListOf<PopItem>()
         try {
-            val url = DATA.BASE_URL_POP
+            val url = Constants.BASE_URL_POP
             val doc = Jsoup.connect(url).get()
             val pops = doc.select(".wikitable:first-of-type tr")
 
@@ -22,7 +22,7 @@ class FunkoRepository {
                 val imgUrl = pops.select("td:nth-of-type(1)").eq(i - 1)
 
                 val img = if (imgUrl.toString() == "<td> </td>") {
-                    DATA.IMAGE_POP
+                    Constants.IMAGE_POP
                 } else {
                     imgUrl.select("a").attr("href")
                 }

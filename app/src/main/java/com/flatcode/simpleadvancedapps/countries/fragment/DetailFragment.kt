@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.utils.VOID.downloadFromUrl
 import com.flatcode.simpleadvancedapps.utils.VOID.placeholderProgressBar
 import com.flatcode.simpleadvancedapps.countries.viewModel.DetailViewModel
@@ -37,7 +37,7 @@ class DetailFragment : Fragment() {
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         viewModel.getDataFromRoom(countryUuid)
 
-        binding.toolbar.nameSpace.text = DATA.COUNTRY_DETAILS
+        binding.toolbar.nameSpace.text = Constants.COUNTRY_DETAILS
 
         observeLiveData()
     }

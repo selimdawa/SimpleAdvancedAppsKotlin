@@ -2,7 +2,7 @@ package com.flatcode.simpleadvancedapps.crypto.di
 
 import com.google.gson.Gson
 import com.flatcode.simpleadvancedapps.BuildConfig
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.crypto.network.CryptoApi
 import dagger.Module
 import dagger.Provides
@@ -66,7 +66,7 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory,
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(DATA.BASE_URL_CRYPTO)
+            .baseUrl(Constants.BASE_URL_CRYPTO)
             .client(okHttpClient)
             .addConverterFactory(gsonConverterFactory)
             .build()

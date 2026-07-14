@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.databinding.ItemMovieBinding
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
-import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_MOVIE_BASIC
+import com.flatcode.simpleadvancedapps.utils.Constants.IMAGE_MOVIE_BASIC
 import com.flatcode.simpleadvancedapps.utils.loadImage
 
 class MainAdapter(private val onMovieClick: (MovieItemModel) -> Unit) :

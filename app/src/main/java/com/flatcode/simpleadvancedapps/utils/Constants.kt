@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.utils
 
-object DATA {
+object Constants {
 
     //Main
     const val DOGS = "Dogs"

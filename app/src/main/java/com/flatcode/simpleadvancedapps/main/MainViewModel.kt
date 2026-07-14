@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.utils.CLASS
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 
 class MainViewModel : ViewModel() {
 
@@ -25,18 +25,18 @@ class MainViewModel : ViewModel() {
 
     private val data: List<Main>
         get() = listOf(
-            Main(R.drawable.ic_home_work, DATA.DOGS, i[0], CLASS.I1),
-            Main(R.drawable.ic_flag, DATA.COUNTRIES, i[1], CLASS.I2),
-            Main(R.drawable.ic_calculate, DATA.CALCULATOR, i[2], CLASS.I3),
-            Main(R.drawable.ic_monetization, DATA.CRYPTO, i[3], CLASS.I4),
-            Main(R.drawable.ic_words, DATA.DICTIONARY, i[4], CLASS.I5),
-            Main(R.drawable.ic_meal, DATA.MEALS, i[5], CLASS.I6),
-            Main(R.drawable.ic_game, DATA.POP, i[6], CLASS.I7),
-            Main(R.drawable.ic_movie, DATA.MOVIE, i[7], CLASS.I8),
-            Main(R.drawable.ic_feed, DATA.NEWS, i[8], CLASS.I9),
-            Main(R.drawable.ic_child, DATA.RICK_AND_MORTY, i[9], CLASS.I10),
-            Main(R.drawable.ic_nights, DATA.WEATHER, i[10], CLASS.I11),
-            Main(R.drawable.ic_gamepad, DATA.POKE, i[11], CLASS.I12),
-            Main(R.drawable.ic_note, DATA.TODO_NOTE, i[12], CLASS.I13)
+            Main(R.drawable.ic_home_work, Constants.DOGS, i[0], CLASS.I1),
+            Main(R.drawable.ic_flag, Constants.COUNTRIES, i[1], CLASS.I2),
+            Main(R.drawable.ic_calculate, Constants.CALCULATOR, i[2], CLASS.I3),
+            Main(R.drawable.ic_monetization, Constants.CRYPTO, i[3], CLASS.I4),
+            Main(R.drawable.ic_words, Constants.DICTIONARY, i[4], CLASS.I5),
+            Main(R.drawable.ic_meal, Constants.MEALS, i[5], CLASS.I6),
+            Main(R.drawable.ic_game, Constants.POP, i[6], CLASS.I7),
+            Main(R.drawable.ic_movie, Constants.MOVIE, i[7], CLASS.I8),
+            Main(R.drawable.ic_feed, Constants.NEWS, i[8], CLASS.I9),
+            Main(R.drawable.ic_child, Constants.RICK_AND_MORTY, i[9], CLASS.I10),
+            Main(R.drawable.ic_nights, Constants.WEATHER, i[10], CLASS.I11),
+            Main(R.drawable.ic_gamepad, Constants.POKE, i[11], CLASS.I12),
+            Main(R.drawable.ic_note, Constants.TODO_NOTE, i[12], CLASS.I13)
         )
 }

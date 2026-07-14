@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.flatcode.simpleadvancedapps.crypto.model.home.Data
 import com.flatcode.simpleadvancedapps.databinding.ItemCryptoBinding
-import com.flatcode.simpleadvancedapps.utils.DATA.IMAGE_CRYPTO
+import com.flatcode.simpleadvancedapps.utils.Constants.IMAGE_CRYPTO
 
 class HomeRecyclerAdapter(private val listener: ItemClickListener) :
     RecyclerView.Adapter<HomeRecyclerAdapter.MViewHolder>() {

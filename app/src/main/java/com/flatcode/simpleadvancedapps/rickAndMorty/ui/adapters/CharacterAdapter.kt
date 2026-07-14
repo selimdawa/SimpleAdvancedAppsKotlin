@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.utils.VOID
 import com.flatcode.simpleadvancedapps.databinding.ItemCharacterBinding
 import com.flatcode.simpleadvancedapps.rickAndMorty.models.CharacterModel
@@ -32,18 +32,18 @@ class CharacterAdapter(private val context: Context?, val list: ArrayList<Charac
     class ViewHolder(private val binding: ItemCharacterBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(context: Context?, item: CharacterModel) {
-            val name = DATA.EMPTY + item.name
-            val status = DATA.EMPTY + item.status
-            val species = DATA.EMPTY + item.species
-            val type = DATA.EMPTY + item.type
-            val gender = DATA.EMPTY + item.gender
-            val image = DATA.EMPTY + item.image
+            val name = Constants.EMPTY + item.name
+            val status = Constants.EMPTY + item.status
+            val species = Constants.EMPTY + item.species
+            val type = Constants.EMPTY + item.type
+            val gender = Constants.EMPTY + item.gender
+            val image = Constants.EMPTY + item.image
 
             VOID.GlideRickAndMorty(context, image, binding.image, binding.imageBlur, 50)
             binding.tvNameCharacter.text = name
             binding.tvStatus.text = status
 
-            if (status == DATA.ALIVE) {
+            if (status == Constants.ALIVE) {
                 binding.cvIndicator.setImageResource(R.color.green)
             } else {
                 binding.cvIndicator.setImageResource(R.color.red)
@@ -51,8 +51,8 @@ class CharacterAdapter(private val context: Context?, val list: ArrayList<Charac
 
             binding.tvSpecies.text = species
 
-            if (type == DATA.EMPTY) {
-                binding.tvType.text = DATA.UNKNOWN
+            if (type == Constants.EMPTY) {
+                binding.tvType.text = Constants.UNKNOWN
             } else {
                 binding.tvType.text = type
             }

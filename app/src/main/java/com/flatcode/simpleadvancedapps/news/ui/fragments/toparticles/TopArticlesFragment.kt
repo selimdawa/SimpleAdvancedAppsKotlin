@@ -1,62 +1,54 @@
 package com.flatcode.simpleadvancedapps.news.ui.fragments.toparticles
 
-import android.os.Bundle
-import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentTopArticlesBinding
 import com.flatcode.simpleadvancedapps.news.base.BaseFragment
 import com.flatcode.simpleadvancedapps.news.common.Resource
+import com.flatcode.simpleadvancedapps.news.common.viewBinding
 import com.flatcode.simpleadvancedapps.news.ui.adapters.TopArticlesAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
-class TopArticlesFragment : BaseFragment<FragmentTopArticlesBinding, TopArticlesViewModel>(R.layout.fragment_top_articles) {
+class TopArticlesFragment :
+    BaseFragment<FragmentTopArticlesBinding, TopArticlesViewModel>(R.layout.fragment_top_articles) {
 
-    private var _binding: FragmentTopArticlesBinding? = null
-    override val binding get() = _binding!!
-    override val viewModel: TopArticlesViewModel by viewModels()
+    override val binding by viewBinding(FragmentTopArticlesBinding::bind)
+    override val viewModel: TopArticlesViewModel by hiltNavGraphViewModels(R.id.nav_graph)
     private val adapter = TopArticlesAdapter()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentTopArticlesBinding.bind(view)
-        super.onViewCreated(view, savedInstanceState)
-        initialize()
-        setupSubscribes()
-    }
-
     override fun initialize() {
-        setupRecyclerView()
-    }
-
-    override fun setupSubscribes() {
-        subscribesTopArticles()
-    }
-
-    private fun setupRecyclerView() {
         binding.recyclerView.adapter = adapter
     }
 
-    private fun subscribesTopArticles() {
-        viewModel.fetchTopArticles().observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Error -> {
-                    Timber.e(resource.message.orEmpty())
-                }
-                is Resource.Loading -> {}
-                is Resource.Success -> {
-                    resource.data?.articles?.let { articles ->
-                        adapter.submitList(articles)
-                    }
-                }
-                else -> {}
-            }
-        }
+    override fun setupSubscribes() {
+        subscribeToTopArticles()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun subscribeToTopArticles() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.topArticlesState.collect { resource ->
+                    when (resource) {
+                        is Resource.Error -> {
+                            Timber.e(resource.message)
+                        }
+
+                        is Resource.Loading -> {
+                            // Handle loading state
+                        }
+
+                        is Resource.Success -> {
+                            adapter.submitList(resource.data.articles)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

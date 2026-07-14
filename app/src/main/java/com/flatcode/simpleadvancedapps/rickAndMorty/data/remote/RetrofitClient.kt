@@ -1,6 +1,6 @@
 package com.flatcode.simpleadvancedapps.rickAndMorty.data.remote
 
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.rickAndMorty.data.remote.apiservices.CharacterApiService
 import com.flatcode.simpleadvancedapps.rickAndMorty.data.remote.apiservices.EpisodeApiService
 import com.flatcode.simpleadvancedapps.rickAndMorty.data.remote.apiservices.LocationApiService
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitClient {
 
-    private val retrofit = Retrofit.Builder().baseUrl(DATA.BASE_URL_RICK_AND_MORTY)
+    private val retrofit = Retrofit.Builder().baseUrl(Constants.BASE_URL_RICK_AND_MORTY)
         .addConverterFactory(GsonConverterFactory.create())
         .client(provideOkHttpClient()).build()
 

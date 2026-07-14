@@ -1,21 +1,25 @@
 package com.flatcode.simpleadvancedapps.news.base
 
-import androidx.lifecycle.liveData
 import com.flatcode.simpleadvancedapps.news.common.Resource
-import okio.IOException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.Response
 
 abstract class BaseRepository {
 
-    fun <T> doRequest(result: suspend () -> Response<T>) = liveData {
-        emit(Resource.Loading())
+    fun <T> doRequest(result: suspend () -> Response<T>): Flow<Resource<T>> = flow {
+        emit(Resource.Loading)
         try {
-            result().let {
-                if (it.isSuccessful && it.body() != null) emit(Resource.Success(it.body()!!))
-                else emit(Resource.Error(it.message(), null))
+            val response = result()
+            if (response.isSuccessful && response.body() != null) {
+                emit(Resource.Success(response.body()!!))
+            } else {
+                emit(Resource.Error(response.message()))
             }
-        } catch (ioException: IOException) {
-            emit(ioException.localizedMessage?.let { Resource.Error(it, data = null) })
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "Unknown Error"))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 }

@@ -1,10 +1,7 @@
 package com.flatcode.simpleadvancedapps.news.common
 
-sealed class Resource<out T>(
-    val data: T? = null,
-    val message: String? = null
-) {
-    class Loading<T>(data: T? = null) : Resource<T>(data = data)
-    class Success<T>(data: T) : Resource<T>(data = data)
-    class Error<T>(message: String, data: T? = null) : Resource<T>(data = data, message = message)
+sealed class Resource<out T> {
+    data object Loading : Resource<Nothing>()
+    data class Success<out T>(val data: T) : Resource<T>()
+    data class Error(val message: String) : Resource<Nothing>()
 }

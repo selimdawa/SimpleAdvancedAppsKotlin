@@ -4,7 +4,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.crypto.base.BaseFragment
 import com.flatcode.simpleadvancedapps.crypto.model.detail.CoinDetail
 import com.flatcode.simpleadvancedapps.crypto.model.detail.DetailResponse
@@ -27,8 +27,8 @@ class DetailFragment :
     private val args by navArgs<DetailFragmentArgs>()
 
     override fun onCreateFinished() {
-        viewModel.getDetail(DATA.API_KEY_CRYPTO, args.symbol)
-        binding.toolbar.nameSpace.text = DATA.CRYPTO_DETAILS
+        viewModel.getDetail(Constants.API_KEY_CRYPTO, args.symbol)
+        binding.toolbar.nameSpace.text = Constants.CRYPTO_DETAILS
     }
 
     override fun initializeListeners() {}
@@ -58,7 +58,7 @@ class DetailFragment :
                 val coin = gson.fromJson(firstObject, CoinDetail::class.java)
                 coin?.let {
                     with(binding) {
-                        ivDetail.loadImage("${DATA.IMAGE_CRYPTO}${args.coinId}.png")
+                        ivDetail.loadImage("${Constants.IMAGE_CRYPTO}${args.coinId}.png")
                         tvDetailTitle.text = it.name
                         tvDetailSymbol.text = it.symbol
                         tvDetailDescription.text = it.description

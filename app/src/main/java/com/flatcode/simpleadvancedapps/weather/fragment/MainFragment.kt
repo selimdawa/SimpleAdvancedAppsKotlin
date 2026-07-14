@@ -20,7 +20,7 @@ import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.flatcode.simpleadvancedapps.utils.DATA
+import com.flatcode.simpleadvancedapps.utils.Constants
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainWeatherBinding
 import com.flatcode.simpleadvancedapps.weather.DialogManager
 import com.flatcode.simpleadvancedapps.weather.adatper.StateAdapter
@@ -76,14 +76,14 @@ class MainFragment : Fragment() {
             binding.tvData.text = it.time
             binding.tvCondition.text = it.condition
             binding.tvCurrentTemp.text = it.currentTemp.ifEmpty { maxMin }
-            binding.tvMaxMin.text = if (it.currentTemp.isEmpty()) DATA.EMPTY else maxMin
+            binding.tvMaxMin.text = if (it.currentTemp.isEmpty()) Constants.EMPTY else maxMin
             Picasso.get().load("https:" + it.imageUrl).into(binding.imgIcon)
         }
     }
 
     private fun getWeatherRequest(city: String) {
         val queue = Volley.newRequestQueue(requireContext())
-        val url = DATA.BASE_URL_WEATHER + DATA.API_KEY_WEATHER + "&q=" + city + "&days=" + "3" + "&aqi=no&alerts=no"
+        val url = Constants.BASE_URL_WEATHER + Constants.API_KEY_WEATHER + "&q=" + city + "&days=" + "3" + "&aqi=no&alerts=no"
 
         val request = StringRequest(Request.Method.GET, url, { result ->
             parseWeatherData(result)
@@ -111,7 +111,7 @@ class MainFragment : Fragment() {
             val item = WeatherModel(
                 name, day.getString("date"),
                 condition.getString("text"),
-                DATA.EMPTY,
+                Constants.EMPTY,
                 dayDetail.getString("maxtemp_c").toFloat().toInt().toString(),
                 dayDetail.getString("mintemp_c").toFloat().toInt().toString(),
                 condition.getString("icon"),

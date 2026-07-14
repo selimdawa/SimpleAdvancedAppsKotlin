@@ -6,8 +6,8 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(@LayoutRes id: Int) :
-    Fragment(id) {
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel>(@LayoutRes layoutId: Int) :
+    Fragment(layoutId) {
 
     protected abstract val binding: VB
     protected abstract val viewModel: VM
