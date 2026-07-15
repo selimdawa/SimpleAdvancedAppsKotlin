@@ -26,7 +26,7 @@ class MainInfoViewModel : ViewModel() {
             MainInfo(DATA.MOVIE, 1, 1, 1, 1),
             MainInfo(DATA.NEWS, 1, 1, 1, 1),
             MainInfo(DATA.RICK_AND_MORTY, 1, 1, 1, 1),
-            MainInfo(DATA.WEATHER, 0, 0, 0, 0),
+            MainInfo(DATA.WEATHER, 1, 1, 1, 1),
             MainInfo(DATA.POKE, 1, 1, 1, 1),
             MainInfo(DATA.TODO_NOTE, 1, 1, 1, 1)
         )
