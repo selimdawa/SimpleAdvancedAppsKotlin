@@ -22,14 +22,14 @@
             android:background="@color/image_profile"
             tools:ignore="MissingConstraints">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivRowImage"
                 android:layout_width="70sp"
                 android:layout_height="70sp"
                 android:layout_gravity="center"
                 android:padding="5sp"
                 android:src="@android:color/transparent"
-                app:civ_border_width="0dp" />
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Circle" />
 
         </FrameLayout>
 

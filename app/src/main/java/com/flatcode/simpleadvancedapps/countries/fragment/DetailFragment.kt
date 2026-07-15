@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.flatcode.simpleadvancedapps.utils.DATA
-import com.flatcode.simpleadvancedapps.utils.VOID.downloadFromUrl
-import com.flatcode.simpleadvancedapps.utils.VOID.placeholderProgressBar
+import com.flatcode.simpleadvancedapps.utils.downloadFromUrl
+import com.flatcode.simpleadvancedapps.utils.placeholderProgressBar
 import com.flatcode.simpleadvancedapps.countries.viewModel.DetailViewModel
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailBinding
 

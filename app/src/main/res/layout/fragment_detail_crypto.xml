@@ -25,13 +25,14 @@
         android:layout_below="@id/toolbar"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivDetail"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center"
             android:layout_marginTop="30sp"
-            android:src="@color/image_profile" />
+            android:src="@color/image_profile"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Circle" />
 
         <TextView
             android:id="@+id/tvDetailTitle"

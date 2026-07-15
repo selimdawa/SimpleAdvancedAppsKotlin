@@ -14,8 +14,8 @@ android {
         applicationId = "com.flatcode.simpleadvancedapps"
         minSdk = 24
         targetSdk = 37
-        versionCode = 5
-        versionName = "1.05"
+        versionCode = 6
+        versionName = "1.06"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,7 +35,6 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        buildConfig = true
     }
 }
 
@@ -51,15 +50,10 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
     //Image
-    implementation(libs.circleimageview)                //Circle image
-    implementation(libs.glide)            //Glide image
-    ksp(libs.glide.ksp)                   //Glide compiler
-    implementation(libs.glide.transformations)           //Glide Blur
+    implementation(libs.coil)                    //Coil Kotlin Image
     implementation(libs.landscapist.glide)       //Glide Landscapist
-    implementation(libs.picasso)              //Picasso
-    implementation(libs.coil)                            //Coil
     implementation(libs.lottie)                  //Lottie Files
-    implementation(libs.shimmer)               //Facebook Shimmer
+    implementation(libs.shimmer)                 //Facebook Shimmer
     //Life Cycle
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)

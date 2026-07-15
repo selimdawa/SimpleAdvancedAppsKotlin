@@ -117,7 +117,7 @@ class MainFragment : Fragment() {
             tvData.text = weather.time
             tvCondition.text = weather.condition
             tvCurrentTemp.text = weather.currentTemp.ifEmpty { maxMin }
-            tvMaxMin.text = if (weather.currentTemp.isEmpty()) DATA.EMPTY else maxMin
+            tvMaxMin.text = weather.currentTemp.ifEmpty { DATA.EMPTY }.let { if (it == DATA.EMPTY) it else maxMin }
             imgIcon.load("https:${weather.imageUrl}")
         }
     }

@@ -23,8 +23,8 @@ class FunkoListAdapter(private val clickListener: PopListener) :
                 clickListener.onClick(pop)
             }
 
-            val imageToLoad =
-                if (pop.img.isEmpty() || !pop.img.startsWith("http")) DATA.IMAGE_POP else pop.img
+            val imageToLoad = pop.img.ifEmpty { DATA.IMAGE_POP }
+                .takeIf { it.startsWith("http") } ?: DATA.IMAGE_POP
 
             binding.imageView.load(imageToLoad)
         }

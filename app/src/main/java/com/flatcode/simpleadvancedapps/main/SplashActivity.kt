@@ -6,7 +6,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.simpleadvancedapps.databinding.ActivitySplashBinding
 import com.flatcode.simpleadvancedapps.utils.CLASS
-import com.flatcode.simpleadvancedapps.utils.VOID
+import com.flatcode.simpleadvancedapps.utils.openActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -22,8 +22,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun launch() {
-        VOID.Intent1(this, CLASS.MAIN)
-        finish()
+        openActivity(CLASS.MAIN, true)
     }
 
     override fun onDestroy() {

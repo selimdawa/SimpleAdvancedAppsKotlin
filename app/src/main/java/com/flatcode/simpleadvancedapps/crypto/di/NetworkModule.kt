@@ -1,12 +1,14 @@
 package com.flatcode.simpleadvancedapps.crypto.di
 
-import com.flatcode.simpleadvancedapps.BuildConfig
+import android.content.Context
+import android.content.pm.ApplicationInfo
 import com.flatcode.simpleadvancedapps.crypto.network.CryptoApi
 import com.flatcode.simpleadvancedapps.utils.DATA
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -50,9 +52,10 @@ object NetworkModule {
     @CryptoInterceptor
     @Singleton
     @Provides
-    fun provideHttpLoggerInterceptor(): HttpLoggingInterceptor {
+    fun provideHttpLoggerInterceptor(@ApplicationContext context: Context): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        if (BuildConfig.DEBUG) {
+        val isDebuggable = 0 != context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE
+        if (isDebuggable) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         } else {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.NONE

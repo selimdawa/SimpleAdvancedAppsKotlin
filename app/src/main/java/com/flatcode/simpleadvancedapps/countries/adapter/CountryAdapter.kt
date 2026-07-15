@@ -3,12 +3,13 @@ package com.flatcode.simpleadvancedapps.countries.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.countries.fragment.DashboardFragmentDirections
 import com.flatcode.simpleadvancedapps.countries.model.Country
 import com.flatcode.simpleadvancedapps.databinding.ItemCountryBinding
-import com.flatcode.simpleadvancedapps.utils.VOID.downloadFromUrl
-import com.flatcode.simpleadvancedapps.utils.VOID.placeholderProgressBar
+import com.flatcode.simpleadvancedapps.utils.downloadFromUrl
+import com.flatcode.simpleadvancedapps.utils.placeholderProgressBar
 
 class CountryAdapter(private val countryList: ArrayList<Country>) :
     RecyclerView.Adapter<CountryViewHolder>() {
@@ -45,10 +46,28 @@ class CountryAdapter(private val countryList: ArrayList<Country>) :
     override fun getItemCount(): Int = countryList.size
 
     fun updateCountryList(newCountryList: List<Country>) {
+        val diffCallback = CountryDiffCallback(countryList, newCountryList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         countryList.clear()
         countryList.addAll(newCountryList)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 }
 
 class CountryViewHolder(val binding: ItemCountryBinding) : RecyclerView.ViewHolder(binding.root)
+
+class CountryDiffCallback(
+    private val oldList: List<Country>, private val newList: List<Country>
+) : DiffUtil.Callback() {
+    override fun getOldListSize(): Int = oldList.size
+    override fun getNewListSize(): Int = newList.size
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].uuid == newList[newItemPosition].uuid
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+}
