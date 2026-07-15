@@ -61,10 +61,11 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/cv_indicator"
                     android:layout_width="15sp"
-                    android:layout_height="15sp" />
+                    android:layout_height="15sp"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Circle" />
 
                 <TextView
                     android:id="@+id/tv_status"
