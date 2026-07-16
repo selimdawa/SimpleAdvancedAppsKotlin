@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.countries.adapter.CountryAdapter
 import com.flatcode.simpleadvancedapps.countries.viewModel.DashboardViewModel
 import com.flatcode.simpleadvancedapps.databinding.FragmentDashboardBinding
+import com.flatcode.simpleadvancedapps.utils.DATA
 
 class DashboardFragment : Fragment() {
 

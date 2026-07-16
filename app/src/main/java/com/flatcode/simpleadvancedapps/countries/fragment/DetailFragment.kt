@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.flatcode.simpleadvancedapps.countries.viewModel.DetailViewModel
+import com.flatcode.simpleadvancedapps.databinding.FragmentDetailBinding
 import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.utils.downloadFromUrl
 import com.flatcode.simpleadvancedapps.utils.placeholderProgressBar
-import com.flatcode.simpleadvancedapps.countries.viewModel.DetailViewModel
-import com.flatcode.simpleadvancedapps.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
 
@@ -53,12 +53,10 @@ class DetailFragment : Fragment() {
                     currencyName.text = country.countryCurrency
 
                     detailImg.downloadFromUrl(
-                        false, country.imageURL,
-                        placeholderProgressBar(requireContext())
+                        false, country.imageURL, placeholderProgressBar(requireContext())
                     )
                     detailImgBlur.downloadFromUrl(
-                        true, country.imageURL,
-                        placeholderProgressBar(requireContext())
+                        true, country.imageURL, placeholderProgressBar(requireContext())
                     )
                 }
             }
