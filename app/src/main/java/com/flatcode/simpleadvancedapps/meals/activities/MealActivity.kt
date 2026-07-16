@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.bumptech.glide.Glide
+import coil.load
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMealBinding
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment
@@ -98,7 +98,7 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun setInformationInViews() {
-        Glide.with(applicationContext).load(mealThumb).into(binding.imgMealDetail)
+        binding.imgMealDetail.load(mealThumb)
 
         with(binding.collapsingToolbar) {
             title = mealName

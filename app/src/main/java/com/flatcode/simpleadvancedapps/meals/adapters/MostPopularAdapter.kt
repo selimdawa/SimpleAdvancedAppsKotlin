@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.flatcode.simpleadvancedapps.databinding.ItemPopularMealBinding
 import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategory
 
@@ -24,7 +24,7 @@ class MostPopularAdapter :
         val meal = getItem(position)
 
         with(holder.binding) {
-            Glide.with(root.context).load(meal.strMealThumb).into(imgPopularMealItem)
+            imgPopularMealItem.load(meal.strMealThumb)
 
             root.setOnClickListener { onItemClick?.invoke(meal) }
         }

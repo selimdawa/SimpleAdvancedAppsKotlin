@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.flatcode.simpleadvancedapps.databinding.ItemCategoryMealBinding
 import com.flatcode.simpleadvancedapps.meals.pojo.Category
 
@@ -24,7 +24,7 @@ class CategoriesAdapter :
         val category = getItem(position)
 
         with(holder.binding) {
-            Glide.with(root.context).load(category.strCategoryThumb).into(imgCategory)
+            imgCategory.load(category.strCategoryThumb)
 
             tvCategoryName.text = category.strCategory
             root.setOnClickListener { onItemClick?.invoke(category) }

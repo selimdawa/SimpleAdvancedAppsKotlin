@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
 import com.flatcode.simpleadvancedapps.databinding.ItemMealBinding
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
 
@@ -25,7 +25,7 @@ class FavoritesMealsAdapter :
         val meal = getItem(position)
 
         with(holder.binding) {
-            Glide.with(root.context).load(meal.strMealThumb).into(imgMeal)
+            imgMeal.load(meal.strMealThumb)
 
             tvMealName.text = meal.strMeal
             root.setOnClickListener { onItemClick?.invoke(meal) }
