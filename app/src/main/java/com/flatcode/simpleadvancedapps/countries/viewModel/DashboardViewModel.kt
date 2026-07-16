@@ -6,18 +6,22 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.countries.model.Country
-import com.flatcode.simpleadvancedapps.countries.service.CountryAPIService
-import com.flatcode.simpleadvancedapps.countries.service.CountryDatabase
+import com.flatcode.simpleadvancedapps.countries.service.CountryAPI
+import com.flatcode.simpleadvancedapps.countries.service.CountryDAO
 import com.flatcode.simpleadvancedapps.countries.utils.CustomDataStore
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DashboardViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val countryApiService = CountryAPIService()
+@HiltViewModel
+class DashboardViewModel @Inject constructor(
+    application: Application, private val countryApi: CountryAPI,
+    private val countryDao: CountryDAO, private val customSharedPreferences: CustomDataStore,
+) : AndroidViewModel(application) {
 
-    private var customSharedPreferences = CustomDataStore(getApplication())
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
     val countries = MutableLiveData<List<Country>>()
@@ -37,7 +41,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun getDataFromSQLite() {
         viewModelScope.launch {
-            val countries = CountryDatabase(getApplication()).countryDao().getAllCountries()
+            val countries = countryDao.getAllCountries()
             showCountries(countries)
             Toast.makeText(getApplication(), "Countries from SQLite", Toast.LENGTH_SHORT).show()
         }
@@ -48,7 +52,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch {
             try {
                 val list = withContext(Dispatchers.IO) {
-                    countryApiService.getData()
+                    countryApi.getCountries()
                 }
                 storeInSQLite(list)
                 Toast.makeText(getApplication(), "Countries from API", Toast.LENGTH_SHORT).show()
@@ -68,9 +72,8 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun storeInSQLite(list: List<Country>) {
         viewModelScope.launch {
-            val dao = CountryDatabase(getApplication()).countryDao()
-            dao.deleteAllCountries()
-            val listLong = dao.insertAll(*list.toTypedArray())
+            countryDao.deleteAllCountries()
+            val listLong = countryDao.insertAll(*list.toTypedArray())
 
             list.forEachIndexed { index, country ->
                 country.uuid = listLong[index].toInt()

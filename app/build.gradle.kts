@@ -51,7 +51,6 @@ dependencies {
     implementation(libs.material)
     //Image
     implementation(libs.coil)                    //Coil Kotlin Image
-    implementation(libs.landscapist.glide)       //Glide Landscapist
     implementation(libs.lottie)                  //Lottie Files
     implementation(libs.shimmer)                 //Facebook Shimmer
     //Life Cycle

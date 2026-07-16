@@ -5,16 +5,20 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.countries.model.Country
-import com.flatcode.simpleadvancedapps.countries.service.CountryDatabase
+import com.flatcode.simpleadvancedapps.countries.service.CountryDAO
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class DetailViewModel @Inject constructor(
+    application: Application, private val countryDao: CountryDAO,
+) : AndroidViewModel(application) {
     val countryLiveData = MutableLiveData<Country>()
 
     fun getDataFromRoom(uuid: Int) {
         viewModelScope.launch {
-            val dao = CountryDatabase(getApplication()).countryDao()
-            val country = dao.getCountry(uuid)
+            val country = countryDao.getCountry(uuid)
             countryLiveData.value = country
         }
     }

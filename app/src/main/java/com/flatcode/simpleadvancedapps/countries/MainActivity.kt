@@ -3,7 +3,9 @@ package com.flatcode.simpleadvancedapps.countries
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainCountryBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainCountryBinding? = null
