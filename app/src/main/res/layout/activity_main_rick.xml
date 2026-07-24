@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorOnBackground"
-        app:itemIconTint="?tickColor"
+        app:itemIconTint="?mc_tick"
         app:itemTextColor="?colorError"
         app:menu="@menu/bottom_navigation_rick" />
 

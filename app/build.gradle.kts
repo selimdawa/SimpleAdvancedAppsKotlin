@@ -43,15 +43,12 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     //Layout
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
+    implementation(libs.multicolors)                   //Theme Colors
     //Image
     implementation(libs.coil)                    //Coil Kotlin Image
-    implementation(libs.lottie)                  //Lottie Files
     implementation(libs.shimmer)                 //Facebook Shimmer
     //Life Cycle
     implementation(libs.lifecycle.viewmodel.ktx)
@@ -60,14 +57,12 @@ dependencies {
     //Retrofit
     implementation(libs.retrofit.core) //Retrofit
     implementation(libs.retrofit.converter.gson)   //Gson
-    implementation(libs.retrofit.converter.moshi)  //Moshi
     //Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.core)   //Core
     implementation(libs.kotlinx.coroutines.android) //Android
     //Navigation
     implementation(libs.navigation.fragment.ktx)  //Navigation Fragment
     implementation(libs.navigation.ui.ktx)      //Navigation Components
-    implementation(libs.navigation.dynamic.features)
     //Room
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
@@ -81,7 +76,6 @@ dependencies {
     implementation(libs.hilt.navigation.fragment)
     //Other's
     implementation(libs.gson)                    //Gson
-    implementation(libs.jsoup)                            //Jsoup
     implementation(libs.volley)                 //Volley
     implementation(libs.intuit.ssp)                 //Size Unit
     implementation(libs.intuit.sdp)                 //Size Unit
@@ -90,7 +84,6 @@ dependencies {
     implementation(libs.play.services.location)     //Weather Location
     implementation(libs.datastore.preferences)   //DataStore
     implementation(libs.timber)              //Timber Log
-    ksp(libs.kotlin.metadata.jvm)                       //Kotlin
 }
 
 ksp {

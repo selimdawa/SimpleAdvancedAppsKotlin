@@ -5,20 +5,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toDrawable
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainBinding
-import com.flatcode.simpleadvancedapps.utils.dataStore
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,29 +23,10 @@ class MainActivity : AppCompatActivity() {
     private var adapter: MainAdapter? = null
     private var adapterInfo: MainInfoAdapter? = null
 
-    private val themeKey = stringPreferencesKey("color_option")
-    private var initialized = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        lifecycleScope.launch {
-            dataStore.data.map { it[themeKey] ?: "ONE" }.collectLatest {
-                if (initialized) binding.root.post { recreate() } else initialized = true
-            }
-        }
-
-        binding.toolbar.settings.setOnClickListener {
-            val entries = resources.getStringArray(R.array.reply_entries)
-            val values = resources.getStringArray(R.array.reply_values)
-            AlertDialog.Builder(this).setTitle("Select Theme").setItems(entries) { _, which ->
-                lifecycleScope.launch {
-                    dataStore.edit { prefs -> prefs[themeKey] = values[which] }
-                }
-            }.show()
-        }
 
         binding.toolbar.info.setOnClickListener { showDialogAboutApps() }
 

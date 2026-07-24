@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
-                android:textColor="?tickColor"
+                android:textColor="?mc_tick"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10sp"
-                android:textColor="?tickColor"
+                android:textColor="?mc_tick"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
             android:layout_gravity="center"
             android:orientation="horizontal"
             android:padding="10sp"
-            android:textColor="?tickColor">
+            android:textColor="?mc_tick">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/dagger_hilt"
-                android:textColor="?tickColor"
+                android:textColor="?mc_tick"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -85,7 +85,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/navigation"
-                android:textColor="?tickColor"
+                android:textColor="?mc_tick"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -112,7 +112,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/room"
-                android:textColor="?tickColor"
+                android:textColor="?mc_tick"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -139,7 +139,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/coroutines"
-                android:textColor="?tickColor"
+                android:textColor="?mc_tick"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

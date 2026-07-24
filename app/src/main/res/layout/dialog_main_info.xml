@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="250sp"
         android:layout_height="wrap_content"
-        android:background="?background"
+        android:background="?mc_bg"
         android:orientation="vertical">
 
         <androidx.core.widget.NestedScrollView

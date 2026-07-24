@@ -18,8 +18,7 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context) =
         Room.databaseBuilder(context, AppDatabase::class.java, "rick_morty_db")
-            .fallbackToDestructiveMigration()
-            .build()
+            .fallbackToDestructiveMigration(dropAllTables = true).build()
 
     @Provides
     fun provideAppDao(db: AppDatabase) = db.appDao()

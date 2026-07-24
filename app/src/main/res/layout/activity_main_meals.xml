@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorOnBackground"
-        app:itemIconTint="?tickColor"
-        app:itemTextColor="?trackColor"
+        app:itemIconTint="?mc_tick"
+        app:itemTextColor="?mc_track"
         app:menu="@menu/menu_btm_meals" />
 
 </LinearLayout>

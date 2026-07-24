@@ -13,7 +13,7 @@
         android:id="@+id/toolbar_internal"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="?background">
+        android:background="?mc_bg">
 
         <ImageView
             android:id="@+id/imageRight"
