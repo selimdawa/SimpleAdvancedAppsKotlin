@@ -44,7 +44,6 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
     //Layout
-    implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
     implementation(libs.multicolors)                   //Theme Colors
     //Image
