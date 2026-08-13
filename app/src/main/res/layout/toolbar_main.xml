@@ -6,7 +6,8 @@
     android:layout_height="45dp"
     android:layout_margin="10dp"
     android:visibility="visible"
-    app:cardCornerRadius="6dp">
+    app:cardCornerRadius="6dp"
+    app:cardElevation="0dp">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"

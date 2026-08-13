@@ -12,7 +12,7 @@
         android:checked="true"
         android:minWidth="0dp"
         android:minHeight="0dp"
-        android:theme="@style/Widget.App.CheckBox"
+        style="@style/Widget.App.CheckBox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
