@@ -1,4 +1,13 @@
 <resources>
+    <!-- Base TO-DO theme. -->
+    <style name="Base.ToDoTheme.MainApp" parent="MC_Base_Theme">
+        <item name="toolbarStyle">@style/Widget.MyApp.Toolbar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.MyApp.Toolbar</item>
+        <item name="drawerArrowStyle">@style/Widget.MyApp.DrawerArrowStyle</item>
+    </style>
+
+    <style name="ToDoTheme.MainApp" parent="Base.ToDoTheme.MainApp" />
+
     <!-- TextView -->
     <style name="StyleTextView">
         <item name="android:paddingBottom">5dp</item>
@@ -14,31 +23,6 @@
         <item name="endIconTint">@color/white</item>
     </style>
 
-    <!-- Base application theme. -->
-    <style name="Base.ToDoTheme.MainApp" parent="Theme.Material3.DayNight">
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/basic_2</item>
-        <item name="colorAccent">@color/basic_2</item>
-        <item name="color">@color/white</item>
-        <item name="mc_bg">@color/basic_2</item>
-        <item name="mc_tick">@color/basic_2</item>
-        <item name="mc_track">@color/basic_2</item>
-        <item name="colorOnBackground">@color/white</item>
-        <item name="colorError">@color/dark</item>
-        <item name="colorOnError">@color/basic_2</item>
-
-        <item name="toolbarStyle">@style/Widget.MyApp.Toolbar</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MyApp.Toolbar</item>
-        <item name="drawerArrowStyle">@style/Widget.MyApp.DrawerArrowStyle</item>
-        <!--
-               <item name="android:navigationBarColor">@color/basic_2</item>
-               <item name="android:windowLightNavigationBar">true</item> -->
-    </style>
-
-    <style name="ToDoTheme.MainApp" parent="Base.ToDoTheme.MainApp" />
 
     <!-- Define the checkbox specific theme override -->
     <style name="Widget.App.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">

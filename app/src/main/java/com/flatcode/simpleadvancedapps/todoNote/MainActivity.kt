@@ -25,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainTodoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbarLayout.toolbar)
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
 

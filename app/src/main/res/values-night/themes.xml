@@ -1,27 +1,12 @@
 <resources>
-    <!-- Base To-Do theme. -->
-    <style name="Base.ToDoTheme.MainApp" parent="Theme.Material3.DayNight">
-        <item name="android:statusBarColor">@color/dark</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/basic_night</item>
-        <item name="colorAccent">@color/basic_night</item>
-        <item name="color">@color/white</item>
-        <item name="mc_bg">@color/basic_night</item>
-        <item name="mc_tick">@color/basic_night</item>
-        <item name="mc_track">@color/basic_night</item>
-        <item name="colorOnBackground">@color/dark</item>
-        <item name="colorError">@color/white</item>
-        <item name="colorOnError">@color/dark</item>
-
+    <!-- Base TO-DO theme. -->
+    <style name="Base.ToDoTheme.MainApp" parent="MC_Base_Theme">
         <item name="toolbarStyle">@style/Widget.MyApp.Toolbar</item>
         <item name="actionBarTheme">@style/ThemeOverlay.MyApp.Toolbar</item>
         <item name="drawerArrowStyle">@style/Widget.MyApp.DrawerArrowStyle</item>
-        <!--
-           <item name="android:navigationBarColor">@color/basic_night</item>
-           <item name="android:windowLightNavigationBar">true</item> -->
     </style>
+
+    <style name="ToDoTheme.MainApp" parent="Base.ToDoTheme.MainApp" />
 
     <!-- Define the checkbox specific theme override -->
     <style name="Widget.App.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
