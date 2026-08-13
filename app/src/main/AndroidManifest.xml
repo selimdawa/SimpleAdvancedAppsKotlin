@@ -49,7 +49,6 @@
         <activity
             android:name=".todoNote.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToDoTheme.MainApp"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".pop.MainActivity"

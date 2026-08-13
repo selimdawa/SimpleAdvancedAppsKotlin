@@ -1,13 +1,4 @@
 <resources>
-    <!-- Base TO-DO theme. -->
-    <style name="Base.ToDoTheme.MainApp" parent="MC_Base_Theme">
-        <item name="toolbarStyle">@style/Widget.MyApp.Toolbar</item>
-        <item name="actionBarTheme">@style/ThemeOverlay.MyApp.Toolbar</item>
-        <item name="drawerArrowStyle">@style/Widget.MyApp.DrawerArrowStyle</item>
-    </style>
-
-    <style name="ToDoTheme.MainApp" parent="Base.ToDoTheme.MainApp" />
-
     <!-- TextView -->
     <style name="StyleTextView">
         <item name="android:paddingBottom">5dp</item>
@@ -21,35 +12,6 @@
     <style name="changeBackgroundColor" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="colorSurface">?mc_tick</item>
         <item name="endIconTint">@color/white</item>
-    </style>
-
-
-    <!-- Define the checkbox specific theme override -->
-    <style name="Widget.App.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
-        <!-- Color when checked -->
-        <item name="colorPrimary">@color/basic_2</item>
-    </style>
-
-    <style name="Widget.MyApp.Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="android:background">@color/basic_2</item>
-    </style>
-
-    <style name="ThemeOverlay.MyApp.Toolbar" parent="ThemeOverlay.Material3.ActionBar">
-        <item name="titleTextColor">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorOnSurfaceVariant">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="colorControlNormal">@color/white</item>
-        <item name="editTextColor">@color/white</item>
-        <item name="android:textColorHint">@color/white</item>
-    </style>
-
-    <style name="Widget.MyApp.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@color/white</item>
-    </style>
-
-    <style name="ActiveIndicatorRed" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/white</item>
     </style>
 
     <style name="ShapeAppearance.Circle" parent="">
