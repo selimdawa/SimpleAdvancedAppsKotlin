@@ -2,7 +2,7 @@
 agp = "9.3.2"
 coreKtx = "1.19.0"
 appcompat = "1.8.0"
-kotlinMetadataJvm = "2.4.0"
+kotlinMetadataJvm = "2.4.10"
 material = "1.14.0"
 activityKtx = "1.13.0"
 fragmentKtx = "1.9.0"
