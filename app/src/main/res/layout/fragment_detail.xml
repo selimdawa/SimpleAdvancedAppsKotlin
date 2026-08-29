@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/country_name"
-                    android:textColor="?mc_tick"
+                    android:textColor="?mc_track"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/country_capital"
-                    android:textColor="?mc_tick"
+                    android:textColor="?mc_track"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/country_region"
-                    android:textColor="?mc_tick"
+                    android:textColor="?mc_track"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/country_language"
-                    android:textColor="?mc_tick"
+                    android:textColor="?mc_track"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/country_currency"
-                    android:textColor="?mc_tick"
+                    android:textColor="?mc_track"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 

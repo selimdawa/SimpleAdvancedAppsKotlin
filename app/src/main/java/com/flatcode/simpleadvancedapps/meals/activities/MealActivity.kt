@@ -2,12 +2,18 @@ package com.flatcode.simpleadvancedapps.meals.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
 import android.view.View
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import coil.load
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMealBinding
@@ -33,9 +39,20 @@ class MealActivity : AppCompatActivity() {
     private var isMealFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         _binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val appbarMargin = (binding.appbar.layoutParams as ViewGroup.MarginLayoutParams).topMargin
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            binding.appbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = systemBars.top + appbarMargin
+            }
+            binding.root.getChildAt(2).updatePadding(bottom = systemBars.bottom)
+            insets
+        }
 
         getMealInformationFromIntent()
         setInformationInViews()

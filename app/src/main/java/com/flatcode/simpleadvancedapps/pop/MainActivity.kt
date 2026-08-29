@@ -1,11 +1,18 @@
 package com.flatcode.simpleadvancedapps.pop
 
+import android.view.View
+import android.view.ViewGroup
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.flatcode.simpleadvancedapps.R
@@ -20,9 +27,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         _binding = ActivityMainPopBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val container = findViewById<View>(R.id.nav_host_fragment)
+        val containerMargin = (container.layoutParams as ViewGroup.MarginLayoutParams).topMargin
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            container.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = systemBars.top + containerMargin
+            }
+            binding.root.updatePadding(
+                bottom = systemBars.bottom
+            )
+            insets
+        }
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

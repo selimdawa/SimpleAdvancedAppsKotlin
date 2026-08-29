@@ -2,8 +2,14 @@ package com.flatcode.simpleadvancedapps.meals.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityCategoryMealsBinding
 import com.flatcode.simpleadvancedapps.meals.adapters.CategoryMealsAdapter
@@ -22,9 +28,22 @@ class CategoryMealsActivity : AppCompatActivity() {
     private lateinit var categoryMealsAdapter: CategoryMealsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         _binding = ActivityCategoryMealsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val toolbarMargin = (binding.toolbar.card.layoutParams as ViewGroup.MarginLayoutParams).topMargin
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            binding.toolbar.card.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = systemBars.top + toolbarMargin
+            }
+            binding.rvMeals.updatePadding(
+                bottom = systemBars.bottom
+            )
+            insets
+        }
 
         binding.toolbar.nameSpace.text = DATA.CATEGORY_MEALS
 

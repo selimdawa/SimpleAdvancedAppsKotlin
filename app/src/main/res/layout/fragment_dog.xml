@@ -19,7 +19,7 @@
         android:layout_marginHorizontal="10dp"
         android:textColorHint="@color/white"
         android:theme="@style/changeBackgroundColor"
-        app:boxBackgroundColor="?mc_tick"
+        app:boxBackgroundColor="?mc_track"
         app:boxStrokeColor="?colorError"
         app:boxStrokeWidth="2dp"
         app:hintTextColor="?colorError">

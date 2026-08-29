@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?colorOnBackground"
-        app:itemIconTint="?mc_tick"
+        app:itemIconTint="?mc_track"
         app:itemTextColor="?colorError"
         app:menu="@menu/menu_btm_meals" />
 

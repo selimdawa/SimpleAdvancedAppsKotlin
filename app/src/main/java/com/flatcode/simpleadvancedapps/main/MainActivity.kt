@@ -3,10 +3,16 @@ package com.flatcode.simpleadvancedapps.main
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
@@ -24,9 +30,22 @@ class MainActivity : AppCompatActivity() {
     private var adapterInfo: MainInfoAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val toolbarMargin = (binding.toolbar.card.layoutParams as ViewGroup.MarginLayoutParams).topMargin
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            binding.toolbar.card.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = systemBars.top + toolbarMargin
+            }
+            binding.recyclerView.updatePadding(
+                bottom = systemBars.bottom
+            )
+            insets
+        }
 
         binding.toolbar.info.setOnClickListener { showDialogAboutApps() }
 
