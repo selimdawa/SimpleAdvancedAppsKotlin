@@ -3,35 +3,31 @@ package com.flatcode.simpleadvancedapps.weather.utils
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import androidx.core.graphics.drawable.toDrawable
 import com.flatcode.simpleadvancedapps.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
 object DialogManager {
 
-    fun locationSettingsDialog(context: Context, listener: Listener) {
-        val builder = AlertDialog.Builder(context)
-        val dialog = builder.create()
-        dialog.setTitle("Enable location?")
-        dialog.setMessage("Location disabled, do you want enable location?")
-        dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK") { _, _ ->
-            listener.onClick(null)
-            dialog.dismiss()
-        }
-        dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel") { _, _ ->
-            dialog.dismiss()
-        }
-        dialog.show()
+    fun locationSettingsDialog(context: Context, onPositiveClick: () -> Unit) {
+        AlertDialog.Builder(context).apply {
+            setTitle("Enable location?")
+            setMessage("Location disabled, do you want enable location?")
+            setPositiveButton("OK") { _, _ ->
+                onPositiveClick()
+            }
+            setNegativeButton("Cancel", null)
+        }.show()
     }
 
-    fun searchByNameDialog(context: Context, listener: Listener) {
-        val builder = AlertDialog.Builder(context)
+    fun searchByNameDialog(context: Context, onSearchClick: (String) -> Unit) {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_search, null)
-        builder.setView(view)
-        val dialog = builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dialog = AlertDialog.Builder(context).apply {
+            setView(view)
+        }.create()
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
 
         val edCity = view.findViewById<TextInputEditText>(R.id.edCity)
         val btnOk = view.findViewById<MaterialButton>(R.id.btnOk)
@@ -40,7 +36,7 @@ object DialogManager {
         btnOk.setOnClickListener {
             val name = edCity.text.toString()
             if (name.isNotEmpty()) {
-                listener.onClick(name)
+                onSearchClick(name)
                 dialog.dismiss()
             }
         }
@@ -48,9 +44,5 @@ object DialogManager {
             dialog.dismiss()
         }
         dialog.show()
-    }
-
-    interface Listener {
-        fun onClick(name: String?)
     }
 }

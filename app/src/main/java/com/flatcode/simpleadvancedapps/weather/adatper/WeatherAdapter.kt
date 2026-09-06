@@ -6,64 +6,48 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.flatcode.simpleadvancedapps.databinding.ItemWeatherBinding
 import com.flatcode.simpleadvancedapps.weather.model.WeatherModel
-import coil.load
 
 class WeatherAdapter(
-    private val listener: Listener?,
+    private val onClick: (WeatherModel) -> Unit = {},
 ) : ListAdapter<WeatherModel, WeatherAdapter.Holder>(Comparator()) {
 
     class Holder(
-        private val binding: ItemWeatherBinding,
-        private val listener: Listener?
+        private val binding: ItemWeatherBinding, private val onClick: (WeatherModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private var itemTemp: WeatherModel? = null
-
-        init {
-            binding.root.setOnClickListener {
-                itemTemp?.let { item -> listener?.onClick(item) }
-            }
-        }
-
         fun bind(item: WeatherModel, isLast: Boolean) {
-            itemTemp = item
-            binding.tvDate.text = item.time
-            binding.tvCondition.text = item.condition
-            binding.tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp}°C / ${item.minTemp}°C" }
-            binding.imgListIcon.load("https:${item.imageUrl}")
+            with(binding) {
+                root.setOnClickListener { onClick(item) }
+                tvDate.text = item.time
+                tvCondition.text = item.condition
+                tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp}°C / ${item.minTemp}°C" }
+                imgListIcon.load("https:${item.imageUrl}")
 
-            binding.root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = if (isLast) {
-                    (10 * binding.root.context.resources.displayMetrics.density).toInt()
-                } else {
-                    (5 * binding.root.context.resources.displayMetrics.density).toInt()
+                root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                    val density = root.context.resources.displayMetrics.density
+                    bottomMargin = ((if (isLast) 10 else 5) * density).toInt()
                 }
             }
         }
     }
 
     class Comparator : DiffUtil.ItemCallback<WeatherModel>() {
-        override fun areItemsTheSame(oldItem: WeatherModel, newItem: WeatherModel): Boolean {
-            return oldItem.time == newItem.time
-        }
+        override fun areItemsTheSame(oldItem: WeatherModel, newItem: WeatherModel): Boolean =
+            oldItem.time == newItem.time
 
-        override fun areContentsTheSame(oldItem: WeatherModel, newItem: WeatherModel): Boolean {
-            return oldItem == newItem
-        }
+        override fun areContentsTheSame(oldItem: WeatherModel, newItem: WeatherModel): Boolean =
+            oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemWeatherBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return Holder(binding, listener)
+        return Holder(binding, onClick)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(getItem(position), position == (itemCount - 1))
-    }
-
-    interface Listener {
-        fun onClick(item: WeatherModel)
     }
 }
