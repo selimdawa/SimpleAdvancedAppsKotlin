@@ -15,8 +15,8 @@ class MainFragmentViewModel @Inject constructor(
     private val repository: RetrofitRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData<MoviesUiState>()
-    val uiState: LiveData<MoviesUiState> get() = _uiState
+    val uiState: LiveData<MoviesUiState>
+        field = MutableLiveData<MoviesUiState>()
 
     init {
         getMoviesRetrofit()
@@ -24,17 +24,17 @@ class MainFragmentViewModel @Inject constructor(
 
     private fun getMoviesRetrofit() {
         viewModelScope.launch {
-            _uiState.value = MoviesUiState.Loading
+            uiState.value = MoviesUiState.Loading
             try {
                 val response = repository.getMovie()
                 if (response.isSuccessful) {
                     val movies = response.body()?.results ?: emptyList()
-                    _uiState.value = MoviesUiState.Success(movies)
+                    uiState.value = MoviesUiState.Success(movies)
                 } else {
-                    _uiState.value = MoviesUiState.Error("Error: ${response.code()}")
+                    uiState.value = MoviesUiState.Error("Error: ${response.code()}")
                 }
             } catch (e: Exception) {
-                _uiState.value = MoviesUiState.Error(e.localizedMessage ?: "Unknown error")
+                uiState.value = MoviesUiState.Error(e.localizedMessage ?: "Unknown error")
             }
         }
     }

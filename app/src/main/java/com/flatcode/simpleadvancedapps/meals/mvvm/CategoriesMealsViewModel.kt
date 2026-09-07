@@ -16,15 +16,15 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesMealsViewModel @Inject constructor(private val mealApi: MealApi) : ViewModel() {
 
-    private val _mealsLiveData = MutableLiveData<List<MealsByCategory>>()
-    val mealsLiveData: LiveData<List<MealsByCategory>> get() = _mealsLiveData
+    val mealsLiveData: LiveData<List<MealsByCategory>>
+        field = MutableLiveData<List<MealsByCategory>>()
 
     fun getMealsByCategory(categoryName: String) {
         mealApi.getMealsByCategory(categoryName).enqueue(object : Callback<MealsByCategoryList> {
             override fun onResponse(
                 call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>,
             ) {
-                response.body()?.let { mealsList -> _mealsLiveData.value = mealsList.meals }
+                response.body()?.let { mealsList -> mealsLiveData.value = mealsList.meals }
             }
 
             override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {

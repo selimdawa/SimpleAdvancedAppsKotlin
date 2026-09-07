@@ -7,11 +7,11 @@ import com.flatcode.simpleadvancedapps.utils.DATA
 
 class MainInfoViewModel : ViewModel() {
 
-    private val _dataMainInfo = MutableLiveData<List<MainInfo>>()
-    val dataMainInfo: LiveData<List<MainInfo>> get() = _dataMainInfo
+    val dataMainInfo: LiveData<List<MainInfo>>
+        field = MutableLiveData<List<MainInfo>>()
 
     fun getInfoItems() {
-        _dataMainInfo.value = dataInfo
+        dataMainInfo.value = dataInfo
     }
 
     private val dataInfo: List<MainInfo>

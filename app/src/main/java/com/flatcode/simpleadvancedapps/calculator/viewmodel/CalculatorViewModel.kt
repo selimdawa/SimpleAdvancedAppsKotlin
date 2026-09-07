@@ -15,32 +15,32 @@ import javax.inject.Inject
 class CalculatorViewModel @Inject constructor(private val calculatorDao: CalculatorDao) :
     ViewModel() {
 
-    private val _expression = MutableLiveData("")
-    val expression: LiveData<String> get() = _expression
+    val expression: LiveData<String>
+        field = MutableLiveData("")
 
-    private val _result = MutableLiveData("")
-    val result: LiveData<String> get() = _result
+    val result: LiveData<String>
+        field = MutableLiveData("")
 
     val historyList: LiveData<List<CalculatorEntity>> = calculatorDao.getAllHistory().asLiveData()
 
     fun appendValue(value: String) {
-        _expression.value = (_expression.value ?: "") + value
+        expression.value = (expression.value ?: "") + value
     }
 
     fun clearAll() {
-        _expression.value = ""
-        _result.value = ""
+        expression.value = ""
+        result.value = ""
     }
 
     fun deleteLast() {
-        val currentExp = _expression.value ?: ""
+        val currentExp = expression.value ?: ""
         if (currentExp.isNotEmpty()) {
-            _expression.value = currentExp.dropLast(1)
+            expression.value = currentExp.dropLast(1)
         }
     }
 
     fun setResultValue(evaluatedResult: String) {
-        _result.value = evaluatedResult
+        result.value = evaluatedResult
     }
 
     fun saveToHistory(exp: String, res: String) {

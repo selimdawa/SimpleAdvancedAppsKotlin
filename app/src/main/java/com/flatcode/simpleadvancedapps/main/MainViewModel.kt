@@ -12,13 +12,13 @@ import com.flatcode.simpleadvancedapps.utils.DATA
 
 class MainViewModel : ViewModel() {
 
-    private val _dataMain = MutableLiveData<List<Main>>()
-    val dataMain: LiveData<List<Main>> get() = _dataMain
+    val dataMain: LiveData<List<Main>>
+        field = MutableLiveData<List<Main>>()
 
     private val i = intArrayOf(1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1)
 
     fun getItems(recyclerView: RecyclerView, bar: ProgressBar) {
-        _dataMain.value = data
+        dataMain.value = data
         bar.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
     }

@@ -7,7 +7,6 @@ import com.flatcode.simpleadvancedapps.dogs.utils.NetworkHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,30 +24,30 @@ class DogViewModel @Inject constructor(
     private val networkHelper: NetworkHelper,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<DogUiState>(DogUiState.Start)
-    val uiState: StateFlow<DogUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<DogUiState>
+        field = MutableStateFlow<DogUiState>(DogUiState.Start)
 
-    private val _breedsList = MutableStateFlow<List<String>>(emptyList())
-    val breedsList: StateFlow<List<String>> = _breedsList.asStateFlow()
+    val breedsList: StateFlow<List<String>>
+        field = MutableStateFlow<List<String>>(emptyList())
 
     fun setBreedsList(list: Array<String>) {
-        _breedsList.value = list.toList()
+        breedsList.value = list.toList()
     }
 
     fun getDogPhotosList(breed: String) {
         viewModelScope.launch {
-            if (_uiState.value !is DogUiState.Success) {
-                _uiState.update { DogUiState.Loading }
+            if (uiState.value !is DogUiState.Success) {
+                uiState.update { DogUiState.Loading }
             }
 
             try {
                 repository.getDogsByBreed(breed, networkHelper.isNetworkConnected())
                     .collect { photos ->
-                        _uiState.update { DogUiState.Success(photos) }
+                        uiState.update { DogUiState.Success(photos) }
                     }
             } catch (_: Exception) {
-                if (_uiState.value !is DogUiState.Success) {
-                    _uiState.update { DogUiState.Error }
+                if (uiState.value !is DogUiState.Success) {
+                    uiState.update { DogUiState.Error }
                 }
             }
         }

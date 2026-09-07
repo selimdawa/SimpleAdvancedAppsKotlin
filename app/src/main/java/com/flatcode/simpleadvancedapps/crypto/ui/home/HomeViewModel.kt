@@ -7,21 +7,20 @@ import com.flatcode.simpleadvancedapps.crypto.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
 
-    private val _cryptoList = MutableStateFlow<List<Data>>(emptyList())
-    val cryptoList: StateFlow<List<Data>> = _cryptoList.asStateFlow()
+    val cryptoList: StateFlow<List<Data>>
+        field = MutableStateFlow<List<Data>>(emptyList())
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    val isLoading: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error.asStateFlow()
+    val error: StateFlow<String?>
+        field = MutableStateFlow<String?>(null)
 
     private var currentStartOffset = 1
     private val limitPerPage = 10
@@ -29,24 +28,24 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
     fun isFirstPage(): Boolean = currentStartOffset == 1
 
     fun getData(apiKey: String, limit: String) {
-        if (_cryptoList.value.isNotEmpty() && isFirstPage()) return
+        if (cryptoList.value.isNotEmpty() && isFirstPage()) return
 
         viewModelScope.launch {
-            _isLoading.value = true
+            isLoading.value = true
             when (val result = repository.getData(apiKey, limit, currentStartOffset.toString())) {
                 is NetworkResult.Success -> {
                     result.data.data?.let { newItems ->
-                        _cryptoList.value += newItems
+                        cryptoList.value += newItems
                     }
                 }
 
                 is NetworkResult.Error -> {
-                    _error.value = result.message
+                    error.value = result.message
                 }
 
                 else -> {}
             }
-            _isLoading.value = false
+            isLoading.value = false
         }
     }
 

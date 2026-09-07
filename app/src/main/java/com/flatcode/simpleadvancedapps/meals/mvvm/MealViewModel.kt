@@ -22,14 +22,14 @@ class MealViewModel @Inject constructor(
     private val mealApi: MealApi, private val mealDao: MealDao
 ) : ViewModel() {
 
-    private val _mealDetailsLiveData = MutableLiveData<Meal>()
-    val mealDetailsLiveData: LiveData<Meal> get() = _mealDetailsLiveData
+    val mealDetailsLiveData: LiveData<Meal>
+        field = MutableLiveData<Meal>()
 
     fun getMealDetail(id: String) {
         mealApi.getMealDetails(id).enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 response.body()?.meals?.firstOrNull()?.let { meal ->
-                    _mealDetailsLiveData.value = meal
+                    mealDetailsLiveData.value = meal
                 }
             }
 

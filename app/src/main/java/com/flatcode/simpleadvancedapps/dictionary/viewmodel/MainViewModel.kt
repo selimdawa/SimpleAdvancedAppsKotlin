@@ -11,34 +11,33 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    application: Application,
-    private val repository: DictionaryRepository
+    application: Application, private val repository: DictionaryRepository
 ) : AndroidViewModel(application) {
 
-    private val _uiState = MutableStateFlow<UiState<String>>(UiState.Idle)
-    val uiState: StateFlow<UiState<String>> = _uiState.asStateFlow()
+    val uiState: StateFlow<UiState<String>>
+        field = MutableStateFlow<UiState<String>>(UiState.Idle)
 
-    private val _navigationEvent = MutableSharedFlow<Unit>()
-    val navigationEvent: SharedFlow<Unit> = _navigationEvent.asSharedFlow()
+    val navigationEvent: SharedFlow<Unit>
+        field = MutableSharedFlow<Unit>()
 
     fun searchWord(word: String) {
         if (word.isBlank()) return
 
         viewModelScope.launch {
-            _uiState.value = UiState.Loading
+            uiState.value = UiState.Loading
             try {
                 val result = repository.getDefinition(word)
-                _uiState.value = UiState.Success(result)
-                _navigationEvent.emit(Unit)
+                uiState.value = UiState.Success(result)
+                navigationEvent.emit(Unit)
             } catch (e: Exception) {
-                _uiState.value = UiState.Error(e.message ?: getApplication<Application>().getString(R.string.unknown_error))
+                uiState.value = UiState.Error(
+                    e.message ?: getApplication<Application>().getString(R.string.unknown_error)
+                )
             }
         }
     }

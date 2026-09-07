@@ -26,14 +26,14 @@ class HomeViewModel @Inject constructor(
     private val mealApi: MealApi, private val mealDao: MealDao
 ) : ViewModel() {
 
-    private val _randomMealLiveData = MutableLiveData<Meal>()
-    val randomMealLiveData: LiveData<Meal> get() = _randomMealLiveData
+    val randomMealLiveData: LiveData<Meal>
+        field = MutableLiveData<Meal>()
 
-    private val _popularItemsLiveData = MutableLiveData<List<MealsByCategory>>()
-    val popularItemsLiveData: LiveData<List<MealsByCategory>> get() = _popularItemsLiveData
+    val popularItemsLiveData: LiveData<List<MealsByCategory>>
+        field = MutableLiveData<List<MealsByCategory>>()
 
-    private val _categoriesLiveData = MutableLiveData<List<Category>>()
-    val categoriesLiveData: LiveData<List<Category>> get() = _categoriesLiveData
+    val categoriesLiveData: LiveData<List<Category>>
+        field = MutableLiveData<List<Category>>()
 
     val favoritesMealsLiveData: LiveData<List<Meal>> = mealDao.getAllMeals()
 
@@ -41,7 +41,7 @@ class HomeViewModel @Inject constructor(
         mealApi.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 response.body()?.meals?.firstOrNull()?.let { randomMeal ->
-                    _randomMealLiveData.value = randomMeal
+                    randomMealLiveData.value = randomMeal
                 }
             }
 
@@ -58,7 +58,7 @@ class HomeViewModel @Inject constructor(
                 response: Response<MealsByCategoryList>,
             ) {
                 response.body()?.meals?.let { popularItem ->
-                    _popularItemsLiveData.value = popularItem
+                    popularItemsLiveData.value = popularItem
                 }
             }
 
@@ -72,7 +72,7 @@ class HomeViewModel @Inject constructor(
         mealApi.getCategories().enqueue(object : Callback<CategoryList> {
             override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
                 response.body()?.let { categoryList ->
-                    _categoriesLiveData.value = categoryList.categories
+                    categoriesLiveData.value = categoryList.categories
                 }
             }
 
