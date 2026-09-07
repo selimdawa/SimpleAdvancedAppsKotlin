@@ -1,4 +1,4 @@
-package com.littleapp.dictionary.fragment
+package com.flatcode.simpleadvancedapps.dictionary.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -51,7 +51,7 @@ class MainFragment : Fragment() {
             if (word.isNotEmpty()) {
                 viewModel.searchWord(word)
             } else {
-                Toast.makeText(requireContext(), "Please enter a word", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.please_enter_a_word), Toast.LENGTH_SHORT).show()
             }
         }
     }

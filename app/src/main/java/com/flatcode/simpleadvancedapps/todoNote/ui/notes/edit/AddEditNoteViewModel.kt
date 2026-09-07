@@ -1,8 +1,10 @@
 package com.flatcode.simpleadvancedapps.todoNote.ui.notes.edit
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.todoNote.ADD_RESULT_OK
 import com.flatcode.simpleadvancedapps.todoNote.EDIT_RESULT_OK
@@ -16,9 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
+    application: Application,
     private val dao: NoteDao,
     private val state: SavedStateHandle
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val addEditNoteEventChannel = Channel<AddEditNoteEvent>()
     val addEditNoteEvent = addEditNoteEventChannel.receiveAsFlow()
@@ -38,7 +41,7 @@ class AddEditNoteViewModel @Inject constructor(
 
     fun onSaveClick() {
         if (noteTitle.isBlank()) {
-            showInvalidInputMessage("Title cannot be empty")
+            showInvalidInputMessage(getApplication<Application>().getString(R.string.title_empty_error))
             return
         }
 

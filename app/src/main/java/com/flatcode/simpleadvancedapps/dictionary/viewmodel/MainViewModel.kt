@@ -1,7 +1,9 @@
 package com.flatcode.simpleadvancedapps.dictionary.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.dictionary.data.repository.DictionaryRepository
 import com.flatcode.simpleadvancedapps.dictionary.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
+    application: Application,
     private val repository: DictionaryRepository
-) : ViewModel() {
+) : AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow<UiState<String>>(UiState.Idle)
     val uiState: StateFlow<UiState<String>> = _uiState.asStateFlow()
@@ -35,7 +38,7 @@ class MainViewModel @Inject constructor(
                 _uiState.value = UiState.Success(result)
                 _navigationEvent.emit(Unit)
             } catch (e: Exception) {
-                _uiState.value = UiState.Error(e.message ?: "Unknown error")
+                _uiState.value = UiState.Error(e.message ?: getApplication<Application>().getString(R.string.unknown_error))
             }
         }
     }

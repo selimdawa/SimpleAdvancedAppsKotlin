@@ -37,6 +37,6 @@ class MainViewModel : ViewModel() {
             Main(R.drawable.ic_child, DATA.RICK_AND_MORTY, i[9], CLASS.I10),
             Main(R.drawable.ic_nights, DATA.WEATHER, i[10], CLASS.I11),
             Main(R.drawable.ic_gamepad, DATA.POKE, i[11], CLASS.I12),
-            Main(R.drawable.ic_note, DATA.TODO_NOTE, i[12], CLASS.I13)
+            Main(R.drawable.ic_note, DATA.TODO_NOTE, i[12], CLASS.I13),
         )
 }

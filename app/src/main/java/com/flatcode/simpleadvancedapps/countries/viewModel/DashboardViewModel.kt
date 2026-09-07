@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.countries.model.Country
 import com.flatcode.simpleadvancedapps.countries.service.CountryAPI
 import com.flatcode.simpleadvancedapps.countries.service.CountryDAO
@@ -43,7 +44,7 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             val countries = countryDao.getAllCountries()
             showCountries(countries)
-            Toast.makeText(getApplication(), "Countries from SQLite", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.countries_from_sqlite), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -55,7 +56,7 @@ class DashboardViewModel @Inject constructor(
                     countryApi.getCountries()
                 }
                 storeInSQLite(list)
-                Toast.makeText(getApplication(), "Countries from API", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.countries_from_api), Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 countryError.value = true
                 countryLoading.value = false

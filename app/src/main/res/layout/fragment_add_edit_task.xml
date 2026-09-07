@@ -63,15 +63,15 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/dateCreatedTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:fontFamily="@font/asapcondensed"
-            android:text="Date created: "
-            android:textColor="?colorError"
-            android:textSize="15dp" />
+            <TextView
+                android:id="@+id/dateCreatedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/asapcondensed"
+                android:text="@string/date_created"
+                android:textColor="?colorError"
+                android:textSize="15dp" />
 
     </LinearLayout>
 

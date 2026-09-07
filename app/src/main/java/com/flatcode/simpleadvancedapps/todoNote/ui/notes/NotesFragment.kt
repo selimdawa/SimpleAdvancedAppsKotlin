@@ -77,21 +77,21 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener {
                 when (event) {
                     is NotesViewModel.NotesEvent.NavigateToAddScreen -> {
                         val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
-                            title = "New Note", Note = null
+                            title = getString(R.string.new_note_title), Note = null
                         )
                         findNavController().navigate(action)
                     }
 
                     is NotesViewModel.NotesEvent.NavigateToEditNoteScreen -> {
                         val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
-                            title = "Edit Note", Note = event.note
+                            title = getString(R.string.edit_note_title), Note = event.note
                         )
                         findNavController().navigate(action)
                     }
 
                     is NotesViewModel.NotesEvent.ShowUndoDeleteNoteMessage -> {
-                        Snackbar.make(requireView(), "Note Deleted", Snackbar.LENGTH_LONG)
-                            .setAction("UNDO") {
+                        Snackbar.make(requireView(), getString(R.string.note_deleted_msg), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.undo_uppercase)) {
                                 viewModel.onUndoDeleteClick(event.note)
                             }.show()
                     }

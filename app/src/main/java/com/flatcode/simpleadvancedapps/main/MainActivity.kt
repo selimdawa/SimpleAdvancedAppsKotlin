@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 topMargin = systemBars.top + toolbarMargin
             }
             binding.recyclerView.updatePadding(
-                bottom = systemBars.bottom
+                bottom = systemBars.bottom,
             )
             insets
         }
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         mainViewModel?.dataMain?.observe(this) { mainList ->
-            adapter?.addList(mainList as? ArrayList<Main> ?: ArrayList(mainList.orEmpty()))
+            adapter?.addList((mainList as? ArrayList<Main>) ?: ArrayList(mainList.orEmpty()))
         }
         mainViewModel?.getItems(binding.recyclerView, binding.bar)
     }

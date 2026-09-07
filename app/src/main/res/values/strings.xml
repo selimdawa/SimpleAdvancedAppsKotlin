@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Simple Advanced Apps</string>
-    //Dogs
+    <string name="app_name">Simple Advanced Apps</string>    //Dogs
     <string name="none_display">There are no items to display</string>
     <string name="hint_text_breeds">Breeds list</string>
     <string name="dogs">photo dogs</string>
@@ -290,4 +289,19 @@
     <string name="empty">Empty</string>
     <string name="_0">0</string>
     <string name="number_placeholder">%1$d</string>
+
+    <!-- Hardcoded Strings from Code -->
+    <string name="countries_from_sqlite">Countries from SQLite</string>
+    <string name="countries_from_api">Countries from API</string>
+    <string name="symbol_is_missing">Symbol is missing</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="please_enter_a_word">Please enter a word</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="no_internet_cached_data">No internet and no cached data</string>
+    <string name="new_note_title">New Note</string>
+    <string name="edit_note_title">Edit Note</string>
+    <string name="note_deleted_msg">Note Deleted</string>
+    <string name="undo_uppercase">UNDO</string>
+    <string name="title_empty_error">Title cannot be empty</string>
+    <string name="date_created">Date created: </string>
 </resources>
