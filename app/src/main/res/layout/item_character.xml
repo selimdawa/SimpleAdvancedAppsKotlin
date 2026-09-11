@@ -24,6 +24,7 @@
                 android:id="@+id/imageBlur"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@null"
                 android:scaleType="centerCrop"
                 tools:src="@color/image_profile" />
 
@@ -32,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120sp"
                 android:layout_gravity="center"
+                android:contentDescription="@string/character"
                 tools:src="@tools:sample/avatars" />
 
         </FrameLayout>

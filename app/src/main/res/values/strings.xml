@@ -304,4 +304,17 @@
     <string name="undo_uppercase">UNDO</string>
     <string name="title_empty_error">Title cannot be empty</string>
     <string name="date_created">Date created: </string>
+
+    <!-- Menu Strings -->
+    <string name="todo">TO-DO</string>
+    <string name="notes">Notes</string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
+    <string name="sort">Sort</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_date_created">Sort by date created</string>
+    <string name="more">More</string>
+    <string name="delete_all_notes">Delete All Notes</string>
+    <string name="hide_completed">Hide completed</string>
+    <string name="delete_completed_tasks">Delete completed tasks</string>
 </resources>
