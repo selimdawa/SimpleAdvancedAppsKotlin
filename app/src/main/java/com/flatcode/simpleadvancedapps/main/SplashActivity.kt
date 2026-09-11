@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.flatcode.simpleadvancedapps.databinding.ActivitySplashBinding
-import com.flatcode.simpleadvancedapps.utils.CLASS
 import com.flatcode.simpleadvancedapps.utils.openActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -32,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun launch() {
-        openActivity(CLASS.MAIN, true)
+        openActivity(MainActivity::class.java, true)
     }
 
     override fun onDestroy() {

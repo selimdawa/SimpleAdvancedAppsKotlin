@@ -20,7 +20,7 @@ import com.flatcode.simpleadvancedapps.databinding.ActivityMainPopBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class PopActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainPopBinding? = null
     private val binding get() = _binding!!

@@ -17,12 +17,12 @@ import com.flatcode.simpleadvancedapps.databinding.ActivityMainTodoBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class TodoNoteActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainTodoBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController: NavController
-    var context = this@MainActivity
+    var context = this@TodoNoteActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()

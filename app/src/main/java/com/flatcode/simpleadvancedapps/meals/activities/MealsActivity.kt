@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.news.ui.activity
+package com.flatcode.simpleadvancedapps.meals.activities
 
 import android.os.Bundle
 import android.view.ViewGroup
@@ -8,23 +8,23 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.NavigationUI
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.databinding.ActivityMainNewsBinding
+import com.flatcode.simpleadvancedapps.databinding.ActivityMainMealsBinding
 import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MealsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainNewsBinding
+    private var _binding: ActivityMainMealsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        binding = ActivityMainNewsBinding.inflate(layoutInflater)
+        _binding = ActivityMainMealsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val toolbarMargin = (binding.toolbar.card.layoutParams as ViewGroup.MarginLayoutParams).topMargin
@@ -33,19 +33,23 @@ class MainActivity : AppCompatActivity() {
             binding.toolbar.card.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 topMargin = systemBars.top + toolbarMargin
             }
-            binding.bottomNavigation.updatePadding(
+            binding.btmNav.updatePadding(
                 bottom = systemBars.bottom
             )
             insets
         }
 
-        binding.toolbar.nameSpace.text = DATA.NEWS
-
-        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        binding.toolbar.nameSpace.text = DATA.MEALS
 
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
-        binding.bottomNavigation.setupWithNavController(navController)
+
+        NavigationUI.setupWithNavController(binding.btmNav, navController)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

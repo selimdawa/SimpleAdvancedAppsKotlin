@@ -35,41 +35,41 @@
             android:name=".main.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".dogs.view.MainActivity"
+            android:name=".dogs.view.DogsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pokemon.ui.view.MainActivity"
+            android:name=".pokemon.ui.view.PokemonActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".movies.MainActivity"
+            android:name=".movies.MoviesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".countries.MainActivity"
+            android:name=".countries.CountriesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".todoNote.MainActivity"
+            android:name=".todoNote.TodoNoteActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".pop.MainActivity"
+            android:name=".pop.PopActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".calculator.view.MainActivity"
+            android:name=".calculator.view.CalculatorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".crypto.ui.MainActivity"
+            android:name=".crypto.ui.CryptoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rickAndMorty.ui.MainActivity"
+            android:name=".rickAndMorty.ui.RickAndMortyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".news.ui.activity.MainActivity"
+            android:name=".news.ui.activity.NewsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".weather.MainActivity"
+            android:name=".weather.WeatherActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".dictionary.MainActivity"
+            android:name=".dictionary.DictionaryActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".meals.activities.CategoryMealsActivity"
@@ -78,7 +78,7 @@
             android:name=".meals.activities.MealActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".meals.activities.MainActivity"
+            android:name=".meals.activities.MealsActivity"
             android:screenOrientation="portrait" />
 
     </application>

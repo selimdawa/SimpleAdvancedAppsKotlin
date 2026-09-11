@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.countries
+package com.flatcode.simpleadvancedapps.crypto.ui
 
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +10,19 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.databinding.ActivityMainCountryBinding
+import com.flatcode.simpleadvancedapps.databinding.ActivityMainCryptoBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class CryptoActivity : AppCompatActivity() {
 
-    private var _binding: ActivityMainCountryBinding? = null
+    private var _binding: ActivityMainCryptoBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainCountryBinding.inflate(layoutInflater)
+        _binding = ActivityMainCryptoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val container = findViewById<View>(R.id.fragmentContainerView)

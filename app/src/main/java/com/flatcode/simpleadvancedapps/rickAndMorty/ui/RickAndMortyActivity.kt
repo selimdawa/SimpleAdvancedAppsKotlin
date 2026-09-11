@@ -17,7 +17,7 @@ import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class RickAndMortyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainRickBinding
 

@@ -1,4 +1,4 @@
-package com.flatcode.simpleadvancedapps.dictionary
+package com.flatcode.simpleadvancedapps.dogs.view
 
 import android.view.View
 import android.view.ViewGroup
@@ -9,26 +9,24 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import com.flatcode.simpleadvancedapps.R
-import com.flatcode.simpleadvancedapps.databinding.ActivityMainDictionaryBinding
+import androidx.navigation.fragment.NavHostFragment
+import com.flatcode.simpleadvancedapps.databinding.ActivityMainDogBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class DogsActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainDictionaryBinding
-
-    private lateinit var navController: NavController
+    private var _binding: ActivityMainDogBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        binding = ActivityMainDictionaryBinding.inflate(layoutInflater)
+        _binding = ActivityMainDogBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val container = findViewById<View>(R.id.nav_host_fragment)
+        val container = findViewById<View>(R.id.fragmentContainerView)
         val containerMargin = (container.layoutParams as ViewGroup.MarginLayoutParams).topMargin
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -41,12 +39,11 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
+        supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
