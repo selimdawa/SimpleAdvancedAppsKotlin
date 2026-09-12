@@ -20,7 +20,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
+            android:layout_below="@+id/toolbar"
             android:layout_marginHorizontal="10sp"
             android:hint="@string/search_et"
             android:inputType="text"
@@ -64,6 +64,7 @@
 
         <ProgressBar
             android:id="@+id/progress_bar"
+            style="@style/Widget.App.ProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />

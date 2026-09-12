@@ -32,14 +32,14 @@ class TodoNoteActivity : AppCompatActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            binding.toolbarLayout.toolbar.updatePadding(top = systemBars.top)
+            binding.toolbarLayout.root.updatePadding(top = systemBars.top)
             binding.bottomNavigation.updatePadding(
                 bottom = systemBars.bottom
             )
             insets
         }
 
-        setSupportActionBar(binding.toolbarLayout.toolbar)
+        setSupportActionBar(binding.toolbarLayout.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment

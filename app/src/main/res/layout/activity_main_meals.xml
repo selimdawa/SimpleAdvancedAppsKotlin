@@ -6,9 +6,7 @@
     android:background="?colorOnBackground"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_content" />
+    <include android:id="@+id/toolbar" layout="@layout/toolbar_content" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_container"

@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            binding.container.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            binding.main.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
