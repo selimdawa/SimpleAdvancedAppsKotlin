@@ -8,9 +8,14 @@ import android.widget.ImageView
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.scale
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import coil.load
-import coil.size.Size
-import coil.transform.Transformation
+import coil3.asImage
+import coil3.load
+import coil3.request.crossfade
+import coil3.request.error
+import coil3.request.placeholder
+import coil3.request.transformations
+import coil3.size.Size
+import coil3.transform.Transformation
 import com.flatcode.simpleadvancedapps.R
 
 fun Context.openActivity(activityClass: Class<out Activity>, finish: Boolean = false) {
@@ -44,7 +49,7 @@ fun ImageView.loadImageWithBlur(
     }
 }
 
-class SimpleBlurTransformation(private val radius: Float) : Transformation {
+class SimpleBlurTransformation(private val radius: Float) : Transformation() {
     override val cacheKey: String = "${SimpleBlurTransformation::class.java.name}-$radius"
 
     override suspend fun transform(input: Bitmap, size: Size): Bitmap {
@@ -94,7 +99,7 @@ fun ImageView.downloadFromUrl(
     blur: Boolean?, url: String?, progressDrawable: CircularProgressDrawable,
 ) {
     load(url) {
-        placeholder(progressDrawable)
+        placeholder(progressDrawable.asImage())
         error(R.drawable.ic_connection_error)
         if (blur == true) {
             transformations(SimpleBlurTransformation(50f))

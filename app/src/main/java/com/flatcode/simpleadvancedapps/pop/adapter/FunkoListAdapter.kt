@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import coil3.load
 import com.flatcode.simpleadvancedapps.databinding.ItemPopBinding
 import com.flatcode.simpleadvancedapps.pop.model.PopItem
 import com.flatcode.simpleadvancedapps.utils.DATA

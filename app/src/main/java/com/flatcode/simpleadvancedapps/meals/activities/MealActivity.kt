@@ -14,7 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
-import coil.load
+import coil3.load
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMealBinding
 import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment

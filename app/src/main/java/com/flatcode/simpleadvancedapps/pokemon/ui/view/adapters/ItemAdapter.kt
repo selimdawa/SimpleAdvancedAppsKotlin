@@ -5,7 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import coil3.load
+import coil3.request.crossfade
+import coil3.request.error
+import coil3.request.placeholder
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ItemPokeBinding
 import com.flatcode.simpleadvancedapps.pokemon.domain.model.PokeItem

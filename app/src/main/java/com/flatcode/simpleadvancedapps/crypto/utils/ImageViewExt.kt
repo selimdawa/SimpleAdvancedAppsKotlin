@@ -3,14 +3,16 @@ package com.flatcode.simpleadvancedapps.crypto.utils
 import android.content.Context
 import android.widget.ImageView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import coil.load
+import coil3.asImage
+import coil3.load
+import coil3.request.crossfade
 
 fun ImageView.loadImage(url: String?) {
     val placeholder = createPlaceHolder(this.context)
     this.load(url) {
         crossfade(enable = true)
         crossfade(durationMillis = 500)
-        placeholder(placeholder)
+        placeholder(placeholder.asImage())
     }
 }
 

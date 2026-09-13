@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import coil.load
+import coil3.load
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomeMealsBinding
 import com.flatcode.simpleadvancedapps.meals.activities.CategoryMealsActivity

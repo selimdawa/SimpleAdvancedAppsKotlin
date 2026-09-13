@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.multicolors)                   //Theme Colors
     //Image
     implementation(libs.coil)                    //Coil Kotlin Image
+    implementation(libs.coil.network.okhttp)
     implementation(libs.shimmer)                 //Facebook Shimmer
     //Life Cycle
     implementation(libs.lifecycle.viewmodel.ktx)

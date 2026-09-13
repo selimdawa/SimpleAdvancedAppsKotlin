@@ -1,12 +1,13 @@
 package com.flatcode.simpleadvancedapps.dogs.view
 
-import android.graphics.drawable.Animatable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import coil3.load
+import coil3.request.error
+import coil3.request.placeholder
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ItemListBinding
 
@@ -34,17 +35,8 @@ class DogViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHol
 
     fun bind(photo: String) {
         binding.imageView.load(photo) {
-            crossfade(true)
-            crossfade(300)
-            placeholder(R.drawable.loading_animation)
+            placeholder(R.color.image_profile)
             error(R.color.image_profile)
-            listener(onStart = { _ ->
-                (binding.imageView.drawable as? Animatable)?.start()
-            }, onSuccess = { _, _ ->
-                (binding.imageView.drawable as? Animatable)?.stop()
-            }, onError = { _, _ ->
-                (binding.imageView.drawable as? Animatable)?.stop()
-            })
         }
     }
 }

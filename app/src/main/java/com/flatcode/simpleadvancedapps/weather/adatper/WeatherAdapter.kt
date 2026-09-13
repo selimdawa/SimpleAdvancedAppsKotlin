@@ -6,7 +6,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import coil3.load
 import com.flatcode.simpleadvancedapps.databinding.ItemWeatherBinding
 import com.flatcode.simpleadvancedapps.weather.model.WeatherModel
 

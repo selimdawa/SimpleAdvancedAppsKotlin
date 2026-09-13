@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import coil.load
+import coil3.load
 import com.flatcode.simpleadvancedapps.databinding.ItemTopArticlesBinding
 import com.flatcode.simpleadvancedapps.news.base.BaseDiffUtilItemCallback
 import com.flatcode.simpleadvancedapps.news.models.TopArticlesNewsItem
