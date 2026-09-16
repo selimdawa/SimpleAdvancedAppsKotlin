@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.utils.DATA
@@ -18,10 +17,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -29,11 +32,16 @@ import javax.inject.Inject
 class NotesViewModel @Inject constructor(
     private val noteDao: NoteDao,
     private val preferencesManager: PreferencesManager,
-    state: SavedStateHandle,
+    private val state: SavedStateHandle,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    val searchQuery = state.getLiveData("noteSearchQuery", DATA.EMPTY)
+    val searchQuery = state.getStateFlow("noteSearchQuery", DATA.EMPTY)
+
+    fun updateSearchQuery(query: String) {
+        state["noteSearchQuery"] = query
+        Timber.d("State updated: searchQuery = $query")
+    }
 
     private val noteEventChannel = Channel<NotesEvent>()
     val noteEvent = noteEventChannel.receiveAsFlow()
@@ -41,7 +49,7 @@ class NotesViewModel @Inject constructor(
     val preferencesFlow = preferencesManager.notesPreferencesFlow
 
     private val noteFlow = combine(
-        searchQuery.asFlow(),
+        searchQuery,
         preferencesFlow
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
@@ -49,7 +57,8 @@ class NotesViewModel @Inject constructor(
         noteDao.getNotes(query, filterPreferences.sortOrder)
     }
 
-    val notes = noteFlow.asLiveData()
+    val notes: StateFlow<List<Notes>> = noteFlow
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun onAddNewNoteClick() = viewModelScope.launch {
         noteEventChannel.send(NotesEvent.NavigateToAddScreen)

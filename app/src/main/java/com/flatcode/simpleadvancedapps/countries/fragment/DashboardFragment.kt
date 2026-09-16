@@ -6,7 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.launch
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.countries.adapter.CountryAdapter
 import com.flatcode.simpleadvancedapps.countries.viewModel.DashboardViewModel
@@ -52,27 +56,34 @@ class DashboardFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        viewModel.countries.observe(viewLifecycleOwner) { countries ->
-            countries?.let {
-                binding.recyclerView.visibility = View.VISIBLE
-                countryAdapter.updateCountryList(it)
-            }
-        }
-
-        viewModel.countryError.observe(viewLifecycleOwner) { error ->
-            binding.errorText.visibility = if (error == true) View.VISIBLE else View.GONE
-        }
-
-        viewModel.countryLoading.observe(viewLifecycleOwner) { loading ->
-            if (loading == true) {
-                with(binding) {
-                    refreshBar.visibility = View.VISIBLE
-                    errorText.visibility = View.GONE
-                    recyclerView.visibility = View.GONE
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.countries.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { countries ->
+                    binding.recyclerView.visibility = View.VISIBLE
+                    countryAdapter.updateCountryList(countries)
                 }
-            } else {
-                binding.refreshBar.visibility = View.GONE
-            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.countryError.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { error ->
+                    binding.errorText.visibility = if (error == true) View.VISIBLE else View.GONE
+                }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.countryLoading.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { loading ->
+                    if (loading == true) {
+                        with(binding) {
+                            refreshBar.visibility = View.VISIBLE
+                            errorText.visibility = View.GONE
+                            recyclerView.visibility = View.GONE
+                        }
+                    } else {
+                        binding.refreshBar.visibility = View.GONE
+                    }
+                }
         }
     }
 

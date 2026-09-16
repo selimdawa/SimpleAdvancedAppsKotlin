@@ -11,6 +11,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomePopBinding
 import com.flatcode.simpleadvancedapps.pop.adapter.FunkoListAdapter
@@ -50,7 +54,7 @@ class HomeFragment : Fragment() {
             searchEtLayout.visibility = View.INVISIBLE
 
             searchEt.doAfterTextChanged { text ->
-                viewModel.filterText.value = text.toString()
+                viewModel.setFilterText(text.toString())
                 viewModel.filter()
             }
         }
@@ -63,9 +67,9 @@ class HomeFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (viewModel.isListFiltered.value == true) {
+                    if (viewModel.isListFiltered.value) {
                         binding.searchEt.text?.clear()
-                        viewModel.filterText.value = ""
+                        viewModel.setFilterText("")
                         viewModel.filter()
                     } else {
                         isEnabled = false
@@ -80,27 +84,33 @@ class HomeFragment : Fragment() {
 
         viewModel.fetchData()
 
-        viewModel.pops.observe(viewLifecycleOwner) { pops ->
-            if (pops != null && pops.isNotEmpty()) {
-                binding.apply {
-                    progressBar.visibility = View.GONE
-                    searchEtLayout.visibility = View.VISIBLE
-                }
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pops.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { pops ->
+                    if (pops.isNotEmpty()) {
+                        binding.apply {
+                            progressBar.visibility = View.GONE
+                            searchEtLayout.visibility = View.VISIBLE
+                        }
+                    }
 
-            if (viewModel.isListFiltered.value == true) {
-                adapter.submitList(viewModel.getFilteredList(viewModel.filterText.value.toString()))
-            } else {
-                adapter.submitList(pops)
-            }
+                    if (viewModel.isListFiltered.value) {
+                        adapter.submitList(viewModel.getFilteredList(viewModel.filterText.value))
+                    } else {
+                        adapter.submitList(pops)
+                    }
+                }
         }
 
-        viewModel.isListFiltered.observe(viewLifecycleOwner) { isFiltered ->
-            if (isFiltered) {
-                adapter.submitList(viewModel.getFilteredList(viewModel.filterText.value.toString()))
-            } else {
-                adapter.submitList(viewModel.pops.value)
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isListFiltered.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { isFiltered ->
+                    if (isFiltered) {
+                        adapter.submitList(viewModel.getFilteredList(viewModel.filterText.value))
+                    } else {
+                        adapter.submitList(viewModel.pops.value)
+                    }
+                }
         }
 
         binding.swipeLayout.setOnRefreshListener {

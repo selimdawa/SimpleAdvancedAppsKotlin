@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.countries.viewModel.DetailViewModel
 import com.flatcode.simpleadvancedapps.databinding.FragmentDetailBinding
@@ -45,23 +49,26 @@ class DetailFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        viewModel.countryLiveData.observe(viewLifecycleOwner) { country ->
-            country?.let {
-                with(binding) {
-                    cName.text = country.countryName
-                    capName.text = country.countryCapital
-                    regionName.text = country.countryRegion
-                    langName.text = country.countryLanguage
-                    currencyName.text = country.countryCurrency
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.countryLiveData.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { country ->
+                    country?.let {
+                        with(binding) {
+                            cName.text = country.countryName
+                            capName.text = country.countryCapital
+                            regionName.text = country.countryRegion
+                            langName.text = country.countryLanguage
+                            currencyName.text = country.countryCurrency
 
-                    detailImg.downloadFromUrl(
-                        false, country.imageURL, placeholderProgressBar(requireContext())
-                    )
-                    detailImgBlur.downloadFromUrl(
-                        true, country.imageURL, placeholderProgressBar(requireContext())
-                    )
+                            detailImg.downloadFromUrl(
+                                false, country.imageURL, placeholderProgressBar(requireContext())
+                            )
+                            detailImgBlur.downloadFromUrl(
+                                true, country.imageURL, placeholderProgressBar(requireContext())
+                            )
+                        }
+                    }
                 }
-            }
         }
     }
 

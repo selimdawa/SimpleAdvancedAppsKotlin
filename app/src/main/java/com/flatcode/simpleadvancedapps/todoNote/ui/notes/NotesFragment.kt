@@ -13,6 +13,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -68,44 +69,48 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener {
             }
         }
 
-        viewModel.notes.observe(viewLifecycleOwner) {
-            notesAdapter.differ.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.notes.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    notesAdapter.differ.submitList(it)
+                }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.noteEvent.collect { event ->
-                when (event) {
-                    is NotesViewModel.NotesEvent.NavigateToAddScreen -> {
-                        val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
-                            title = getString(R.string.new_note_title), Note = null
-                        )
-                        findNavController().navigate(action)
-                    }
+            viewModel.noteEvent.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { event ->
+                    when (event) {
+                        is NotesViewModel.NotesEvent.NavigateToAddScreen -> {
+                            val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
+                                title = getString(R.string.new_note_title), Note = null
+                            )
+                            findNavController().navigate(action)
+                        }
 
-                    is NotesViewModel.NotesEvent.NavigateToEditNoteScreen -> {
-                        val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
-                            title = getString(R.string.edit_note_title), Note = event.note
-                        )
-                        findNavController().navigate(action)
-                    }
+                        is NotesViewModel.NotesEvent.NavigateToEditNoteScreen -> {
+                            val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(
+                                title = getString(R.string.edit_note_title), Note = event.note
+                            )
+                            findNavController().navigate(action)
+                        }
 
-                    is NotesViewModel.NotesEvent.ShowUndoDeleteNoteMessage -> {
-                        Snackbar.make(requireView(), getString(R.string.note_deleted_msg), Snackbar.LENGTH_LONG)
-                            .setAction(getString(R.string.undo_uppercase)) {
-                                viewModel.onUndoDeleteClick(event.note)
-                            }.show()
-                    }
+                        is NotesViewModel.NotesEvent.ShowUndoDeleteNoteMessage -> {
+                            Snackbar.make(requireView(), getString(R.string.note_deleted_msg), Snackbar.LENGTH_LONG)
+                                .setAction(getString(R.string.undo_uppercase)) {
+                                    viewModel.onUndoDeleteClick(event.note)
+                                }.show()
+                        }
 
-                    is NotesViewModel.NotesEvent.ShowNoteSavedConfirmationMessage -> {
-                        Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_SHORT).show()
-                    }
+                        is NotesViewModel.NotesEvent.ShowNoteSavedConfirmationMessage -> {
+                            Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_SHORT).show()
+                        }
 
-                    is NotesViewModel.NotesEvent.NavigateToDeleteAllScreen -> {
-                        val action = NotesFragmentDirections.actionGlobalDeleteAllNotes()
-                        findNavController().navigate(action)
-                    }
-                }.exhaustive
-            }
+                        is NotesViewModel.NotesEvent.NavigateToDeleteAllScreen -> {
+                            val action = NotesFragmentDirections.actionGlobalDeleteAllNotes()
+                            findNavController().navigate(action)
+                        }
+                    }.exhaustive
+                }
         }
 
         setupMenu()
@@ -120,7 +125,7 @@ class NotesFragment : Fragment(), NotesAdapter.OnItemClickListener {
                 val searchItem = menu.findItem(R.id.action_search_notes)
                 searchView = searchItem.actionView as SearchView
 
-                searchView.onQueryTextChanged { viewModel.searchQuery.value = it }
+                searchView.onQueryTextChanged { viewModel.updateSearchQuery(it) }
 
                 val pendingQuery = viewModel.searchQuery.value
                 if (!pendingQuery.isNullOrEmpty()) {

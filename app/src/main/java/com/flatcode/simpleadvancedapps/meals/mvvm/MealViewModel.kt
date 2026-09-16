@@ -1,7 +1,5 @@
 package com.flatcode.simpleadvancedapps.meals.mvvm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.meals.db.MealDao
@@ -10,6 +8,10 @@ import com.flatcode.simpleadvancedapps.meals.pojo.MealList
 import com.flatcode.simpleadvancedapps.meals.retrofit.MealApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,14 +24,15 @@ class MealViewModel @Inject constructor(
     private val mealApi: MealApi, private val mealDao: MealDao
 ) : ViewModel() {
 
-    val mealDetailsLiveData: LiveData<Meal>
-        field = MutableLiveData<Meal>()
+    val mealDetails: StateFlow<Meal?>
+        field = MutableStateFlow(null)
 
     fun getMealDetail(id: String) {
         mealApi.getMealDetails(id).enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 response.body()?.meals?.firstOrNull()?.let { meal ->
-                    mealDetailsLiveData.value = meal
+                    (mealDetails as MutableStateFlow).value = meal
+                    Timber.d("State updated: mealDetails = $meal")
                 }
             }
 
@@ -39,13 +42,12 @@ class MealViewModel @Inject constructor(
         })
     }
 
-    fun observeMealDetailsLiveData(): LiveData<Meal> = mealDetailsLiveData
-
     fun insertMeal(meal: Meal) {
         viewModelScope.launch(Dispatchers.IO) { mealDao.upsert(meal) }
     }
 
-    fun observeFavoritesMealsLiveData(): LiveData<List<Meal>> = mealDao.getAllMeals()
+    val favoritesMeals: StateFlow<List<Meal>> = mealDao.getAllMeals()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun deleteMeal(meal: Meal) {
         viewModelScope.launch(Dispatchers.IO) { mealDao.delete(meal) }

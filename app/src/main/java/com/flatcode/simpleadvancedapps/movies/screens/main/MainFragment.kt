@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.flatcode.simpleadvancedapps.databinding.FragmentMainMovieBinding
 import com.flatcode.simpleadvancedapps.movies.models.MoviesUiState
 import com.flatcode.simpleadvancedapps.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -51,22 +55,26 @@ class MainFragment : Fragment() {
 
         binding.rvMain.adapter = adapter
 
-        viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is MoviesUiState.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { state ->
+                    when (state) {
+                        is MoviesUiState.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
 
-                is MoviesUiState.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    adapter.listMovies = state.movies
-                }
+                        is MoviesUiState.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            adapter.listMovies = state.movies
+                        }
 
-                is MoviesUiState.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                        is MoviesUiState.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }
                 }
-            }
         }
     }
 

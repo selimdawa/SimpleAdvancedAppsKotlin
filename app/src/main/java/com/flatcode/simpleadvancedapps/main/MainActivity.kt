@@ -13,8 +13,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMainBinding
 
@@ -53,8 +57,13 @@ class MainActivity : AppCompatActivity() {
         adapter = MainAdapter(this)
         binding.recyclerView.adapter = adapter
 
-        mainViewModel?.dataMain?.observe(this) { mainList ->
-            adapter?.addList((mainList as? ArrayList<Main>) ?: ArrayList(mainList.orEmpty()))
+        mainViewModel?.let { vm ->
+            lifecycleScope.launch {
+                vm.dataMain.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                    .collect { mainList ->
+                        adapter?.addList((mainList as? ArrayList<Main>) ?: ArrayList(mainList.orEmpty()))
+                    }
+            }
         }
         mainViewModel?.getItems(binding.recyclerView, binding.bar)
     }
@@ -78,8 +87,13 @@ class MainActivity : AppCompatActivity() {
         adapterInfo = MainInfoAdapter(this)
         recyclerView.adapter = adapterInfo
 
-        mainInfoViewModel?.dataMainInfo?.observe(this) { mainInfoList ->
-            adapterInfo?.submitList(mainInfoList)
+        mainInfoViewModel?.let { vm ->
+            lifecycleScope.launch {
+                vm.dataMainInfo.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                    .collect { mainInfoList ->
+                        adapterInfo?.submitList(mainInfoList)
+                    }
+            }
         }
         mainInfoViewModel?.getInfoItems()
 

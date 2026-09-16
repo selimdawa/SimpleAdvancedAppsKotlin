@@ -1,12 +1,12 @@
 package com.flatcode.simpleadvancedapps.pop.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import com.flatcode.simpleadvancedapps.pop.db.PopDao
 import com.flatcode.simpleadvancedapps.pop.model.PopItem
 import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import javax.inject.Inject
@@ -17,7 +17,7 @@ class FunkoRepository @Inject constructor(
     @ApplicationContext private val context: Context, private val popDao: PopDao
 ) {
 
-    val pops: LiveData<List<PopItem>> = popDao.getAllPops()
+    val pops: Flow<List<PopItem>> = popDao.getAllPops()
 
     suspend fun refreshPops() {
         withContext(Dispatchers.IO) {

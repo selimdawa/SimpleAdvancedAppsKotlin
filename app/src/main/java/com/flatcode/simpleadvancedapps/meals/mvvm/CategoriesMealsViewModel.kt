@@ -1,12 +1,12 @@
 package com.flatcode.simpleadvancedapps.meals.mvvm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategory
 import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategoryList
 import com.flatcode.simpleadvancedapps.meals.retrofit.MealApi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,15 +16,18 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesMealsViewModel @Inject constructor(private val mealApi: MealApi) : ViewModel() {
 
-    val mealsLiveData: LiveData<List<MealsByCategory>>
-        field = MutableLiveData<List<MealsByCategory>>()
+    val meals: StateFlow<List<MealsByCategory>>
+        field = MutableStateFlow(emptyList())
 
     fun getMealsByCategory(categoryName: String) {
         mealApi.getMealsByCategory(categoryName).enqueue(object : Callback<MealsByCategoryList> {
             override fun onResponse(
                 call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>,
             ) {
-                response.body()?.let { mealsList -> mealsLiveData.value = mealsList.meals }
+                response.body()?.let { mealsList ->
+                    (meals as MutableStateFlow).value = mealsList.meals
+                    Timber.d("State updated: meals = ${mealsList.meals}")
+                }
             }
 
             override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
@@ -32,6 +35,4 @@ class CategoriesMealsViewModel @Inject constructor(private val mealApi: MealApi)
             }
         })
     }
-
-    fun observeCategoriesMealsLiveData(): LiveData<List<MealsByCategory>> = mealsLiveData
 }

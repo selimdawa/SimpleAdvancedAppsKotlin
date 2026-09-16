@@ -3,7 +3,6 @@ package com.flatcode.simpleadvancedapps.countries.viewModel
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.countries.model.Country
@@ -12,8 +11,11 @@ import com.flatcode.simpleadvancedapps.countries.service.CountryDAO
 import com.flatcode.simpleadvancedapps.countries.utils.CustomDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -25,9 +27,12 @@ class DashboardViewModel @Inject constructor(
 
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
-    val countries = MutableLiveData<List<Country>>()
-    val countryError = MutableLiveData<Boolean>()
-    val countryLoading = MutableLiveData<Boolean>()
+    val countries: StateFlow<List<Country>>
+        field = MutableStateFlow(emptyList())
+    val countryError: StateFlow<Boolean>
+        field = MutableStateFlow(false)
+    val countryLoading: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
     fun refreshData() {
         viewModelScope.launch {
@@ -49,7 +54,8 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun getDataFromAPI() {
-        countryLoading.value = true
+        (countryLoading as MutableStateFlow).value = true
+        Timber.d("State updated: countryLoading = true")
         viewModelScope.launch {
             try {
                 val list = withContext(Dispatchers.IO) {
@@ -58,17 +64,18 @@ class DashboardViewModel @Inject constructor(
                 storeInSQLite(list)
                 Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.countries_from_api), Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
-                countryError.value = true
-                countryLoading.value = false
-                e.printStackTrace()
+                (countryError as MutableStateFlow).value = true
+                (countryLoading as MutableStateFlow).value = false
+                Timber.e(e, "Error fetching countries from API. State updated: countryError = true, countryLoading = false")
             }
         }
     }
 
     private fun showCountries(countryL: List<Country>) {
-        countries.value = countryL
-        countryError.value = false
-        countryLoading.value = false
+        (countries as MutableStateFlow).value = countryL
+        (countryError as MutableStateFlow).value = false
+        (countryLoading as MutableStateFlow).value = false
+        Timber.d("State updated: countries = $countryL, countryError = false, countryLoading = false")
     }
 
     private fun storeInSQLite(list: List<Country>) {

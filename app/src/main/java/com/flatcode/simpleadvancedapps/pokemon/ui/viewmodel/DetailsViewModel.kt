@@ -1,12 +1,12 @@
 package com.flatcode.simpleadvancedapps.pokemon.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.pokemon.domain.GetDetails
 import com.flatcode.simpleadvancedapps.pokemon.domain.model.PokeItemDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,12 +18,11 @@ class DetailsViewModel @Inject constructor(
     private val getDetails: GetDetails
 ) : ViewModel() {
 
-    private var _pokeDetails = MutableLiveData<PokeItemDetails>()
-    val pokeDetails: LiveData<PokeItemDetails> get() = _pokeDetails
+    val pokeDetails: StateFlow<PokeItemDetails?>
+        field = MutableStateFlow(null)
 
-    private var _status = MutableLiveData<ApiStatusDetail>()
-    val status: LiveData<ApiStatusDetail>
-        get() = _status
+    val status: StateFlow<ApiStatusDetail?>
+        field = MutableStateFlow(null)
 
     private var currentId: Int = -1
 
@@ -31,19 +30,22 @@ class DetailsViewModel @Inject constructor(
         if (id == -1 || id == currentId) return
 
         currentId = id
-        _status.value = ApiStatusDetail.LOADING
+        (status as MutableStateFlow).value = ApiStatusDetail.LOADING
+        Timber.d("State updated: status = ApiStatusDetail.LOADING")
         viewModelScope.launch {
             try {
                 val result = getDetails.fromPokemon(id)
                 if (result != null) {
-                    _pokeDetails.value = result
-                    _status.value = ApiStatusDetail.DONE
+                    (pokeDetails as MutableStateFlow).value = result
+                    (status as MutableStateFlow).value = ApiStatusDetail.DONE
+                    Timber.d("State updated: pokeDetails = $result, status = ApiStatusDetail.DONE")
                 } else {
-                    _status.value = ApiStatusDetail.ERROR
+                    (status as MutableStateFlow).value = ApiStatusDetail.ERROR
+                    Timber.d("State updated: status = ApiStatusDetail.ERROR")
                 }
             } catch (e: Exception) {
-                _status.value = ApiStatusDetail.ERROR
-                Timber.e(e)
+                (status as MutableStateFlow).value = ApiStatusDetail.ERROR
+                Timber.e(e, "State updated: status = ApiStatusDetail.ERROR")
             }
         }
     }

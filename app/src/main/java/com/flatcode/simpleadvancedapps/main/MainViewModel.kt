@@ -2,8 +2,6 @@ package com.flatcode.simpleadvancedapps.main
 
 import android.view.View
 import android.widget.ProgressBar
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
@@ -21,16 +19,20 @@ import com.flatcode.simpleadvancedapps.rickAndMorty.ui.RickAndMortyActivity
 import com.flatcode.simpleadvancedapps.todoNote.TodoNoteActivity
 import com.flatcode.simpleadvancedapps.utils.DATA
 import com.flatcode.simpleadvancedapps.weather.WeatherActivity
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import timber.log.Timber
 
 class MainViewModel : ViewModel() {
 
-    val dataMain: LiveData<List<Main>>
-        field = MutableLiveData<List<Main>>()
+    val dataMain: StateFlow<List<Main>>
+        field = MutableStateFlow(emptyList())
 
     private val i = intArrayOf(1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1)
 
     fun getItems(recyclerView: RecyclerView, bar: ProgressBar) {
-        dataMain.value = data
+        (dataMain as MutableStateFlow).value = data
+        Timber.d("State updated: dataMain = $data")
         bar.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
     }

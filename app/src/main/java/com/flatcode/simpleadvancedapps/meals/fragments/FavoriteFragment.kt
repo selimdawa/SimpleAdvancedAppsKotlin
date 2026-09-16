@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.flatcode.simpleadvancedapps.R
@@ -16,6 +19,7 @@ import com.flatcode.simpleadvancedapps.meals.adapters.FavoritesMealsAdapter
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
@@ -78,8 +82,11 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun observeFavorites() {
-        viewModel.observeFavoritesMealsLiveData().observe(viewLifecycleOwner) { meals ->
-            favoritesAdapter.submitList(meals)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.favoritesMeals.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { meals ->
+                    favoritesAdapter.submitList(meals)
+                }
         }
     }
 

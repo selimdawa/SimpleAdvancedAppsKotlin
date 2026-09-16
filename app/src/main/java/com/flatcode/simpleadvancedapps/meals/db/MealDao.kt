@@ -1,12 +1,12 @@
 package com.flatcode.simpleadvancedapps.meals.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MealDao {
@@ -18,5 +18,5 @@ interface MealDao {
     suspend fun delete(meal: Meal)
 
     @Query("SELECT * FROM mealInformation")
-    fun getAllMeals(): LiveData<List<Meal>>
+    fun getAllMeals(): Flow<List<Meal>>
 }

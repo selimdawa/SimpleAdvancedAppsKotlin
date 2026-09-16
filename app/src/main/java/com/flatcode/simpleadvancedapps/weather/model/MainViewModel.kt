@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,10 +28,12 @@ class MainViewModel @Inject constructor(private val dao: WeatherDao) : ViewModel
 
     fun updateCurrent(weather: WeatherModel) {
         liveDataCurrent.value = weather
+        Timber.d("State updated: liveDataCurrent = $weather")
     }
 
     fun updateList(list: List<WeatherModel>) {
         liveDataList.value = list
+        Timber.d("State updated: liveDataList = $list")
     }
 
     fun saveWeather(weather: WeatherModel) = viewModelScope.launch {

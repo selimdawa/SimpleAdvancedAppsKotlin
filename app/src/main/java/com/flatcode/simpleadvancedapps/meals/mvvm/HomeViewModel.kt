@@ -1,7 +1,5 @@
 package com.flatcode.simpleadvancedapps.meals.mvvm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.meals.db.MealDao
@@ -14,6 +12,10 @@ import com.flatcode.simpleadvancedapps.meals.pojo.MealsByCategoryList
 import com.flatcode.simpleadvancedapps.meals.retrofit.MealApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,22 +28,24 @@ class HomeViewModel @Inject constructor(
     private val mealApi: MealApi, private val mealDao: MealDao
 ) : ViewModel() {
 
-    val randomMealLiveData: LiveData<Meal>
-        field = MutableLiveData<Meal>()
+    val randomMeal: StateFlow<Meal?>
+        field = MutableStateFlow(null)
 
-    val popularItemsLiveData: LiveData<List<MealsByCategory>>
-        field = MutableLiveData<List<MealsByCategory>>()
+    val popularItems: StateFlow<List<MealsByCategory>>
+        field = MutableStateFlow(emptyList())
 
-    val categoriesLiveData: LiveData<List<Category>>
-        field = MutableLiveData<List<Category>>()
+    val categories: StateFlow<List<Category>>
+        field = MutableStateFlow(emptyList())
 
-    val favoritesMealsLiveData: LiveData<List<Meal>> = mealDao.getAllMeals()
+    val favoritesMeals: StateFlow<List<Meal>> = mealDao.getAllMeals()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun getRandomMeal() {
         mealApi.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
-                response.body()?.meals?.firstOrNull()?.let { randomMeal ->
-                    randomMealLiveData.value = randomMeal
+                response.body()?.meals?.firstOrNull()?.let { meal ->
+                    (randomMeal as MutableStateFlow).value = meal
+                    Timber.d("State updated: randomMeal = $meal")
                 }
             }
 
@@ -58,7 +62,8 @@ class HomeViewModel @Inject constructor(
                 response: Response<MealsByCategoryList>,
             ) {
                 response.body()?.meals?.let { popularItem ->
-                    popularItemsLiveData.value = popularItem
+                    (popularItems as MutableStateFlow).value = popularItem
+                    Timber.d("State updated: popularItems = $popularItem")
                 }
             }
 
@@ -72,7 +77,8 @@ class HomeViewModel @Inject constructor(
         mealApi.getCategories().enqueue(object : Callback<CategoryList> {
             override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
                 response.body()?.let { categoryList ->
-                    categoriesLiveData.value = categoryList.categories
+                    (categories as MutableStateFlow).value = categoryList.categories
+                    Timber.d("State updated: categories = ${categoryList.categories}")
                 }
             }
 
@@ -89,9 +95,4 @@ class HomeViewModel @Inject constructor(
     fun deleteMeal(meal: Meal) {
         viewModelScope.launch(Dispatchers.IO) { mealDao.delete(meal) }
     }
-
-    fun observeRandomMealLiveData(): LiveData<Meal> = randomMealLiveData
-    fun observerPopularItemsLiveData(): LiveData<List<MealsByCategory>> = popularItemsLiveData
-    fun observeCategoriesLiveData(): LiveData<List<Category>> = categoriesLiveData
-    fun observeFavoritesMealsLiveData(): LiveData<List<Meal>> = favoritesMealsLiveData
 }

@@ -52,10 +52,8 @@ dependencies {
     implementation(libs.coil)                    //Coil Kotlin Image
     implementation(libs.coil.network.okhttp)
     implementation(libs.shimmer)                 //Facebook Shimmer
-    //Life Cycle
+    //MVVM, Life Cycle
     implementation(libs.lifecycle.viewmodel.ktx)
-    implementation(libs.lifecycle.livedata.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
     //Retrofit
     implementation(libs.retrofit.core) //Retrofit
     implementation(libs.retrofit.converter.gson)   //Gson

@@ -6,10 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.flatcode.simpleadvancedapps.databinding.FragmentFavoriteMovieBinding
 import com.flatcode.simpleadvancedapps.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
@@ -42,9 +46,12 @@ class FavoriteFragment : Fragment() {
         binding.toolbar.nameSpace.text = getString(R.string.favorite_movies)
         binding.rvFavorite.adapter = adapter
 
-        viewModel.getAllMovies().observe(viewLifecycleOwner) { list ->
-            adapter.listMovies = list.asReversed()
-            binding.tvEmpty.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.allMovies.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { list ->
+                    adapter.listMovies = list.asReversed()
+                    binding.tvEmpty.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+                }
         }
     }
 

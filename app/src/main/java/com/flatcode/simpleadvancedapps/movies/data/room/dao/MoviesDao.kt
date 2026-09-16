@@ -1,12 +1,12 @@
 package com.flatcode.simpleadvancedapps.movies.data.room.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoviesDao {
@@ -17,5 +17,5 @@ interface MoviesDao {
     fun delete(moviesItemModel: MovieItemModel)
 
     @Query("SELECT * from movie_table")
-    fun getAllMovies(): LiveData<List<MovieItemModel>>
+    fun getAllMovies(): Flow<List<MovieItemModel>>
 }

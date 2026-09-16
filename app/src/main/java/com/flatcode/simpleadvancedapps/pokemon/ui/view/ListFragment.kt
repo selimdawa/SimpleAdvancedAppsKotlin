@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentListPokeBinding
@@ -45,31 +49,38 @@ class ListFragment : Fragment() {
     }
 
     private fun observeApiStatus() {
-        viewModel.status.observe(viewLifecycleOwner) { status ->
-            when (status) {
-                ApiStatus.LOADING -> {
-                    binding.statusOffline.visibility = View.GONE
-                    binding.shimmerLoading.visibility = View.VISIBLE
-                    binding.recyclerViewPoke.visibility = View.GONE
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.status.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { status ->
+                    when (status) {
+                        ApiStatus.LOADING -> {
+                            binding.statusOffline.visibility = View.GONE
+                            binding.shimmerLoading.visibility = View.VISIBLE
+                            binding.recyclerViewPoke.visibility = View.GONE
+                        }
 
-                ApiStatus.ERROR -> {
-                    binding.statusOffline.visibility = View.VISIBLE
-                    binding.shimmerLoading.visibility = View.GONE
-                    binding.recyclerViewPoke.visibility = View.GONE
-                }
+                        ApiStatus.ERROR -> {
+                            binding.statusOffline.visibility = View.VISIBLE
+                            binding.shimmerLoading.visibility = View.GONE
+                            binding.recyclerViewPoke.visibility = View.GONE
+                        }
 
-                ApiStatus.DONE -> {
-                    binding.statusOffline.visibility = View.GONE
-                    binding.shimmerLoading.visibility = View.GONE
-                    binding.recyclerViewPoke.visibility = View.VISIBLE
+                        ApiStatus.DONE -> {
+                            binding.statusOffline.visibility = View.GONE
+                            binding.shimmerLoading.visibility = View.GONE
+                            binding.recyclerViewPoke.visibility = View.VISIBLE
+                        }
+                        null -> {}
+                    }
                 }
-            }
         }
     }
 
     private fun observeListPokemon() {
-        viewModel.pokemonList.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pokemonList.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { adapter.submitList(it) }
+        }
     }
 
     private fun onClickItem() {

@@ -1,14 +1,14 @@
 package com.flatcode.simpleadvancedapps.movies.data.room.repository
 
-import androidx.lifecycle.LiveData
 import com.flatcode.simpleadvancedapps.movies.data.room.dao.MoviesDao
 import com.flatcode.simpleadvancedapps.movies.models.MovieItemModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MoviesRepositoryRealization @Inject constructor(private val moviesDao: MoviesDao):
     MoviesRepository {
 
-    override val allMovies: LiveData<List<MovieItemModel>>
+    override val allMovies: Flow<List<MovieItemModel>>
         get() = moviesDao.getAllMovies()
 
     override suspend fun insertMovie(movieItemModel: MovieItemModel) {

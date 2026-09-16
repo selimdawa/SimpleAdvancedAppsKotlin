@@ -1,46 +1,55 @@
 package com.flatcode.simpleadvancedapps.calculator.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.calculator.data.CalculatorDao
 import com.flatcode.simpleadvancedapps.calculator.data.CalculatorEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class CalculatorViewModel @Inject constructor(private val calculatorDao: CalculatorDao) :
     ViewModel() {
 
-    val expression: LiveData<String>
-        field = MutableLiveData("")
+    val expression: StateFlow<String>
+        field = MutableStateFlow("")
 
-    val result: LiveData<String>
-        field = MutableLiveData("")
+    val result: StateFlow<String>
+        field = MutableStateFlow("")
 
-    val historyList: LiveData<List<CalculatorEntity>> = calculatorDao.getAllHistory().asLiveData()
+    val historyList: StateFlow<List<CalculatorEntity>> = calculatorDao.getAllHistory()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun appendValue(value: String) {
-        expression.value = (expression.value ?: "") + value
+        val newValue = (expression.value) + value
+        (expression as MutableStateFlow).value = newValue
+        Timber.d("State updated: expression = $newValue")
     }
 
     fun clearAll() {
-        expression.value = ""
-        result.value = ""
+        (expression as MutableStateFlow).value = ""
+        (result as MutableStateFlow).value = ""
+        Timber.d("State updated: expression = , result = ")
     }
 
     fun deleteLast() {
-        val currentExp = expression.value ?: ""
+        val currentExp = expression.value
         if (currentExp.isNotEmpty()) {
-            expression.value = currentExp.dropLast(1)
+            val newValue = currentExp.dropLast(1)
+            (expression as MutableStateFlow).value = newValue
+            Timber.d("State updated: expression = $newValue")
         }
     }
 
     fun setResultValue(evaluatedResult: String) {
-        result.value = evaluatedResult
+        (result as MutableStateFlow).value = evaluatedResult
+        Timber.d("State updated: result = $evaluatedResult")
     }
 
     fun saveToHistory(exp: String, res: String) {

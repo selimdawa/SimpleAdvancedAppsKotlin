@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flatcode.simpleadvancedapps.R
@@ -102,16 +104,25 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.expression.observe(viewLifecycleOwner) { exp ->
-            binding.txtPlaceHolder.text = exp
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.expression.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { exp ->
+                    binding.txtPlaceHolder.text = exp
+                }
         }
 
-        viewModel.result.observe(viewLifecycleOwner) { res ->
-            binding.txtResult.text = res
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.result.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { res ->
+                    binding.txtResult.text = res
+                }
         }
 
-        viewModel.historyList.observe(viewLifecycleOwner) { history ->
-            historyAdapter.submitList(history)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.historyList.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { history ->
+                    historyAdapter.submitList(history)
+                }
         }
     }
 

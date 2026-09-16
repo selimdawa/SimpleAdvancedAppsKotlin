@@ -14,6 +14,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import coil3.load
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityMealBinding
@@ -21,6 +24,7 @@ import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment
 import com.flatcode.simpleadvancedapps.meals.mvvm.MealViewModel
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MealActivity : AppCompatActivity() {
@@ -66,11 +70,14 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun observeFavoriteStatus() {
-        mealMvvm.observeFavoritesMealsLiveData().observe(this) { favoritesList ->
-            isMealFavorite = favoritesList.any { it.idMeal == mealId }
-            binding.btnAddToFav.setImageResource(
-                if (isMealFavorite) R.drawable.ic_heart_selected else R.drawable.ic_heart_unselected
-            )
+        lifecycleScope.launch {
+            mealMvvm.favoritesMeals.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect { favoritesList ->
+                    isMealFavorite = favoritesList.any { it.idMeal == mealId }
+                    binding.btnAddToFav.setImageResource(
+                        if (isMealFavorite) R.drawable.ic_heart_selected else R.drawable.ic_heart_unselected
+                    )
+                }
         }
     }
 
@@ -99,18 +106,23 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun observerMealDetailsLiveData() {
-        mealMvvm.observeMealDetailsLiveData().observe(this) { value ->
-            onResponseCase()
-            mealToSave = value
+        lifecycleScope.launch {
+            mealMvvm.mealDetails.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect { value ->
+                    value?.let {
+                        onResponseCase()
+                        mealToSave = it
 
-            with(binding) {
-                tvCategory.text =
-                    getString(R.string.category_placeholder, value?.strCategory.orEmpty())
-                tvArea.text = getString(R.string.area_placeholder, value?.strArea.orEmpty())
-                tvInstructionsSteps.text = value?.strInstructions.orEmpty()
-            }
+                        with(binding) {
+                            tvCategory.text =
+                                getString(R.string.category_placeholder, it.strCategory.orEmpty())
+                            tvArea.text = getString(R.string.area_placeholder, it.strArea.orEmpty())
+                            tvInstructionsSteps.text = it.strInstructions.orEmpty()
+                        }
 
-            youtubeLink = value?.strYoutube.toString()
+                        youtubeLink = it.strYoutube.toString()
+                    }
+                }
         }
     }
 

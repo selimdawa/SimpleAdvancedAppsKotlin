@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import coil3.load
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.FragmentHomeMealsBinding
@@ -17,6 +20,7 @@ import com.flatcode.simpleadvancedapps.meals.adapters.MostPopularAdapter
 import com.flatcode.simpleadvancedapps.meals.mvvm.HomeViewModel
 import com.flatcode.simpleadvancedapps.meals.pojo.Meal
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -88,8 +92,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerCategoriesLiveData() {
-        viewModel.observeCategoriesLiveData().observe(viewLifecycleOwner) { categories ->
-            categoriesAdapter.submitList(categories)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.categories.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { categories ->
+                    categoriesAdapter.submitList(categories)
+                }
         }
     }
 
@@ -109,8 +116,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun observePopularItemsLiveData() {
-        viewModel.observerPopularItemsLiveData().observe(viewLifecycleOwner) { mealList ->
-            popularItemsAdapter.submitList(mealList)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.popularItems.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { mealList ->
+                    popularItemsAdapter.submitList(mealList)
+                }
         }
     }
 
@@ -128,12 +138,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerRandomMeal() {
-        viewModel.observeRandomMealLiveData().observe(viewLifecycleOwner) { meal ->
-            meal?.let {
-                binding.imgRandomMeal.load(it.strMealThumb)
-
-                this.randomMeal = it
-            }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.randomMeal.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { meal ->
+                    meal?.let {
+                        binding.imgRandomMeal.load(it.strMealThumb)
+                        this@HomeFragment.randomMeal = it
+                    }
+                }
         }
     }
 }

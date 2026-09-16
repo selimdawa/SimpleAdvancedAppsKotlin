@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.utils.DATA
@@ -18,10 +17,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -29,18 +32,23 @@ import javax.inject.Inject
 class TasksViewModel @Inject constructor(
     private val taskDao: TaskDao,
     private val preferencesManager: PreferencesManager,
-    state: SavedStateHandle,
+    private val state: SavedStateHandle,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    val searchQuery = state.getLiveData("searchQuery", DATA.EMPTY)
+    val searchQuery = state.getStateFlow("searchQuery", DATA.EMPTY)
+
+    fun updateSearchQuery(query: String) {
+        state["searchQuery"] = query
+        Timber.d("State updated: searchQuery = $query")
+    }
     val preferencesFlow = preferencesManager.preferencesFlow
 
     private val taskEventChannel = Channel<TasksEvent>()
     val taskEvent = taskEventChannel.receiveAsFlow()
 
     private val tasksFlow = combine(
-        searchQuery.asFlow(),
+        searchQuery,
         preferencesFlow
     ) { query, filterPreferences ->
         Pair(query, filterPreferences)
@@ -56,7 +64,8 @@ class TasksViewModel @Inject constructor(
         preferencesManager.updateHideCompleted(hideCompleted)
     }
 
-    val tasks = tasksFlow.asLiveData()
+    val tasks: StateFlow<List<Task>> = tasksFlow
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun onTaskSelected(task: Task) = viewModelScope.launch {
         taskEventChannel.send(TasksEvent.NavigateToEditTaskScreen(task))

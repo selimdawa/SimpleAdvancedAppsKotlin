@@ -13,6 +13,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
@@ -84,8 +85,11 @@ class TasksFragment : Fragment(), TaskAdapter.OnItemClickListener {
             }).attachToRecyclerView(tasksRec)
         }
 
-        viewModel.tasks.observe(viewLifecycleOwner) {
-            taskAdapter.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.tasks.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    taskAdapter.submitList(it)
+                }
         }
 
         setFragmentResultListener("add_edit_request") { _, bundle ->
@@ -94,43 +98,44 @@ class TasksFragment : Fragment(), TaskAdapter.OnItemClickListener {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.taskEvent.collect { event ->
-                when (event) {
-                    is TasksViewModel.TasksEvent.ShowUndoDeleteTaskMessage -> {
-                        Snackbar.make(
-                            requireView(),
-                            getString(R.string.msg_task_deleted),
-                            Snackbar.LENGTH_SHORT
-                        )
-                            .setAction(getString(R.string.action_undo)) {
-                                viewModel.onUndoDeleteClick(event.task)
-                            }.show()
-                    }
+            viewModel.taskEvent.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { event ->
+                    when (event) {
+                        is TasksViewModel.TasksEvent.ShowUndoDeleteTaskMessage -> {
+                            Snackbar.make(
+                                requireView(),
+                                getString(R.string.msg_task_deleted),
+                                Snackbar.LENGTH_SHORT
+                            )
+                                .setAction(getString(R.string.action_undo)) {
+                                    viewModel.onUndoDeleteClick(event.task)
+                                }.show()
+                        }
 
-                    is TasksViewModel.TasksEvent.NavigateToAddScreen -> {
-                        val action = TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
-                            task = null, title = getString(R.string.title_new_task)
-                        )
-                        findNavController().navigate(action)
-                    }
+                        is TasksViewModel.TasksEvent.NavigateToAddScreen -> {
+                            val action = TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
+                                task = null, title = getString(R.string.title_new_task)
+                            )
+                            findNavController().navigate(action)
+                        }
 
-                    is TasksViewModel.TasksEvent.NavigateToEditTaskScreen -> {
-                        val action = TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
-                            task = event.task, title = getString(R.string.title_edit_task)
-                        )
-                        findNavController().navigate(action)
-                    }
+                        is TasksViewModel.TasksEvent.NavigateToEditTaskScreen -> {
+                            val action = TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
+                                task = event.task, title = getString(R.string.title_edit_task)
+                            )
+                            findNavController().navigate(action)
+                        }
 
-                    is TasksViewModel.TasksEvent.ShowTaskSavedConfirmationMessage -> {
-                        Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_SHORT).show()
-                    }
+                        is TasksViewModel.TasksEvent.ShowTaskSavedConfirmationMessage -> {
+                            Snackbar.make(requireView(), event.msg, Snackbar.LENGTH_SHORT).show()
+                        }
 
-                    is TasksViewModel.TasksEvent.NavigateToDeleteAllCompletedTasksScreen -> {
-                        val action = TasksFragmentDirections.actionGlobalDeleteAllCompletedTasksDialogFragment()
-                        findNavController().navigate(action)
-                    }
-                }.exhaustive
-            }
+                        is TasksViewModel.TasksEvent.NavigateToDeleteAllCompletedTasksScreen -> {
+                            val action = TasksFragmentDirections.actionGlobalDeleteAllCompletedTasksDialogFragment()
+                            findNavController().navigate(action)
+                        }
+                    }.exhaustive
+                }
         }
 
         setupMenu()
@@ -145,7 +150,7 @@ class TasksFragment : Fragment(), TaskAdapter.OnItemClickListener {
                 val searchItem = menu.findItem(R.id.action_search)
                 searchView = searchItem.actionView as SearchView
 
-                searchView.onQueryTextChanged { viewModel.searchQuery.value = it }
+                searchView.onQueryTextChanged { viewModel.updateSearchQuery(it) }
 
                 val pendingQuery = viewModel.searchQuery.value
                 if (!pendingQuery.isNullOrEmpty()) {

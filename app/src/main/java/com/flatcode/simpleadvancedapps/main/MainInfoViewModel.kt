@@ -1,17 +1,19 @@
 package com.flatcode.simpleadvancedapps.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.flatcode.simpleadvancedapps.utils.DATA
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import timber.log.Timber
 
 class MainInfoViewModel : ViewModel() {
 
-    val dataMainInfo: LiveData<List<MainInfo>>
-        field = MutableLiveData<List<MainInfo>>()
+    val dataMainInfo: StateFlow<List<MainInfo>>
+        field = MutableStateFlow(emptyList())
 
     fun getInfoItems() {
-        dataMainInfo.value = dataInfo
+        (dataMainInfo as MutableStateFlow).value = dataInfo
+        Timber.d("State updated: dataMainInfo = $dataInfo")
     }
 
     private val dataInfo: List<MainInfo>

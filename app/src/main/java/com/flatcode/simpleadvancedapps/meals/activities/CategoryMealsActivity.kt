@@ -10,6 +10,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.flatcode.simpleadvancedapps.R
 import com.flatcode.simpleadvancedapps.databinding.ActivityCategoryMealsBinding
 import com.flatcode.simpleadvancedapps.meals.adapters.CategoryMealsAdapter
@@ -17,6 +20,7 @@ import com.flatcode.simpleadvancedapps.meals.fragments.HomeFragment
 import com.flatcode.simpleadvancedapps.meals.mvvm.CategoriesMealsViewModel
 import com.flatcode.simpleadvancedapps.utils.DATA
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CategoryMealsActivity : AppCompatActivity() {
@@ -53,11 +57,14 @@ class CategoryMealsActivity : AppCompatActivity() {
         categoryMealsViewModel.getMealsByCategory(
             intent.getStringExtra(HomeFragment.CATEGORY_NAME).orEmpty()
         )
-        categoryMealsViewModel.observeCategoriesMealsLiveData().observe(this) { mealList ->
-            binding.toolbar.nameSpace.text = getString(
-                R.string.category_meals_count, DATA.CATEGORY_MEALS, mealList.size
-            )
-            categoryMealsAdapter.submitList(mealList)
+        lifecycleScope.launch {
+            categoryMealsViewModel.meals.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect { mealList ->
+                    binding.toolbar.nameSpace.text = getString(
+                        R.string.category_meals_count, DATA.CATEGORY_MEALS, mealList.size
+                    )
+                    categoryMealsAdapter.submitList(mealList)
+                }
         }
     }
 

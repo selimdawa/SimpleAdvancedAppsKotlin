@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import coil3.load
 import coil3.request.crossfade
 import coil3.request.error
@@ -46,59 +50,67 @@ class DetailFragment : Fragment() {
     }
 
     private fun observe() {
-        viewModel.pokeDetails.observe(viewLifecycleOwner) { pokemon ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pokeDetails.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { pokemon ->
+                    pokemon?.let {
+                        binding.tvType1.text = pokemon.types.getOrNull(0) ?: ""
 
-            binding.tvType1.text = pokemon.types.getOrNull(0) ?: ""
+                        if (pokemon.types.size > 1) {
+                            binding.tvType2.text = pokemon.types[1]
+                            binding.tvType2.visibility = View.VISIBLE
+                        } else {
+                            binding.tvType2.visibility = View.GONE
+                        }
 
-            if (pokemon.types.size > 1) {
-                binding.tvType2.text = pokemon.types[1]
-                binding.tvType2.visibility = View.VISIBLE
-            } else {
-                binding.tvType2.visibility = View.GONE
-            }
+                        binding.image.load(pokemon.img) {
+                            placeholder(R.drawable.loading_animation)
+                            error(R.drawable.ic_broken_image)
+                            crossfade(true)
+                        }
 
-            binding.image.load(pokemon.img) {
-                placeholder(R.drawable.loading_animation)
-                error(R.drawable.ic_broken_image)
-                crossfade(true)
-            }
-
-            binding.collapsingToolbar.title = pokemon.name
-            binding.tvHp.text = pokemon.hp.toString()
-            binding.speed.text = pokemon.speed.toString()
-            binding.attack.text = pokemon.attack.toString()
-            binding.defense.text = pokemon.defense.toString()
-            binding.specialAttack.text = pokemon.specialAttack.toString()
-            binding.specialDefense.text = pokemon.specialDefense.toString()
-            binding.height.text = getString(R.string.metro, pokemon.height.toString())
-            binding.weight.text = getString(R.string.kilo, pokemon.weight.toString())
+                        binding.collapsingToolbar.title = pokemon.name
+                        binding.tvHp.text = pokemon.hp.toString()
+                        binding.speed.text = pokemon.speed.toString()
+                        binding.attack.text = pokemon.attack.toString()
+                        binding.defense.text = pokemon.defense.toString()
+                        binding.specialAttack.text = pokemon.specialAttack.toString()
+                        binding.specialDefense.text = pokemon.specialDefense.toString()
+                        binding.height.text = getString(R.string.metro, pokemon.height.toString())
+                        binding.weight.text = getString(R.string.kilo, pokemon.weight.toString())
+                    }
+                }
         }
     }
 
     private fun observeStatus() {
-        viewModel.status.observe(viewLifecycleOwner) { status ->
-            when (status) {
-                ApiStatusDetail.LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.appBar.visibility = View.GONE
-                    binding.nestedScrollView.visibility = View.GONE
-                    binding.statusOffline.visibility = View.GONE
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.status.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect { status ->
+                    when (status) {
+                        ApiStatusDetail.LOADING -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.appBar.visibility = View.GONE
+                            binding.nestedScrollView.visibility = View.GONE
+                            binding.statusOffline.visibility = View.GONE
+                        }
 
-                ApiStatusDetail.DONE -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.appBar.visibility = View.VISIBLE
-                    binding.nestedScrollView.visibility = View.VISIBLE
-                    binding.statusOffline.visibility = View.GONE
-                }
+                        ApiStatusDetail.DONE -> {
+                            binding.progressBar.visibility = View.GONE
+                            binding.appBar.visibility = View.VISIBLE
+                            binding.nestedScrollView.visibility = View.VISIBLE
+                            binding.statusOffline.visibility = View.GONE
+                        }
 
-                ApiStatusDetail.ERROR -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.appBar.visibility = View.GONE
-                    binding.nestedScrollView.visibility = View.GONE
-                    binding.statusOffline.visibility = View.VISIBLE
+                        ApiStatusDetail.ERROR -> {
+                            binding.progressBar.visibility = View.GONE
+                            binding.appBar.visibility = View.GONE
+                            binding.nestedScrollView.visibility = View.GONE
+                            binding.statusOffline.visibility = View.VISIBLE
+                        }
+                        null -> {}
+                    }
                 }
-            }
         }
     }
 
