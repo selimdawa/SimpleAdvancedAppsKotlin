@@ -40,7 +40,7 @@ class DaysFragment : Fragment(R.layout.fragment_days) {
 
     private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            model.liveDataList
+            model.weatherStateList
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { weatherList ->
                     adapter.submitList(weatherList)

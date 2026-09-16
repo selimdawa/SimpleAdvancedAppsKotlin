@@ -8,11 +8,11 @@ import timber.log.Timber
 
 class MainInfoViewModel : ViewModel() {
 
-    val dataMainInfo: StateFlow<List<MainInfo>>
-        field = MutableStateFlow(emptyList())
+    private val _dataMainInfo = MutableStateFlow(emptyList<MainInfo>())
+    val dataMainInfo: StateFlow<List<MainInfo>> = _dataMainInfo
 
     fun getInfoItems() {
-        (dataMainInfo as MutableStateFlow).value = dataInfo
+        _dataMainInfo.value = dataInfo
         Timber.d("State updated: dataMainInfo = $dataInfo")
     }
 

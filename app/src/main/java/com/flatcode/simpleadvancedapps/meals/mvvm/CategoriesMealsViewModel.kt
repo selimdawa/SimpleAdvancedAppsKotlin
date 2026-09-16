@@ -16,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoriesMealsViewModel @Inject constructor(private val mealApi: MealApi) : ViewModel() {
 
-    val meals: StateFlow<List<MealsByCategory>>
-        field = MutableStateFlow(emptyList())
+    private val _meals = MutableStateFlow(emptyList<MealsByCategory>())
+    val meals: StateFlow<List<MealsByCategory>> = _meals
 
     fun getMealsByCategory(categoryName: String) {
         mealApi.getMealsByCategory(categoryName).enqueue(object : Callback<MealsByCategoryList> {
@@ -25,7 +25,7 @@ class CategoriesMealsViewModel @Inject constructor(private val mealApi: MealApi)
                 call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>,
             ) {
                 response.body()?.let { mealsList ->
-                    (meals as MutableStateFlow).value = mealsList.meals
+                    _meals.value = mealsList.meals
                     Timber.d("State updated: meals = ${mealsList.meals}")
                 }
             }

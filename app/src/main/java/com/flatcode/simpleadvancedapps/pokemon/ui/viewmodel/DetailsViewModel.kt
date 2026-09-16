@@ -18,11 +18,11 @@ class DetailsViewModel @Inject constructor(
     private val getDetails: GetDetails
 ) : ViewModel() {
 
-    val pokeDetails: StateFlow<PokeItemDetails?>
-        field = MutableStateFlow(null)
+    private val _pokeDetails = MutableStateFlow<PokeItemDetails?>(null)
+    val pokeDetails: StateFlow<PokeItemDetails?> = _pokeDetails
 
-    val status: StateFlow<ApiStatusDetail?>
-        field = MutableStateFlow(null)
+    private val _status = MutableStateFlow<ApiStatusDetail?>(null)
+    val status: StateFlow<ApiStatusDetail?> = _status
 
     private var currentId: Int = -1
 
@@ -30,21 +30,21 @@ class DetailsViewModel @Inject constructor(
         if (id == -1 || id == currentId) return
 
         currentId = id
-        (status as MutableStateFlow).value = ApiStatusDetail.LOADING
+        _status.value = ApiStatusDetail.LOADING
         Timber.d("State updated: status = ApiStatusDetail.LOADING")
         viewModelScope.launch {
             try {
                 val result = getDetails.fromPokemon(id)
                 if (result != null) {
-                    (pokeDetails as MutableStateFlow).value = result
-                    (status as MutableStateFlow).value = ApiStatusDetail.DONE
+                    _pokeDetails.value = result
+                    _status.value = ApiStatusDetail.DONE
                     Timber.d("State updated: pokeDetails = $result, status = ApiStatusDetail.DONE")
                 } else {
-                    (status as MutableStateFlow).value = ApiStatusDetail.ERROR
+                    _status.value = ApiStatusDetail.ERROR
                     Timber.d("State updated: status = ApiStatusDetail.ERROR")
                 }
             } catch (e: Exception) {
-                (status as MutableStateFlow).value = ApiStatusDetail.ERROR
+                _status.value = ApiStatusDetail.ERROR
                 Timber.e(e, "State updated: status = ApiStatusDetail.ERROR")
             }
         }

@@ -16,8 +16,8 @@ class MainFragmentViewModel @Inject constructor(
     private val repository: RetrofitRepository
 ) : ViewModel() {
 
-    val uiState: StateFlow<MoviesUiState>
-        field = MutableStateFlow(MoviesUiState.Loading)
+    private val _uiState = MutableStateFlow<MoviesUiState>(MoviesUiState.Loading)
+    val uiState: StateFlow<MoviesUiState> = _uiState
 
     init {
         getMoviesRetrofit()
@@ -25,23 +25,23 @@ class MainFragmentViewModel @Inject constructor(
 
     private fun getMoviesRetrofit() {
         viewModelScope.launch {
-            (uiState as MutableStateFlow).value = MoviesUiState.Loading
+            _uiState.value = MoviesUiState.Loading
             Timber.d("State updated: uiState = MoviesUiState.Loading")
             try {
                 val response = repository.getMovie()
                 if (response.isSuccessful) {
                     val movies = response.body()?.results ?: emptyList()
                     val successState = MoviesUiState.Success(movies)
-                    (uiState as MutableStateFlow).value = successState
+                    _uiState.value = successState
                     Timber.d("State updated: uiState = $successState")
                 } else {
                     val errorState = MoviesUiState.Error("Error: ${response.code()}")
-                    (uiState as MutableStateFlow).value = errorState
+                    _uiState.value = errorState
                     Timber.d("State updated: uiState = $errorState")
                 }
             } catch (e: Exception) {
                 val errorState = MoviesUiState.Error(e.localizedMessage ?: "Unknown error")
-                (uiState as MutableStateFlow).value = errorState
+                _uiState.value = errorState
                 Timber.d("State updated: uiState = $errorState")
             }
         }

@@ -23,23 +23,23 @@ class PokeViewModel @Inject constructor(
     val pokemonList: StateFlow<List<PokeItem>> = getPokemon.pokemonList
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val status: StateFlow<ApiStatus?>
-        field = MutableStateFlow(null)
+    private val _status = MutableStateFlow<ApiStatus?>(null)
+    val status: StateFlow<ApiStatus?> = _status
 
     init {
         refreshPokemon()
     }
 
     fun refreshPokemon() {
-        (status as MutableStateFlow).value = ApiStatus.LOADING
+        _status.value = ApiStatus.LOADING
         Timber.d("State updated: status = ApiStatus.LOADING")
         viewModelScope.launch {
             try {
                 getPokemon.refresh()
-                (status as MutableStateFlow).value = ApiStatus.DONE
+                _status.value = ApiStatus.DONE
                 Timber.d("State updated: status = ApiStatus.DONE")
             } catch (e: Exception) {
-                (status as MutableStateFlow).value = ApiStatus.ERROR
+                _status.value = ApiStatus.ERROR
                 Timber.d(e, "State updated: status = ApiStatus.ERROR")
             }
         }

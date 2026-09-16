@@ -63,7 +63,7 @@ class MealActivity : AppCompatActivity() {
         loadingCase()
 
         mealMvvm.getMealDetail(mealId)
-        observerMealDetailsLiveData()
+        observeMealDetailsState()
         observeFavoriteStatus()
         onYoutubeImageClick()
         onFavoriteClick()
@@ -105,7 +105,7 @@ class MealActivity : AppCompatActivity() {
         }
     }
 
-    private fun observerMealDetailsLiveData() {
+    private fun observeMealDetailsState() {
         lifecycleScope.launch {
             mealMvvm.mealDetails.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect { value ->

@@ -97,7 +97,7 @@ class MainFragment : Fragment(R.layout.fragment_main_weather) {
             }
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            model.liveDataCurrent.flowWithLifecycle(
+            model.weatherStateCurrent.flowWithLifecycle(
                 viewLifecycleOwner.lifecycle,
                 Lifecycle.State.STARTED,
             ).collect { weather ->

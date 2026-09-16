@@ -17,24 +17,24 @@ import javax.inject.Inject
 class CalculatorViewModel @Inject constructor(private val calculatorDao: CalculatorDao) :
     ViewModel() {
 
-    val expression: StateFlow<String>
-        field = MutableStateFlow("")
+    private val _expression = MutableStateFlow("")
+    val expression: StateFlow<String> = _expression
 
-    val result: StateFlow<String>
-        field = MutableStateFlow("")
+    private val _result = MutableStateFlow("")
+    val result: StateFlow<String> = _result
 
     val historyList: StateFlow<List<CalculatorEntity>> = calculatorDao.getAllHistory()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun appendValue(value: String) {
         val newValue = (expression.value) + value
-        (expression as MutableStateFlow).value = newValue
+        _expression.value = newValue
         Timber.d("State updated: expression = $newValue")
     }
 
     fun clearAll() {
-        (expression as MutableStateFlow).value = ""
-        (result as MutableStateFlow).value = ""
+        _expression.value = ""
+        _result.value = ""
         Timber.d("State updated: expression = , result = ")
     }
 
@@ -42,13 +42,13 @@ class CalculatorViewModel @Inject constructor(private val calculatorDao: Calcula
         val currentExp = expression.value
         if (currentExp.isNotEmpty()) {
             val newValue = currentExp.dropLast(1)
-            (expression as MutableStateFlow).value = newValue
+            _expression.value = newValue
             Timber.d("State updated: expression = $newValue")
         }
     }
 
     fun setResultValue(evaluatedResult: String) {
-        (result as MutableStateFlow).value = evaluatedResult
+        _result.value = evaluatedResult
         Timber.d("State updated: result = $evaluatedResult")
     }
 

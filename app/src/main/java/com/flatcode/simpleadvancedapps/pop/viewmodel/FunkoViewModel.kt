@@ -20,17 +20,17 @@ class FunkoViewModel @Inject constructor(private val funkoRepository: FunkoRepos
     val pops: StateFlow<List<PopItem>> = funkoRepository.pops
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    val pop: StateFlow<PopItem?>
-        field = MutableStateFlow(null)
+    private val _pop = MutableStateFlow<PopItem?>(null)
+    val pop: StateFlow<PopItem?> = _pop
 
-    val filterText: StateFlow<String>
-        field = MutableStateFlow("")
+    private val _filterText = MutableStateFlow("")
+    val filterText: StateFlow<String> = _filterText
 
-    val isListFiltered: StateFlow<Boolean>
-        field = MutableStateFlow(false)
+    private val _isListFiltered = MutableStateFlow(false)
+    val isListFiltered: StateFlow<Boolean> = _isListFiltered
 
     fun setFilterText(text: String) {
-        (filterText as MutableStateFlow).value = text
+        _filterText.value = text
         Timber.d("State updated: filterText = $text")
     }
 
@@ -42,21 +42,20 @@ class FunkoViewModel @Inject constructor(private val funkoRepository: FunkoRepos
 
     fun filter() {
         val currentTextLength = filterText.value.length
-        (isListFiltered as MutableStateFlow).value = currentTextLength > 1
+        _isListFiltered.value = currentTextLength > 1
         Timber.d("State updated: isListFiltered = ${currentTextLength > 1}")
     }
 
     fun getFilteredList(text: String): List<PopItem> {
-        val currentPops = pops.value ?: return emptyList()
         val query = text.lowercase()
 
-        return currentPops.filter { pop ->
+        return pops.value.filter { pop ->
             pop.name.lowercase().contains(query) || pop.series.lowercase().contains(query)
         }
     }
 
     fun onPopClicked(clickedPop: PopItem) {
-        (pop as MutableStateFlow).value = clickedPop
+        _pop.value = clickedPop
         Timber.d("State updated: pop = $clickedPop")
     }
 }

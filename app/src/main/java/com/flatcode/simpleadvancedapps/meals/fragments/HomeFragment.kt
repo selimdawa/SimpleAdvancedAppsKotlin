@@ -63,12 +63,12 @@ class HomeFragment : Fragment() {
         onRandomMealClick()
 
         viewModel.getPopularItems()
-        observePopularItemsLiveData()
+        observePopularItemsState()
         onPopularItemClick()
 
         prepareCategoriesRecyclerView()
         viewModel.getCategories()
-        observerCategoriesLiveData()
+        observeCategoriesState()
         onCategoryClick()
     }
 
@@ -91,7 +91,7 @@ class HomeFragment : Fragment() {
         binding.recViewCategories.adapter = categoriesAdapter
     }
 
-    private fun observerCategoriesLiveData() {
+    private fun observeCategoriesState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.categories.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { categories ->
@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
         binding.recPopular.adapter = popularItemsAdapter
     }
 
-    private fun observePopularItemsLiveData() {
+    private fun observePopularItemsState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.popularItems.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { mealList ->

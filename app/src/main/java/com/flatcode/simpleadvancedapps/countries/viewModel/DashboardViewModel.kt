@@ -27,12 +27,14 @@ class DashboardViewModel @Inject constructor(
 
     private var refreshTime = 10 * 60 * 1000 * 1000 * 1000L
 
-    val countries: StateFlow<List<Country>>
-        field = MutableStateFlow(emptyList())
-    val countryError: StateFlow<Boolean>
-        field = MutableStateFlow(false)
-    val countryLoading: StateFlow<Boolean>
-        field = MutableStateFlow(false)
+    private val _countries = MutableStateFlow(emptyList<Country>())
+    val countries: StateFlow<List<Country>> = _countries
+
+    private val _countryError = MutableStateFlow(false)
+    val countryError: StateFlow<Boolean> = _countryError
+
+    private val _countryLoading = MutableStateFlow(false)
+    val countryLoading: StateFlow<Boolean> = _countryLoading
 
     fun refreshData() {
         viewModelScope.launch {
@@ -54,7 +56,7 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun getDataFromAPI() {
-        (countryLoading as MutableStateFlow).value = true
+        _countryLoading.value = true
         Timber.d("State updated: countryLoading = true")
         viewModelScope.launch {
             try {
@@ -64,17 +66,17 @@ class DashboardViewModel @Inject constructor(
                 storeInSQLite(list)
                 Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.countries_from_api), Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
-                (countryError as MutableStateFlow).value = true
-                (countryLoading as MutableStateFlow).value = false
+                _countryError.value = true
+                _countryLoading.value = false
                 Timber.e(e, "Error fetching countries from API. State updated: countryError = true, countryLoading = false")
             }
         }
     }
 
     private fun showCountries(countryL: List<Country>) {
-        (countries as MutableStateFlow).value = countryL
-        (countryError as MutableStateFlow).value = false
-        (countryLoading as MutableStateFlow).value = false
+        _countries.value = countryL
+        _countryError.value = false
+        _countryLoading.value = false
         Timber.d("State updated: countries = $countryL, countryError = false, countryLoading = false")
     }
 

@@ -16,14 +16,14 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     application: Application, private val countryDao: CountryDAO,
 ) : AndroidViewModel(application) {
-    val countryLiveData: StateFlow<Country?>
-        field = MutableStateFlow(null)
+    private val _countryState = MutableStateFlow<Country?>(null)
+    val countryState: StateFlow<Country?> = _countryState
 
     fun getDataFromRoom(uuid: Int) {
         viewModelScope.launch {
             val country = countryDao.getCountry(uuid)
-            (countryLiveData as MutableStateFlow).value = country
-            Timber.d("State updated: countryLiveData = $country")
+            _countryState.value = country
+            Timber.d("State updated: countryState = $country")
         }
     }
 }

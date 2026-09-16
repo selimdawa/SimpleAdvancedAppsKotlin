@@ -25,13 +25,13 @@ import timber.log.Timber
 
 class MainViewModel : ViewModel() {
 
-    val dataMain: StateFlow<List<Main>>
-        field = MutableStateFlow(emptyList())
+    private val _dataMain = MutableStateFlow(emptyList<Main>())
+    val dataMain: StateFlow<List<Main>> = _dataMain
 
     private val i = intArrayOf(1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1)
 
     fun getItems(recyclerView: RecyclerView, bar: ProgressBar) {
-        (dataMain as MutableStateFlow).value = data
+        _dataMain.value = data
         Timber.d("State updated: dataMain = $data")
         bar.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE

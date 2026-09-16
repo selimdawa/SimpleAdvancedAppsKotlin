@@ -28,14 +28,14 @@ class HomeViewModel @Inject constructor(
     private val mealApi: MealApi, private val mealDao: MealDao
 ) : ViewModel() {
 
-    val randomMeal: StateFlow<Meal?>
-        field = MutableStateFlow(null)
+    private val _randomMeal = MutableStateFlow<Meal?>(null)
+    val randomMeal: StateFlow<Meal?> = _randomMeal
 
-    val popularItems: StateFlow<List<MealsByCategory>>
-        field = MutableStateFlow(emptyList())
+    private val _popularItems = MutableStateFlow(emptyList<MealsByCategory>())
+    val popularItems: StateFlow<List<MealsByCategory>> = _popularItems
 
-    val categories: StateFlow<List<Category>>
-        field = MutableStateFlow(emptyList())
+    private val _categories = MutableStateFlow(emptyList<Category>())
+    val categories: StateFlow<List<Category>> = _categories
 
     val favoritesMeals: StateFlow<List<Meal>> = mealDao.getAllMeals()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
         mealApi.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 response.body()?.meals?.firstOrNull()?.let { meal ->
-                    (randomMeal as MutableStateFlow).value = meal
+                    _randomMeal.value = meal
                     Timber.d("State updated: randomMeal = $meal")
                 }
             }
@@ -62,7 +62,7 @@ class HomeViewModel @Inject constructor(
                 response: Response<MealsByCategoryList>,
             ) {
                 response.body()?.meals?.let { popularItem ->
-                    (popularItems as MutableStateFlow).value = popularItem
+                    _popularItems.value = popularItem
                     Timber.d("State updated: popularItems = $popularItem")
                 }
             }
@@ -77,7 +77,7 @@ class HomeViewModel @Inject constructor(
         mealApi.getCategories().enqueue(object : Callback<CategoryList> {
             override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
                 response.body()?.let { categoryList ->
-                    (categories as MutableStateFlow).value = categoryList.categories
+                    _categories.value = categoryList.categories
                     Timber.d("State updated: categories = ${categoryList.categories}")
                 }
             }

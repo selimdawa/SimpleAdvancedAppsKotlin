@@ -45,12 +45,12 @@ class DetailFragment : Fragment() {
 
         binding.toolbar.nameSpace.text = DATA.COUNTRY_DETAILS
 
-        observeLiveData()
+        observeState()
     }
 
-    private fun observeLiveData() {
+    private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.countryLiveData.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            viewModel.countryState.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { country ->
                     country?.let {
                         with(binding) {

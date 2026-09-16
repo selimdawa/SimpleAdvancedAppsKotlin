@@ -24,14 +24,14 @@ class MealViewModel @Inject constructor(
     private val mealApi: MealApi, private val mealDao: MealDao
 ) : ViewModel() {
 
-    val mealDetails: StateFlow<Meal?>
-        field = MutableStateFlow(null)
+    private val _mealDetails = MutableStateFlow<Meal?>(null)
+    val mealDetails: StateFlow<Meal?> = _mealDetails
 
     fun getMealDetail(id: String) {
         mealApi.getMealDetails(id).enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 response.body()?.meals?.firstOrNull()?.let { meal ->
-                    (mealDetails as MutableStateFlow).value = meal
+                    _mealDetails.value = meal
                     Timber.d("State updated: mealDetails = $meal")
                 }
             }

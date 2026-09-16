@@ -52,10 +52,10 @@ class DashboardFragment : Fragment() {
                 swipe.isRefreshing = false
             }
         }
-        observeLiveData()
+        observeState()
     }
 
-    private fun observeLiveData() {
+    private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.countries.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { countries ->

@@ -41,7 +41,7 @@ class HoursFragment : Fragment(R.layout.fragment_hours) {
 
     private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            model.liveDataCurrent
+            model.weatherStateCurrent
                 .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
                 .collect { weatherItem ->
                     weatherItem?.let { adapter.submitList(getHoursList(it)) }
