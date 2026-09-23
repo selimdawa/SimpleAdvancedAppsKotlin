@@ -10,7 +10,7 @@
     app:cardElevation="0dp"
     app:strokeWidth="0dp">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="?mc_bg"
@@ -38,6 +38,6 @@
             android:layout_width="30dp"
             android:layout_height="30dp" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
 
 </com.google.android.material.card.MaterialCardView>

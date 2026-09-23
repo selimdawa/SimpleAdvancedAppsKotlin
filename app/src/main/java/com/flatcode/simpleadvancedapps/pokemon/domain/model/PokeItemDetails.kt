@@ -1,9 +1,12 @@
 package com.flatcode.simpleadvancedapps.pokemon.domain.model
 
+import android.os.Parcelable
 import com.flatcode.simpleadvancedapps.pokemon.data.model.PokeModelDetails
 import com.flatcode.simpleadvancedapps.pokemon.data.model.Types
-import java.util.*
+import kotlinx.parcelize.Parcelize
+import java.util.Locale
 
+@Parcelize
 data class PokeItemDetails(
     val id: String,
     val name: String,
@@ -12,15 +15,15 @@ data class PokeItemDetails(
     val attack: Int,
     val defense: Int,
     val specialAttack: Int,
-    val specialDefense:Int,
+    val specialDefense: Int,
     val speed: Int,
     val types: List<String>,
     val weight: Double,
     val height: Double
-)
+) : Parcelable
 
 fun PokeModelDetails.toDomain(): PokeItemDetails {
-    val id = "N° ${id.toString().padStart(3,'0')}"
+    val id = "N° ${id.toString().padStart(3, '0')}"
     val name = replaceFirstChar(name)
     val img = sprites.other.officialArtwork.img
     val hp = pokemonDetails[0].statValue
@@ -32,8 +35,20 @@ fun PokeModelDetails.toDomain(): PokeItemDetails {
     val types = getTypes(types)
     val weight = weight / 10.0
     val height = height / 10.0
-    return PokeItemDetails(id, name, img, hp, attack, defense,
-        specialAttack, specialDefense, speed, types, weight, height)
+    return PokeItemDetails(
+        id,
+        name,
+        img,
+        hp,
+        attack,
+        defense,
+        specialAttack,
+        specialDefense,
+        speed,
+        types,
+        weight,
+        height
+    )
 }
 
 private fun getTypes(types: List<Types>): List<String> {

@@ -48,10 +48,10 @@ class DetailFragment : Fragment() {
             updateFavoriteIcon()
         }
 
-        binding.imgDetail.loadImage("$IMAGE_MOVIE${currentMovie.poster_path}")
+        binding.imgDetail.loadImage("$IMAGE_MOVIE${currentMovie.posterPath}")
 
         binding.tvTitleDetail.text = currentMovie.title
-        binding.tvDateDetail.text = currentMovie.release_date
+        binding.tvDateDetail.text = currentMovie.releaseDate
         binding.tvDescription.text = currentMovie.overview
 
         binding.imgDetailFavorite.setOnClickListener {

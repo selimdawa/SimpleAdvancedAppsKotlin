@@ -1,3 +1,7 @@
 package com.flatcode.simpleadvancedapps.meals.pojo
 
-data class MealsByCategoryList(val meals: List<MealsByCategory>)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class MealsByCategoryList(val meals: List<MealsByCategory>) : Parcelable

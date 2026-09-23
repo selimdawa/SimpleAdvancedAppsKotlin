@@ -1,6 +1,7 @@
 package com.flatcode.simpleadvancedapps.todoNote.data
 
 import android.content.Context
+import android.os.Parcelable
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -11,6 +12,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
@@ -20,8 +22,11 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore("u
 
 enum class SortOrder { BY_NAME, BY_DATE }
 
-data class FilterPreferences(val sortOrder: SortOrder, val hideCompleted: Boolean)
-data class FilterPreferencesNotes(val sortOrder: SortOrder)
+@Parcelize
+data class FilterPreferences(val sortOrder: SortOrder, val hideCompleted: Boolean) : Parcelable
+
+@Parcelize
+data class FilterPreferencesNotes(val sortOrder: SortOrder) : Parcelable
 
 @Singleton
 class PreferencesManager @Inject constructor(@ApplicationContext context: Context) {
@@ -29,8 +34,7 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
     private val dataStore: DataStore<Preferences> = context.dataStore
     private val dataStoreNotes: DataStore<Preferences> = context.dataStore
 
-    val preferencesFlow = dataStore.data
-        .catch { exception ->
+    val preferencesFlow = dataStore.data.catch { exception ->
             if (exception is IOException) {
                 Timber.e(exception, "Error reading preferences")
                 emit(emptyPreferences())
@@ -41,24 +45,21 @@ class PreferencesManager @Inject constructor(@ApplicationContext context: Contex
 
         .map { preferences ->
             val sortOrder = SortOrder.valueOf(
-                preferences[PreferencesKeys.SORT_ORDER]
-                    ?: SortOrder.BY_DATE.name
+                preferences[PreferencesKeys.SORT_ORDER] ?: SortOrder.BY_DATE.name
             )
             val hideCompleted = preferences[PreferencesKeys.HIDE_COMPLETED] ?: false
 
             FilterPreferences(sortOrder, hideCompleted)
         }
 
-    val notesPreferencesFlow = dataStoreNotes.data
-        .catch { exception ->
+    val notesPreferencesFlow = dataStoreNotes.data.catch { exception ->
             if (exception is IOException) {
                 Timber.e(exception, "Error reading preferences")
                 emit(emptyPreferences())
             } else {
                 throw exception
             }
-        }
-        .map { preferences ->
+        }.map { preferences ->
             val sortOrderNotes = SortOrder.valueOf(
                 preferences[PreferencesKeys.SORT_ORDER_NOTES] ?: SortOrder.BY_DATE.name
             )

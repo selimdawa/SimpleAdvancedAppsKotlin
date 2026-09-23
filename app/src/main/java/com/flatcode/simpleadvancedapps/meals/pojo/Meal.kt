@@ -1,9 +1,12 @@
 package com.flatcode.simpleadvancedapps.meals.pojo
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "mealInformation")
+@Parcelize
 data class Meal(
     val dateModified: String?,
     @PrimaryKey val idMeal: String,
@@ -58,4 +61,4 @@ data class Meal(
     val strSource: String?,
     val strTags: String?,
     val strYoutube: String?,
-)
+) : Parcelable

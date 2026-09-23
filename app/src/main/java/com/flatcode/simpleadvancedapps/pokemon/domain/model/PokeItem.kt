@@ -1,11 +1,16 @@
 package com.flatcode.simpleadvancedapps.pokemon.domain.model
 
-import com.flatcode.simpleadvancedapps.utils.DATA.RAW_URL_POKE
+import android.os.Parcelable
 import com.flatcode.simpleadvancedapps.pokemon.data.model.PokeModel
-import java.util.*
+import com.flatcode.simpleadvancedapps.utils.DATA.RAW_URL_POKE
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+import java.util.Locale
 
-data class PokeItem(val id: Int, val name: String, val img: String) {
+@Parcelize
+data class PokeItem(val id: Int, val name: String, val img: String) : Parcelable {
 
+    @IgnoredOnParcel
     val formatId = "N° ${id.toString().padStart(3, '0')}"
 }
 

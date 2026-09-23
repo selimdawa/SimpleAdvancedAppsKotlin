@@ -1,14 +1,16 @@
 package com.flatcode.simpleadvancedapps.pokemon.data.database.entities
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.flatcode.simpleadvancedapps.pokemon.domain.model.PokeItemDetails
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "pokemon_detail_table")
+@Parcelize
 data class PokeDetailEntity(
-    @PrimaryKey
-    @ColumnInfo(name = "id_int") val idInt: Int,
+    @PrimaryKey @ColumnInfo(name = "id_int") val idInt: Int,
     @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "img") val img: String,
@@ -21,7 +23,7 @@ data class PokeDetailEntity(
     @ColumnInfo(name = "types") val types: String,
     @ColumnInfo(name = "weight") val weight: Double,
     @ColumnInfo(name = "height") val height: Double
-)
+) : Parcelable
 
 fun PokeItemDetails.toDatabase(idInt: Int) = PokeDetailEntity(
     idInt = idInt,

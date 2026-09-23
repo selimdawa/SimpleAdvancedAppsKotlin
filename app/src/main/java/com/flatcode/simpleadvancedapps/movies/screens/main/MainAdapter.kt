@@ -40,13 +40,14 @@ class MainAdapter(private val onMovieClick: (MovieItemModel) -> Unit) :
 
     override fun getItemCount(): Int = listMovies.size
 
-    inner class ViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemMovieBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(model: MovieItemModel) {
             binding.tvTitle.text = model.title
-            binding.tvDate.text = model.release_date
+            binding.tvDate.text = model.releaseDate
 
-            binding.itemImg.loadImage("$IMAGE_MOVIE_BASIC${model.poster_path}")
+            binding.itemImg.loadImage("$IMAGE_MOVIE_BASIC${model.posterPath}")
 
             itemView.setOnClickListener {
                 val position = bindingAdapterPosition
