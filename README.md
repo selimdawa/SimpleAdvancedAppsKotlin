@@ -3,7 +3,7 @@
 <p align="center">
  <a><img alt="Min SDK" src="https://img.shields.io/badge/Min SDK-24-020290?logo=android&logoColor=white"/></a>
  <a><img alt="Target SDK" src="https://img.shields.io/badge/Target SDK-37-0EB265?logo=android&logoColor=0EB265"/></a>
- <a href="https://kotlinlang.org"><img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-2.4.10-blue?logo=kotlin&logoColor=white"/></a>
+ <a href="https://kotlinlang.org"><img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-2.4.20-blue?logo=kotlin&logoColor=white"/></a>
  <a href="https://opensource.org/licenses/MIT"><img alt="License" src="https://img.shields.io/badge/License-MIT-CC9900?logo=MIT&logoColor=white"/></a>
 </p>
 
@@ -165,13 +165,80 @@ One | Two | Three
 --- | --- | --- | 
 ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgQVH5FnSpB8T0915WzZg6RfhGFCvhUr3AeGhsHRDmWY0rfC9m5pCaJ4E6BR3m6mVbcQNdhOvCg04h4wUAobr7ZtETfPf2i1p5n7lYUHqsE3t9q_GqSTro907KsC7F2YCp7C8wXpB4y0ToKzQsdQYu1iSRyyNOXIUz79ZUfXdMY6GgE_MaMMCYaURHYwOE/s1280/photo_2026-06-17_05-31-14.jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhR8JcfZSjHeCvCny-ptgyDLnXtsDbNgdNHFjjD6vSUpjDLl8XT3B2cWHRrWKq2ZzFZeHlO5tEi3Ejm_MFGZI07gOH3DwMJAVRW_atGYzK_ljrVkfWPVlp_LG75uojasbOcDdbURNcuEDp13exrgQEBe_0pVY0Pd4mPHfvQy6lPVOjS3f2I2sH3QsYpuoA/s1280/photo_2026-06-17_05-31-14%20(2).jpg) | ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQ9zgfyWd4B0ZpBuEreQURtiIN7aA1Lj0kZgsDBct43HHyGhjMS2g9jcVG04EPhbVAYy5ACkkCdEvc8g1FlGHTygI4ZsQnB_b8w4BSt_kHvueQL5Gk2pS6y9DNlP6Oz-0N8GmhH2VB7hj3lW4yYe9gxEjCli_sZ9DjtfddK0yJ-csvysmD2Hg26sWmgU4/s1280/photo_2026-06-17_05-31-14%20(3).jpg) | 
 
-<a href='https://play.google.com/store/apps/details?id=com.flatcode.simpleadvancedapps'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="170px"/></a>
-<br />
+---
 
-- [Kotlin Old Code Version](https://github.com/selimdawa/SimpleAdvancedAppsKotlinOld/)
+### ✨ Core Functionalities
+*   **Modular Multi-App Suite**: Collection of 13+ advanced mini-applications built with modern Android architecture.
+*   **Diverse Domain Features**: Crypto tracking, weather forecasting, news, dictionary, movie database, and more.
+*   **Context-Aware Theming**: Adaptive UI support for dark and light modes.
+*   **Resilient Offline Capabilities**: Local caching and data management.
+
+---
+
+## 🛠️ Built With
+*   **Language:** [Kotlin](https://kotlinlang.org/)
+*   **UI Framework:** Material Design 3, ViewBinding
+*   **Cloud Infrastructure:** [Firebase](https://firebase.google.com/)
+*   **Async Operations:** Coroutines & Flow
+
+---
+
+### 🏗️ Technical Architecture
+The application is engineered using **MVVM (Model-View-ViewModel)** architectural patterns, strictly adhering to **Clean Architecture** principles to promote modularity and ease of maintenance.
+
+```text
+app/src/main/java/com/flatcode/simpleadvancedapps/
+├── main/               # Main Dashboard & App Selection Navigation
+├── calculator/         # Calculator App Module
+├── countries/          # Countries Info App Module
+├── crypto/             # Crypto Tracker App Module
+├── dictionary/         # Dictionary App Module
+├── dogs/               # Dogs Discovery App Module
+├── meals/              # Meals & Recipes App Module
+├── movies/             # Movies Discovery App Module
+├── news/               # News Reader App Module
+├── pokemon/            # Pokémon Pokedex App Module
+├── pop/                # Pop Audio / Visual Module
+├── rickAndMorty/       # Rick & Morty Explorer Module
+├── todoNote/           # To-Do & Notes Module
+├── weather/            # Weather Forecast Module
+└── utils/              # Extensions, Constants & Utility Classes
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+*   Android Studio Ladybug or newer.
+*   JDK 21.
+*   Android SDK Level 37 (Compile SDK).
+
+### Installation
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/selimdawa/SimpleAdvancedAppsKotlin.git
+    ```
+2.  Open the project in Android Studio.
+3.  Sync Project with Gradle Files.
+4.  Run the app on your device or emulator.
+
+---
+
+### 🛠️ Technology Stack
+*   **Language**: Kotlin (Modern, expressive, and safe development).
+*   **Architecture**: **MVVM & Clean Architecture**.
+*   **Concurrency**: **Coroutines & Flow** (High-performance asynchronous data streams).
+*   **View Interop**: **ViewBinding** (Safe and efficient UI component interaction).
+
+---
+
+## 🔗 Links & Resources
+*   **Legacy Versions:**
+    *   [Kotlin Old Code Version](https://github.com/selimdawa/SimpleAdvancedAppsKotlinOld/)
+*   **Author:** [Selim Dawa](https://github.com/selimdawa)
 
 ---
 
 ## 📜 License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
