@@ -1,8 +1,8 @@
-[versions]
+﻿[versions]
 agp = "9.4.1"
 coreKtx = "1.19.1"
 appcompat = "1.8.0"
-kotlin = "2.4.20"
+kotlin = "2.4.21"
 material = "1.14.0"
 activityKtx = "1.13.0"
 fragmentKtx = "1.9.1"
