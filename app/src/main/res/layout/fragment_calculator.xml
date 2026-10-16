@@ -55,7 +55,7 @@
         android:ellipsize="end"
         android:gravity="end|bottom"
         android:singleLine="true"
-        android:textColor="@color/white"
+        android:textColor="?colorError"
         android:textSize="48sp"
         android:textStyle="bold" />
 
